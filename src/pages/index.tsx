@@ -18,7 +18,7 @@ export default function Home() {
                         <div className="h-full ltr">
                             <h1>
                                 Acting workshops with
-                                the UK's leading directors
+                                the UK&apos;s leading directors
                             </h1>
                             <div className="h-10" />
                             <Link
@@ -41,6 +41,6 @@ export default function Home() {
                 </div>
             </main>
         </>
-    );
-};
+    )
+}
 

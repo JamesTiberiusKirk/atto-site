@@ -93,7 +93,7 @@ export default function Apply() {
                                 <input className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                                     type="checkbox"
                                     value="" />
-                                <label className="ml-2 text-sm font-medium text-gray-700">I don't wish to be emailed with atto news & upcoming workshops.</label>
+                                <label className="ml-2 text-sm font-medium text-gray-700">I don&apos;t wish to be emailed with atto news &apos; upcoming workshops.</label>
                             </div>
 
                             <button className="mt-5 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
@@ -103,6 +103,6 @@ export default function Apply() {
                 </div>
             </main >
         </>
-    );
-};
+    )
+}
 
