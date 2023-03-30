@@ -8,7 +8,10 @@ export async function newApplication(application: Application) {
 
     const collection = db.collection(process.env.MONGO_DB)
 
-    const res = await collection.insertOne(application)
-
-    return res.insertedId
+    try {
+        const res = await collection.insertOne(application)
+        return res.insertedId
+    } catch (e) {
+        console.error(e)
+    }
 }
