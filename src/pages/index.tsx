@@ -7,8 +7,8 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Atto</title>
-                <meta name="description" content="Atto Workshop" />
+                <title>atto</title>
+                <meta name="description" content="atto Workshop" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             {/* background: #e95c20   bg-amber-600*/}
