@@ -3,11 +3,15 @@ import * as mongoDB from "mongodb";
 export async function connectToDatabase() {
     if (!process.env.MONGO_URL) return
 
-    const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.MONGO_URL);
+    try {
+        const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.MONGO_URL);
 
-    await client.connect();
+        await client.connect();
 
-    const db: mongoDB.Db = client.db(process.env.MONGO_NAME);
+        const db: mongoDB.Db = client.db(process.env.MONGO_NAME);
 
-    return db
+        return db
+    } catch (e) {
+        console.log(e)
+    }
 }
