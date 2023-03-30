@@ -1,3 +1,4 @@
+import { log } from "console";
 import Head from "next/head";
 import { useState } from "react";
 import { api } from "~/utils/api";
@@ -42,6 +43,20 @@ export default function Apply() {
         })
     }
 
+
+    const isFieldWrong = (fieldName: string): boolean => {
+        if (!mutation.isError) return false
+        return (mutation.error.data?.zodError?.fieldErrors[fieldName] !== undefined)
+    }
+
+
+
+    const getErrorMessages = (fieldName: string): string[] => {
+        // if (!mutation.isError || !mutation.error.data || !mutation.error.data.zodError) return []
+        return mutation.error?.data?.zodError?.fieldErrors[fieldName] as string[]
+    }
+
+
     return (
         <>
             <Head>
@@ -71,7 +86,11 @@ export default function Apply() {
                                     name="pronouns" type="text" />
                             </label>
                             <label className="pt-2 block text-gray-700 text-sm font-bold mb-2">
-                                Email:
+                                {mutation.isError && isFieldWrong('email') ? (
+                                    <span className="text-red-600">Email: {getErrorMessages('email').map(s => s + ' ')}</span>
+                                ) : (
+                                    <>Email: no error</>
+                                )}
                                 <input className="shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     value={email} onChange={(e) => setEmail(e.target.value)}
                                     name="email" type="text" />
@@ -99,8 +118,10 @@ export default function Apply() {
                             <label className="pt-2 block text-gray-700 text-sm font-bold mb-2">
                                 Spotlight Link/Credits/Place of Training:
                                 <textarea className="shadow appearance-none border rounded-lg w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                    value={credits} onChange={(e) => setCredits(e.target.value)}
-                                    name="name" rows={2} />
+                                    value={credits}
+                                    onChange={(e) => setCredits(e.target.value)}
+                                    name="name"
+                                    rows={2} />
                             </label>
 
                             <div className="flex items-center mb-4">
@@ -111,7 +132,7 @@ export default function Apply() {
                             </div>
 
                             {mutation.isError && (
-                                <div>Error has occured when sending forms</div>
+                                <div className="text-red-600">Error has occured when sending forms</div>
                             )}
 
                             <button type="submit" className="mt-5 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
