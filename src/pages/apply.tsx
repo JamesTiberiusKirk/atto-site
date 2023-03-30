@@ -1,4 +1,3 @@
-import { log } from "console";
 import Head from "next/head";
 import { useState } from "react";
 import { api } from "~/utils/api";
@@ -52,7 +51,6 @@ export default function Apply() {
 
 
     const getErrorMessages = (fieldName: string): string[] => {
-        // if (!mutation.isError || !mutation.error.data || !mutation.error.data.zodError) return []
         return mutation.error?.data?.zodError?.fieldErrors[fieldName] as string[]
     }
 
