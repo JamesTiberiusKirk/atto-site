@@ -18,7 +18,7 @@
     - [ ] Pretty much same functionality as application form but less fields
 
 # IDEAS
-- for admin login, worth just using admin email env variable (as array)
+- For admin login, worth just using admin email env variable (as array)
     - then send a one time code to the email at login
     - OR use OAuth with some provider and only let in if its the correct email
     - option 1 is simpler
