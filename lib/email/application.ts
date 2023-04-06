@@ -12,8 +12,8 @@ export default async function sendApplicationReceipt(application: Application) {
         Messages: [
             {
                 From: {
-                    Email: 'mail@dumitruvulpe.com',
-                    Name: 'atto',
+                    Email: process.env.MJ_SENDER_EMAIL as string,
+                    Name: process.env.MJ_SENDER_NAME as string,
                 },
                 To: [
                     {
