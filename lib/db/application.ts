@@ -1,4 +1,4 @@
-import { Application } from "types/application";
+import type { Application } from "types/application";
 import { connectToDatabase } from "./connect";
 
 export async function newApplication(application: Application) {

@@ -1,5 +1,6 @@
-import { SendEmailV3_1, LibraryResponse, Client } from 'node-mailjet';
-import { Application } from 'types/application';
+import { Client } from 'node-mailjet';
+import type { SendEmailV3_1, LibraryResponse } from 'node-mailjet';
+import type { Application } from 'types/application';
 
 export default async function sendApplicationReceipt(application: Application) {
     const mailjet = new Client({

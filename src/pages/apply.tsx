@@ -1,12 +1,16 @@
-import Head from "next/head";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AttoPage from "~/components/page";
 import { api } from "~/utils/api";
 
 // TODO: need to handle input validation here
 export default function Apply() {
-    const mutation = api.apply.new.useMutation()
+    const router = useRouter()
+    const mutation = api.apply.new.useMutation({
+        onMutate: () => {
+            void router.push('/confirmation')
+        }
+    })
 
     const workshopOptions = [
         {
@@ -29,11 +33,6 @@ export default function Apply() {
     const [workshop, setWorkshop] = useState('')
     const [credits, setCredits] = useState('')
     const [emailPreference, setEmailPreference] = useState(false)
-    const router = useRouter()
-
-    useEffect(() => {
-        mutation.isSuccess && router.push('/confirmation')
-    }, [mutation.isSuccess])
 
     function handleSendForm(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();

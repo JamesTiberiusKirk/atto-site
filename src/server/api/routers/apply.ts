@@ -23,10 +23,12 @@ export const applicationRouter = createTRPCRouter({
         .mutation(async ({ input }: NewApplicationProps) => {
             console.log('inserting: ', input)
 
-            const insertedID = await newApplication(input)
+            const p = await Promise.all([newApplication(input), sendApplicationReceipt(input)])
+
+            const insertedID = p[0]
             console.log('Inserted: ', insertedID)
 
-            const emailResponse = await sendApplicationReceipt(input)
+            const emailResponse = p[1]
             emailResponse.response.status == 200 ?
                 console.log('Email sent: ', input.email) :
                 console.error('Email send error: ', input.email)
