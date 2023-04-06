@@ -1,7 +1,7 @@
-import Head from "next/head";
+import AttoPage from "~/components/page";
 import { api } from "~/utils/api";
 
-export default function ContactMe() {
+export default function ContactMe(): JSX.Element {
     const mutation = api.contactMe.new.useMutation()
     const handleSendForm = () => {
         console.log('handle send form')
@@ -17,22 +17,15 @@ export default function ContactMe() {
 
 
     return (
-        <>
-            <Head>
-                <title>atto</title>
-                <meta name="description" content="atto" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <main className="flex min-h-screen flex-col items-center justify-center bg-[#e95c20]">
-                <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
-                    <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
-                        Contact me
-                    </h1>
-                    <input type="button" onClick={handleSendForm} title="Send form" />
-                    <button onClick={handleSendForm}>Send Form</button>
-                </div>
-            </main>
-        </>
+        <AttoPage>
+            <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+                <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
+                    Contact me
+                </h1>
+                <input type="button" onClick={handleSendForm} title="Send form" />
+                <button onClick={handleSendForm}>Send Form</button>
+            </div>
+        </AttoPage>
     )
 }
 
