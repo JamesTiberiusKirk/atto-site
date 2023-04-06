@@ -9,7 +9,6 @@ const server = z.object({
     MONGO_URL: z.string(),
     MJ_APIKEY_PUBLIC: z.string(),
     MJ_APIKEY_PRIVATE: z.string(),
-    MJ_API_TOKEN: z.string(),
 });
 
 /**
@@ -33,7 +32,6 @@ const processEnv = {
 
     MJ_APIKEY_PUBLIC: process.env.MJ_APIKEY_PUBLIC,
     MJ_APIKEY_PRIVATE: process.env.MJ_APIKEY_PRIVATE,
-    MJ_API_TOKEN: process.env.MJ_API_TOKEN,
 };
 
 // Don't touch the part below
