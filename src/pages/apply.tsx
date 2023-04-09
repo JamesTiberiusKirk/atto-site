@@ -52,16 +52,13 @@ export default function Apply() {
         return (mutation.error.data?.zodError?.fieldErrors[fieldName] !== undefined)
     }
 
-
-
     const getErrorMessages = (fieldName: string): string[] => {
         return mutation.error?.data?.zodError?.fieldErrors[fieldName] as string[]
     }
 
-
     return (
-        <AttoPage>
-            <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 ">
+        <AttoPage >
+            <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16 bg-[#FF955F]">
                 <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]">
                     Apply for a workshop
                 </h1>
@@ -131,7 +128,7 @@ export default function Apply() {
                             <div className="text-red-600">Error has occured when sending forms</div>
                         )}
 
-                        <button type="submit" className="mt-5 w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
+                        <button type="submit" className="mt-5 w-full  bg-[#8C2F00] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
                             onClick={(e) => handleSendForm(e)} disabled={mutation.isLoading}>
                             {mutation.isLoading ?
                                 (<div role="status">

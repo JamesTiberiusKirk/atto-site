@@ -16,21 +16,25 @@ export const applicationRouter = createTRPCRouter({
             email: z.string().email(),
             pronouns: z.string(),
             workshop: z.string(),
-            // workshop: z.nativeEnum(WorkshopTypes),
             credits: z.string(),
             emailPreference: z.boolean(),
         }))
         .mutation(async ({ input }: NewApplicationProps) => {
             console.log('inserting: ', input)
 
-            const p = await Promise.all([newApplication(input), sendApplicationReceipt(input)])
+            const p = await Promise.all([
+                newApplication(input),
+                sendApplicationReceipt(input)
+            ])
 
             const insertedID = p[0]
             console.log('Inserted: ', insertedID)
 
             const emailResponse = p[1]
-            emailResponse.response.status == 200 ?
-                console.log('Email sent: ', input.email) :
-                console.error('Email send error: ', input.email)
+            // This wount actually validate weather the email was sent or not
+            console.log(emailResponse)
+            // emailResponse.response.status == 200 ?
+            //     console.log('Email sent: ', input.email) :
+            //     console.error('Email send error: ', input.email)
         }),
 });

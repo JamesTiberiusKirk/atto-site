@@ -14,7 +14,7 @@ export default function AttoPage({ children }: AttoPageProps) {
                 < meta name="description" content="atto" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="flex min-h-screen flex-col items-center justify-center bg-[#e95c20]" >
+            <main className="flex flex-col items-center justify-center " >
                 {children}
             </main >
         </>
