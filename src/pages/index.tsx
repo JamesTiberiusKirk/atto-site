@@ -58,12 +58,14 @@ export default function Home() {
             <Menu />
             <div id='home' >
                 <div className='h-screen overflow-clip w-full bg-[#FF955F]' >
-                    <div className='h-1/3 w-full top-0 bg-gray-500 '>
+                    <div className='sm:h-1/3 h-1/4 relative w-full top-0 bg-gray-500 '
+                    >
                         <div className='blur-sm h-full w-full'>
                             <Image
                                 src='/workshop/dvelped_nice_pic_scaled.png'
                                 alt='Picture of workshop'
-                                style={{ objectFit: "cover" }}
+                                // style={{ objectFit: "cover" }}
+                                style={{ objectFit: 'cover' }}
                                 priority
                                 fill
                             />
@@ -71,7 +73,7 @@ export default function Home() {
                     </div>
 
                     <div className="w-full gap-4 grid sm:grid-flow-col grid-flow-row xl:px-20 xl:pl-40 ">
-                        <div className="p-16 text-[#8C2F00] text-3xl">
+                        <div className="sm:p-16 px-16 py-10 text-[#8C2F00] text-3xl">
                             <div>
                                 <h1>
                                     Acting workshops with
@@ -87,7 +89,7 @@ export default function Home() {
                                 <div className='md:absolute bottom-16 left-16 lg:left-52'>
                                     atto supports
                                     <Image
-                                        // className='float-right'
+                                        className='sm:h-1/5'
                                         alt='DFYC logo'
                                         src='/dfyc_logo.jpg'
                                         width={472}
