@@ -11,10 +11,10 @@ export default function AttoPage({ children }: AttoPageProps) {
         <>
             <Head>
                 <title>atto </title>
-                < meta name="description" content="atto" />
+                <meta name="description" content="atto" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <main className="flex flex-col items-center justify-center " >
+            <main>
                 {children}
             </main >
         </>

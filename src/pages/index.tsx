@@ -16,11 +16,8 @@ function Menu() {
             <div className='z-30 top-16 right-16  fixed '>
                 <GoKebabVertical
                     onClick={() => setMenuVisible(!menuVisible)}
-                    // color='rgb(227,180,65)'
-                    // color='#e95c20'
                     className={'text-[#8C2F00] hover:scale-110 h-20 w-20 transform transition duration-100 ' + (menuVisible ? 'rotate-90 ' : '')} />
             </div>
-            {/* <div className={'z-30 top-36 right-5  fixed  p-4 transition-transform duration-500  transform' + (menuVisible ? 'translate-x-0' : 'translate-x-full')}> */}
             <div
                 className={`${menuVisible ? 'translate-x-0' : 'translate-x-full'
                     } transform fixed z-30 top-36 right-6 h-full w-64 p-4 transition-transform duration-500`}
@@ -56,48 +53,68 @@ function Menu() {
 }
 
 export default function Home() {
-
     return (
         <AttoPage>
             <Menu />
-            <section id='home'>
-                <div className='z-0 h-1/3 blur-sm absolute -inset-1 '>
-                    <Image
-                        src='/workshop/dvelped_nice_pic.png'
-                        alt='Picture of workshop'
-                        style={{ objectFit: "cover" }}
-                        fill
-                    />
-                </div>
-                <div className='absolute h-screen w-screen -z-10  bg-[#FF955F]' />
-                <div
-                    // style={{ zIndex: 10 }}
-                    className="z-10 h-screen w-screen grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 ">
-                    <div className="relative p-20 container flex flex-col text-[#8C2F00] text-3xl">
-                        <div className="pt-96 h-full ltr">
-                            <h1>
-                                Acting workshops with
-                                the UK&apos;s leading directors
-                            </h1>
-                            <div className="h-10" />
-                            <Link
-                                className="px-5 py-3 bg-[#8C2F00] text-gray-100 font-bold rounded-full"
-                                href={'/apply'}>Apply</Link>
+            <div id='home' >
+                <div className='h-screen overflow-clip w-full bg-[#FF955F]' >
+                    <div className='h-1/3 w-full top-0 bg-gray-500 '>
+                        <div className='blur-sm h-full w-full'>
+                            <Image
+                                src='/workshop/dvelped_nice_pic_scaled.png'
+                                alt='Picture of workshop'
+                                style={{ objectFit: "cover" }}
+                                priority
+                                fill
+                            />
                         </div>
-                        <Link href={'/contactme'}>Contact me</Link>
                     </div>
-                    <div className="container relative flex flex-col items-center justify-center gap-12 px-4 py-16">
-                        <Image
-                            alt="Atto logo"
-                            width={1890 / 3}
-                            height={1417 / 3}
-                            src='/logo_with_name.png'
-                        />
+
+                    <div className="w-full gap-4 grid sm:grid-flow-col grid-flow-row xl:px-20 xl:pl-40 ">
+                        <div className="p-16 text-[#8C2F00] text-3xl">
+                            <div>
+                                <h1>
+                                    Acting workshops with
+                                    the UK&apos;s leading directors
+                                </h1>
+                                <div className="h-5" />
+                                <Link
+                                    className="px-5 py-3 bg-[#8C2F00] text-gray-100 font-bold rounded-full"
+                                    href={'/apply'}>Apply</Link>
+                            </div>
+                            <div className='h-5' />
+                            <div className="sm:pt-5" >
+                                <div className='md:absolute bottom-16 left-16 lg:left-52'>
+                                    atto supports
+                                    <Image
+                                        // className='float-right'
+                                        alt='DFYC logo'
+                                        src='/dfyc_logo.jpg'
+                                        width={472}
+                                        height={508}
+                                        style={{
+                                            width: '50%',
+                                            // height: '25%',
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="place-content-center w-full min-sm:py-16">
+                            <Image
+                                className='object-center'
+                                alt="Atto logo"
+                                width={1890 / 3}
+                                height={1417 / 3}
+                                src='/logo_with_name.png'
+                            />
+                        </div>
                     </div>
                 </div>
-            </section >
-            <section id='workshops'>
-                <div className='h-screen w-screen grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 bg-white'>
+            </div >
+            <div id='workshops'>
+                <div className='h-screen w-full grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 bg-white'>
                     <div className="p-10 container flex flex-col  text-[#8C2F00] text-3xl">
                         <div className="h-full ltr ">
                             <h1>
@@ -107,9 +124,9 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </section >
-            <section id='what-we-do'>
-                <div className='h-screen w-screen grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 bg-[#FF955F]'>
+            </div >
+            <div id='what-we-do'>
+                <div className='h-screen w-full grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 bg-[#FF955F]'>
                     <div className="p-10 container flex flex-col text-[#8C2F00] text-3xl">
                         <div className="h-full ltr ">
                             <h1>
@@ -118,9 +135,9 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </section >
-            <section id='testimonials'>
-                <div className='h-screen w-screen grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 bg-white'>
+            </div >
+            <div id='testimonials'>
+                <div className='h-screen w-full grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 bg-white'>
                     <div className="p-10 container flex flex-col  text-[#8C2F00] text-3xl">
                         <div className="h-full ltr ">
                             <h1>
@@ -129,7 +146,7 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-            </section >
+            </div >
         </AttoPage >
     )
 }
