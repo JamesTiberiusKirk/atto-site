@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import AttoPage from '~/components/page';
 import { api } from '~/utils/api';
+import { TbChairDirector } from 'react-icons/tb'
 
 // TODO: need to handle input validation here
 export default function Apply() {
@@ -60,9 +61,21 @@ export default function Apply() {
         <AttoPage >
             <div className='min-h-screen flex flex-col items-center px-4 py-16 bg-[#FF955F]'>
                 <div className='max-w-3xl'>
-                    <h1 className='text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]'>
-                        Apply for a workshop
-                    </h1>
+                    <div className='inline-flex'>
+                        <h1 className='text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]'>
+                            Apply for a workshop
+                        </h1>
+                        <a href='/'>
+                            <TbChairDirector
+                                className='h-24 w-24'
+                                color='white'
+                            />
+                        </a>
+                        {/* <GiDirectorChair */}
+                        {/*     className='h-24 w-24' */}
+                        {/*     color='white' */}
+                        {/* /> */}
+                    </div>
                     <p className='text-white py-5'>
                         Please choose the workshops you wish to attend. We advise choosing more than one, to avoid missing out as workshops can fill up.
                     </p>
@@ -85,7 +98,7 @@ export default function Apply() {
                             {mutation.isError && isFieldWrong('email') ? (
                                 <span className='text-red-600'>Email: {getErrorMessages('email').map(s => s + ' ')}</span>
                             ) : (
-                                <>Email: no error</>
+                                <>Email:</>
                             )}
                             <input className='shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
                                 value={email} onChange={(e) => setEmail(e.target.value)}

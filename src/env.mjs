@@ -7,6 +7,9 @@ import { z } from "zod";
 const server = z.object({
     NODE_ENV: z.enum(["development", "test", "production"]),
     MONGO_URL: z.string(),
+    MONGO_DB_APPLICATION_COLLECTION: z.string(),
+    MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION: z.string(),
+    MONGO_DB_CONTACTS_COLLECTION: z.string(),
     MJ_APIKEY_PUBLIC: z.string(),
     MJ_APIKEY_PRIVATE: z.string(),
     MJ_SENDER_EMAIL: z.string(),
@@ -29,9 +32,10 @@ const client = z.object({
  */
 const processEnv = {
     NODE_ENV: process.env.NODE_ENV,
-    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
     MONGO_URL: process.env.MONGO_URL,
-
+    MONGO_DB_APPLICATION_COLLECTION: process.env.MONGO_DB_APPLICATION_COLLECTION,
+    MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION: process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION,
+    MONGO_DB_CONTACTS_COLLECTION: process.env.MONGO_DB_CONTACTS_COLLECTION,
     MJ_APIKEY_PUBLIC: process.env.MJ_APIKEY_PUBLIC,
     MJ_APIKEY_PRIVATE: process.env.MJ_APIKEY_PRIVATE,
     MJ_SENDER_EMAIL: process.env.MJ_SENDER_EMAIL,
