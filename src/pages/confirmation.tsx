@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link';
 import AttoPage from "~/components/page";
 
 export default function Confirmation() {
@@ -14,7 +15,7 @@ export default function Confirmation() {
                     workshops
                 </h1>
                 <div className='pt-32 place-content-center w-full over-xl:py-16'>
-                    <a href='/'>
+                    <Link href='/'>
                         <Image
                             className='object-center mx-auto'
                             alt='Atto logo'
@@ -22,7 +23,7 @@ export default function Confirmation() {
                             height={1417 / 3}
                             src='/logo_with_name.png'
                         />
-                    </a>
+                    </Link>
                 </div>
             </div>
         </AttoPage>

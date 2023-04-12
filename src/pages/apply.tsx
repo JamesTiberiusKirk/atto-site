@@ -3,6 +3,7 @@ import { useState } from 'react';
 import AttoPage from '~/components/page';
 import { api } from '~/utils/api';
 import { TbChairDirector } from 'react-icons/tb'
+import Link from 'next/link';
 
 // TODO: need to handle input validation here
 export default function Apply() {
@@ -65,12 +66,12 @@ export default function Apply() {
                         <h1 className='text-5xl font-extrabold tracking-tight text-white sm:text-[5rem]'>
                             Apply for a workshop
                         </h1>
-                        <a href='/'>
+                        <Link href='/'>
                             <TbChairDirector
                                 className='h-24 w-24'
                                 color='white'
                             />
-                        </a>
+                        </Link>
                         {/* <GiDirectorChair */}
                         {/*     className='h-24 w-24' */}
                         {/*     color='white' */}

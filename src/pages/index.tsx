@@ -54,12 +54,7 @@ function Menu() {
 }
 
 export default function Home() {
-
-
-
-    const mutation = api.newsLetter.new.useMutation({
-        onMutate: () => { },
-    })
+    const mutation = api.newsLetter.new.useMutation()
     const [email, setEmail] = useState('')
 
     function handleSendForm(e: React.MouseEvent<HTMLButtonElement>) {
