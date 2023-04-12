@@ -4,34 +4,15 @@ const config = {
     theme: {
         extend: {},
         screens: {
-            'min-xl': { 'min': '1079px' },
-            'min-lg': { 'min': '823px' },
-            'min-md': { 'min': '567px' },
-            'min-sm': { 'min': '439px' },
-            //
-            // 'xl': {
-            //     'max': '1279px',
-            //     'min': '1079px',
-            // },
-            // // => @media (max-width: 1279px) { ... }
-            //
-            // 'lg': {
-            //     'max': '1023px',
-            //     'min': '823px',
-            // },
-            // // => @media (max-width: 1023px) { ... }
-            //
-            // 'md': {
-            //     'max': '767px',
-            //     'min': '567px',
-            // },
-            // // => @media (max-width: 767px) { ... }
-            //
-            // 'sm': {
-            //     'max': '639px',
-            //     'min': '439px',
-            // },
-            // => @media (max-width: 639px) { ... }
+            'over-xl': { 'min': '1079px' },
+            'over-lg': { 'min': '823px' },
+            'over-md': { 'min': '567px' },
+            'over-sm': { 'min': '440px' },
+
+            'bellow-xl': { 'max': '1079px' },
+            'bellow-lg': { 'max': '823px' },
+            'bellow-md': { 'max': '567px' },
+            'bellow-sm': { 'max': '439px' },
 
             'sm': '640px',
             'md': '768px',

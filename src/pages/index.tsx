@@ -57,9 +57,8 @@ export default function Home() {
         <AttoPage>
             <Menu />
             <div id='home' >
-                <div className='h-screen overflow-clip w-full bg-[#FF955F]' >
-                    <div className='sm:h-1/3 h-1/4 relative w-full top-0 bg-gray-500 '
-                    >
+                <div className='min-h-screen  w-full bg-[#FF955F] bellow-xl:text-center bellow-xl:object-center' >
+                    <div className='relative over-sm:h-64 bellow-sm:h-52 w-full top-0 bg-gray-500 '>
                         <div className='blur-sm h-full w-full'>
                             <Image
                                 src='/workshop/dvelped_nice_pic_scaled.png'
@@ -72,8 +71,8 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="w-full gap-4 grid sm:grid-flow-col grid-flow-row xl:px-20 xl:pl-40 ">
-                        <div className="sm:p-16 px-16 py-10 text-[#8C2F00] text-3xl">
+                    <div className="w-full gap-4 grid over-xl:grid-flow-col bellow-xl:grid-flow-row over-xl:px-20 over-xl:pl-40 ">
+                        <div className="bellow-sm:p-16 px-16 py-10 text-[#8C2F00] text-3xl">
                             <div>
                                 <h1>
                                     Acting workshops with
@@ -85,27 +84,29 @@ export default function Home() {
                                     href={'/apply'}>Apply</Link>
                             </div>
                             <div className='h-5' />
-                            <div className="sm:pt-5" >
-                                <div className='md:absolute bottom-16 left-16 lg:left-52'>
+                            <div className="bellow-xl:pt-5 bellow-xl:w-full bellow-xl:object-center " >
+                                <div className='over-xl:absolute bottom-16 left-16 over-xl:left-52 '>
                                     atto supports
-                                    <Image
-                                        className='sm:h-1/5'
-                                        alt='DFYC logo'
-                                        src='/dfyc_logo.jpg'
-                                        width={472}
-                                        height={508}
-                                        style={{
-                                            width: '50%',
-                                            // height: '25%',
-                                        }}
-                                    />
+                                    <div
+                                        className='max-w-sm mx-auto'>
+                                        <Image
+                                            className='mx-auto'
+                                            alt='DFYC logo'
+                                            src='/dfyc_logo.jpg'
+                                            width={472}
+                                            height={508}
+                                            style={{
+                                                width: '50%',
+                                            }}
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="place-content-center w-full min-sm:py-16">
+                        <div className="place-content-center w-full over-xl:py-16">
                             <Image
-                                className='object-center'
+                                className='object-center mx-auto'
                                 alt="Atto logo"
                                 width={1890 / 3}
                                 height={1417 / 3}
@@ -144,6 +145,17 @@ export default function Home() {
                         <div className="h-full ltr ">
                             <h1>
                                 Testimonials
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div >
+            <div id='news-letter'>
+                <div className='h-screen w-full grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 bg-white'>
+                    <div className="p-10 container flex flex-col  text-[#8C2F00] text-3xl">
+                        <div className="h-full ltr ">
+                            <h1>
+                                Subscribe to our news letter
                             </h1>
                         </div>
                     </div>
