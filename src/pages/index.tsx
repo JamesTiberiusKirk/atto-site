@@ -54,8 +54,15 @@ function Menu() {
 }
 
 export default function Home() {
-    const mutation = api.newsLetter.new.useMutation()
+    const mutation = api.newsLetter.new.useMutation({
+        onSuccess: () => {
+            setEmail('')
+        },
+    })
     const [email, setEmail] = useState('')
+    useEffect(() => {
+        console.log('isSuccess:', mutation.isSuccess)
+    }, [email, mutation.isSuccess])
 
     function handleSendForm(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
@@ -211,17 +218,14 @@ export default function Home() {
                             <form className='mt-5 '>
                                 <label className='pt-2 block text-gray-700 text-sm font-bold mb-2'>
                                     {mutation.isError && isFieldWrong('email') && (
-                                        <span className='text-red-600'>Email: {getErrorMessages('email').map(s => s + ' ')}</span>
+                                        <span className='text-red-600'>* {getErrorMessages('email').map(s => s + ' ')}</span>
                                     )}
                                     <input className='shadow appearance-none border rounded-full w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline'
-                                        value={email} onChange={(e) => setEmail(e.target.value)}
-                                        name='email' placeholder='Email' type='text' />
+                                        value={email} name='email' type='text'
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        placeholder={!mutation.isSuccess ? 'Email' : 'Thank you!'}
+                                    />
                                 </label>
-
-                                {mutation.isError && (
-                                    <div className='text-red-600'>Error has occured when sending forms</div>
-                                )}
-
                                 <button type='submit' className='w-full  bg-[#8C2F00] hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline'
                                     onClick={(e) => handleSendForm(e)} disabled={mutation.isLoading}>
                                     {mutation.isLoading ?
