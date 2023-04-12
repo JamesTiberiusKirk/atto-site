@@ -135,6 +135,16 @@ export default function Home() {
                             <h1>
                                 What we do
                             </h1>
+                            <p>
+                                What we do
+
+                                Professional actors with professional directors
+
+                                On Saturdays professional actors of all ages are welcome to take part in our drop-in scene studies. Our aim is to create a truly safe space to fail, succeed, learn & work on that craft with the guidance of leading directors.
+                                Workshops will take place at Downside Fisher Youth Club, Coxson Place, Druid Street, London, SE1 2EZ. A 10 minute walk from London Bridge Station.
+
+                                Workshops help support the running of the Downside Fisher Youth Club who help socially excluded children & young people from Bermondsey & its neighbouring areas.
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -146,6 +156,17 @@ export default function Home() {
                             <h1>
                                 Testimonials
                             </h1>
+                            <p>
+                                Ayo - “I really loved the workshop because I learned something new that was very effective I will take with me for the rest of my acting career”
+
+                                Ella Dorman-Gajic - “ An engaging and informative 2 hours, learning from a highly skilled director”
+
+                                Atto Participant - “Great! Fun location and very inclusive”
+
+                                Atto Participant - “ I liked that I didn’t feel pressure or nervous in the room, the director was friendly and communicative, easy to talk to and discuss where to go with the text”
+
+                                Atto Participant - “I learnt about the importance of punctuation!”
+                            </p>
                         </div>
                     </div>
                 </div>
