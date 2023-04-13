@@ -22,8 +22,10 @@ export default async function sendContactusReceipt(contactus: ContactUs) {
                 ],
                 Subject: 'Atto contact request',
                 HTMLPart: `<h1>Dear ${contactus.name}</h1>
-<h3>Thank you for your contact request to atto!</h3><br />
-We will get back to you as soon as possible.`,
+<p>
+Thank you for your contact request to atto!<br />
+We will get back to you as soon as possible.
+</p>`,
             },
         ],
     };

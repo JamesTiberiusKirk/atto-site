@@ -5,6 +5,8 @@ import { TbChairDirector } from "react-icons/tb";
 import AttoPage from "~/components/page";
 import { api } from "~/utils/api";
 
+// TODO: Need to create confimation screen for this
+// Could standardise it by making use of regex in routes and have a route parm?
 export default function Contactus(): JSX.Element {
     const router = useRouter()
     const mutation = api.contactus.new.useMutation({

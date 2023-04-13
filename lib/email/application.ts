@@ -22,8 +22,8 @@ export default async function sendApplicationReceipt(application: Application) {
                 ],
                 Subject: 'Atto application',
                 HTMLPart: `<h1>Dear ${application.name}</h1>
-<h3>Thank you for your application to atto!</h3><br />
-Your application will be reviewed and we will shortly get in touch with you.`,
+<p>Thank you for your application to atto!<br />
+Your application will be reviewed and we will shortly get in touch with you.</p>`,
             },
         ],
     };

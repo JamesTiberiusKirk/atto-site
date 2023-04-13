@@ -1,4 +1,5 @@
 import { newApplication } from "lib/db/application";
+import { newNewsSubscription } from "lib/db/subscriptions";
 import sendApplicationReceipt from "lib/email/application";
 import type { Application } from "types/application";
 import { z } from "zod";
@@ -22,19 +23,15 @@ export const applicationRouter = createTRPCRouter({
         .mutation(async ({ input }: NewApplicationProps) => {
             console.log('inserting: ', input)
 
-            const p = await Promise.all([
-                newApplication(input),
-                sendApplicationReceipt(input)
-            ])
+            const insert = await newApplication(input)
+            console.log('Inserted application: ', insert)
 
-            const insertedID = p[0]
-            console.log('Inserted: ', insertedID)
+            const emailResponse = await sendApplicationReceipt(input)
+            console.log('Email sent', emailResponse)
 
-            const emailResponse = p[1]
-            // This wount actually validate weather the email was sent or not
-            console.log('email sent', emailResponse)
-            // emailResponse.response.status == 200 ?
-            //     console.log('Email sent: ', input.email) :
-            //     console.error('Email send error: ', input.email)
+            if (input.emailPreference) {
+                const newsSubscriptionInsertion = await newNewsSubscription(input.email)
+                console.log('Inserted news subscription', newsSubscriptionInsertion)
+            }
         }),
 });
