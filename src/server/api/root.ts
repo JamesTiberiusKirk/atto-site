@@ -1,5 +1,5 @@
 import { createTRPCRouter } from "~/server/api/trpc";
-import { contactFormsRouter } from "./routers/contactme";
+import { contactFormsRouter } from "./routers/contactus";
 import { applicationRouter } from "./routers/apply";
 import { newsLetterRouter } from "./routers/newsletter";
 
@@ -9,7 +9,7 @@ import { newsLetterRouter } from "./routers/newsletter";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-    contactMe: contactFormsRouter,
+    contactus: contactFormsRouter,
     apply: applicationRouter,
     newsLetter: newsLetterRouter,
 });

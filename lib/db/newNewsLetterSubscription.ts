@@ -10,7 +10,7 @@ export async function newNewsSubscription(email: string) {
         const collection = db.collection(process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION)
         const res = await collection.insertOne({ email })
 
-        return res.insertedId
+        return res
     } catch (e) {
         console.error(e)
     }

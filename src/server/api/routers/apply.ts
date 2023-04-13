@@ -32,7 +32,7 @@ export const applicationRouter = createTRPCRouter({
 
             const emailResponse = p[1]
             // This wount actually validate weather the email was sent or not
-            console.log(emailResponse)
+            console.log('email sent', emailResponse)
             // emailResponse.response.status == 200 ?
             //     console.log('Email sent: ', input.email) :
             //     console.error('Email send error: ', input.email)

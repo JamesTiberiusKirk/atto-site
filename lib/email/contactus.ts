@@ -1,8 +1,8 @@
 import { Client } from 'node-mailjet';
 import type { SendEmailV3_1, LibraryResponse } from 'node-mailjet';
-import type { Application } from 'types/application';
+import { ContactUs } from '~/server/api/routers/contactus';
 
-export default async function sendApplicationReceipt(application: Application) {
+export default async function sendContactusReceipt(contactme: ContactUs) {
     const mailjet = new Client({
         apiKey: process.env.MJ_APIKEY_PUBLIC,
         apiSecret: process.env.MJ_APIKEY_PRIVATE
@@ -17,13 +17,13 @@ export default async function sendApplicationReceipt(application: Application) {
                 },
                 To: [
                     {
-                        Email: application.email,
+                        Email: contactme.email,
                     },
                 ],
-                Subject: 'Atto application',
-                HTMLPart: `<h1>Dear ${application.name}</h1>
-<h3>Thank you for your application to atto!</h3><br />
-Your application will be reviewed and we will shortly get in touch with you.`,
+                Subject: 'Atto contact request',
+                HTMLPart: `<h1>Dear ${contactme.name}</h1>
+<h3>Thank you for your contact request to atto!</h3><br />
+We will get back to you as soon as possible.`,
             },
         ],
     };
@@ -31,7 +31,6 @@ Your application will be reviewed and we will shortly get in touch with you.`,
     const result: LibraryResponse<SendEmailV3_1.Response> = await mailjet
         .post('send', { version: 'v3.1' })
         .request(data);
-
 
     return result.body.Messages[0];
 }
