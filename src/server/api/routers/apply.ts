@@ -1,6 +1,6 @@
 import { newApplication } from "lib/db/application";
 import sendApplicationReceipt from "lib/email/application";
-import { Application } from "types/application";
+import type { Application } from "types/application";
 import { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";

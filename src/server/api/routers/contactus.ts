@@ -11,7 +11,7 @@ export type ContactUs = {
     message: string
 }
 
-type NewContactMeProps = {
+type NewcontactusProps = {
     input: ContactUs
 }
 
@@ -23,7 +23,7 @@ export const contactFormsRouter = createTRPCRouter({
             pronouns: z.string(),
             message: z.string(),
         }))
-        .mutation(async ({ input }: NewContactMeProps) => {
+        .mutation(async ({ input }: NewcontactusProps) => {
             console.log('new contact me form', input)
             const dbInsertionResult = await newContactus(input)
             console.log('db insertion result', dbInsertionResult)

@@ -43,7 +43,7 @@ function Menu() {
                             className='grid-cols-1  p-2 mr-4 '>
                             Testimonials
                         </a>
-                        <Link href={'/contactme'} className='grid-cols-1  p-2 mr-4 '>
+                        <Link href={'/contactus'} className='grid-cols-1  p-2 mr-4 '>
                             Contact us
                         </Link>
                     </nav>

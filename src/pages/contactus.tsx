@@ -5,14 +5,13 @@ import { TbChairDirector } from "react-icons/tb";
 import AttoPage from "~/components/page";
 import { api } from "~/utils/api";
 
-export default function ContactMe(): JSX.Element {
+export default function Contactus(): JSX.Element {
     const router = useRouter()
     const mutation = api.contactus.new.useMutation({
         onMutate: () => {
             void router.push('/confirmation')
         }
     })
-
 
     const [name, setName] = useState('')
     const [pronouns, setPronouns] = useState('')
