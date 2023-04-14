@@ -8,7 +8,7 @@ export async function newNewsSubscription(email: string) {
     try {
         console.log('inserting into collection', process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION)
         const collection = db.collection(process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION)
-        const res = await collection.insertOne({ email })
+        const res = await collection.updateOne({ email }, { $set: { email } }, { upsert: true })
 
         return res
     } catch (e) {
