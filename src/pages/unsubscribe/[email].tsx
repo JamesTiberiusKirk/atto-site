@@ -1,9 +1,9 @@
-import Image from 'next/image'
+import Image from 'next/image';
 import Link from 'next/link';
-import AttoPage from "~/components/page";
-import { useRouter } from 'next/router'
-import { api } from '~/utils/api';
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
+import AttoPage from "~/components/page";
+import { api } from '~/utils/api';
 
 export default function Unsubscribe() {
     const router = useRouter()
@@ -12,7 +12,7 @@ export default function Unsubscribe() {
 
     useEffect(() => {
         if (email && typeof email === 'string') mutation.mutate(email)
-    }, [email])
+    }, [mutation, email])
 
     return (
         <AttoPage>
