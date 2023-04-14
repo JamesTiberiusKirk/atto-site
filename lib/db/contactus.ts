@@ -7,7 +7,7 @@ export async function newContactus(contactus: ContactUs) {
     if (!process.env.MONGO_DB_CONTACTS_COLLECTION || !db) return
 
     try {
-        console.log('inserting into collection', process.env.MONGO_DB_CONTACTS_COLLECTION)
+        console.log('Inserting into collection', process.env.MONGO_DB_CONTACTS_COLLECTION)
         const collection = db.collection(process.env.MONGO_DB_CONTACTS_COLLECTION)
         const res = await collection.insertOne(contactus)
 

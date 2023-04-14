@@ -6,7 +6,7 @@ export async function newNewsSubscription(email: string) {
     if (!process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION || !db) return
 
     try {
-        console.log('inserting into collection', process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION)
+        console.log('Upserting into collection', process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION)
         const collection = db.collection(process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION)
         const res = await collection.updateOne({ email }, { $set: { email } }, { upsert: true })
 
@@ -22,7 +22,7 @@ export async function removeNewsSubscription(email: string) {
     if (!process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION || !db) return
 
     try {
-        console.log('removing from collection', process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION)
+        console.log('Removing from collection', process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION)
         const collection = db.collection(process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION)
         const res = await collection.findOneAndDelete({ email })
 

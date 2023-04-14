@@ -7,7 +7,7 @@ export async function newApplication(application: Application) {
     if (!process.env.MONGO_DB_APPLICATION_COLLECTION || !db) return
 
     try {
-        console.log('inserting into collection', process.env.MONGO_DB_APPLICATION_COLLECTION)
+        console.log('Inserting into collection', process.env.MONGO_DB_APPLICATION_COLLECTION)
         const collection = db.collection(process.env.MONGO_DB_APPLICATION_COLLECTION)
         const res = await collection.insertOne(application)
 
