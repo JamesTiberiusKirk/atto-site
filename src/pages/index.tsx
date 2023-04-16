@@ -1,30 +1,26 @@
 import Image from 'next/image'
 import Link from 'next/link';
 import AttoPage from '~/components/page';
-import { GoKebabVertical } from 'react-icons/go'
+import { RxHamburgerMenu } from 'react-icons/rx'
 import { useEffect, useState } from 'react';
 import { api } from '~/utils/api';
 
 function Menu() {
     const [menuVisible, setMenuVisible] = useState(false)
 
-    useEffect(() => {
-        console.log(menuVisible)
-    }, [menuVisible])
-
     return (
         <>
-            <div className='z-30 top-16 right-16  fixed '>
-                <GoKebabVertical
+            <div className='z-30 top-10 right-10 fixed bg-[#f0631c] p-4 rounded-lg'>
+                <RxHamburgerMenu
                     onClick={() => setMenuVisible(!menuVisible)}
-                    className={'text-[#8C2F00] hover:scale-110 h-20 w-20 transform transition duration-100 ' + (menuVisible ? 'rotate-90 ' : '')} />
+                    className={'text-white hover:scale-110 h-8 w-8 transform transition duration-100 ' + (menuVisible ? 'rotate-90 ' : '')} />
             </div>
             <div
                 className={`${menuVisible ? 'translate-x-0' : 'translate-x-full'
                     } transform fixed z-30 top-36 right-6 h-full w-64 p-4 transition-transform duration-500`}
             >
                 {menuVisible && (
-                    <nav className='bg-[#e95c20] rounded-lg shadow-lg grid text-white text-2xl z-40'>
+                    <nav className='bg-[#f0631c] rounded-lg shadow-lg grid text-white text-2xl z-40'>
                         <Link href={'/apply'} className='grid-cols-1  p-2 mr-4 '>
                             Apply
                         </Link>
@@ -60,9 +56,6 @@ export default function Home() {
         },
     })
     const [email, setEmail] = useState('')
-    useEffect(() => {
-        console.log('isSuccess:', mutation.isSuccess)
-    }, [email, mutation.isSuccess])
 
     function handleSendForm(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
@@ -116,12 +109,13 @@ export default function Home() {
                                         <Image
                                             className='mx-auto'
                                             alt='DFYC logo'
-                                            src='/dfyc_logo.jpg'
+                                            src='/dfyc_logo_small.jpg'
                                             width={472}
                                             height={508}
                                             style={{
                                                 width: '50%',
                                             }}
+                                            priority
                                         />
                                     </div>
                                 </div>
@@ -135,6 +129,7 @@ export default function Home() {
                                 width={1890 / 3}
                                 height={1417 / 3}
                                 src='/logo_with_name.png'
+                                priority
                             />
                         </div>
                     </div>
@@ -153,9 +148,14 @@ export default function Home() {
                 </div>
             </div >
             <div id='what-we-do'>
-                <div className='min-h-screen w-full grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 bg-[#FF955F]'>
-                    <div className='p-10 container flex flex-col text-[#8C2F00]'>
-                        <div className='h-full ltr '>
+                <div className='min-h-screen w-full bg-[#FF955F] '>
+                    <div className='p-10 items-center flex flex-row text-[#8C2F00] bellow-md:flex-col over-lg:max-w-3xl '>
+                        <div
+                            className='h-full ltr '
+                            style={{
+                                width: '100%',
+                            }}
+                        >
                             <h1 className='text-3xl'>
                                 What we do
                             </h1>
@@ -172,13 +172,31 @@ export default function Home() {
                                 Workshops help support the running of the Downside Fisher Youth Club who help socially excluded children & young people from Bermondsey & its neighbouring areas.
                             </p>
                         </div>
+                        <div
+                            className=' border-solid  '
+                        >
+                            <Image
+                                src='/workshop/dev_4.png'
+                                alt='Workshop picture'
+                                width={502}
+                                height={756}
+                                // style={{
+                                //     objectFit: 'none',
+                                // }}
+                                className='rounded-lg'
+
+                            //2005 × 3024
+                            />
+
+
+                        </div>
                     </div>
                 </div>
             </div >
             <div id='testimonials'>
-                <div className='min-h-screen w-full grid grid-cols-1  bg-white'>
+                <div className='min-h-screen w-full grid grid-cols-1 bg-white'>
                     <div className='p-10 text-[#8C2F00] '>
-                        <div className='h-full ltr '>
+                        <div className='h-full '>
                             <h1 className='text-3xl text-center'>
                                 Testimonials
                             </h1>
@@ -209,7 +227,7 @@ export default function Home() {
             </div >
             <div id='news-letter' className='h-96 w-full bg-[#FF955F]'>
                 <div className='p-10 text-[#8C2F00]'>
-                    <div className='h-full ltr items-center flex flex-col'>
+                    <div className='h-full items-center flex flex-col'>
                         <h1 className='text-3xl text-center'>
                             Subscribe to our news letter
                         </h1>
