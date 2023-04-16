@@ -236,23 +236,14 @@ export default function Home() {
                                     </p>
                                     <div className='py-5'>
                                         “Great! Fun location and very inclusive”
-                                        <p className='text-right'>
-                                            - Atto Participant
-                                        </p>
                                     </div>
 
                                     <div className='py-5'>
                                         “I liked that I didn’t feel pressure or nervous in the room, the director was friendly and communicative, easy to talk to and discuss where to go with the text”
-                                        <p className='text-right'>
-                                            - Atto Participant
-                                        </p>
                                     </div>
 
                                     <div className='py-5'>
                                         “I learnt about the importance of punctuation!”
-                                        <p className='text-right'>
-                                            - Atto Participant
-                                        </p>
                                     </div>
                                 </div>
                             </div>
