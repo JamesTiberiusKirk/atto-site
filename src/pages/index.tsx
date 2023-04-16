@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import { AiOutlineInstagram, AiOutlineTwitter } from 'react-icons/ai';
 import AttoPage from '~/components/page';
 import { api } from '~/utils/api';
 
@@ -10,10 +11,17 @@ function Menu() {
 
     return (
         <>
-            <div className='z-30 top-10 right-10 fixed bg-[#f0631c] p-4 rounded-lg'>
+            <div className='z-30 top-10 right-10 fixed bg-[#f0631c] p-4 rounded-lg flex flex-row'>
+                <AiOutlineTwitter
+                    className='pr-2 text-white hover:scale-110 h-8 w-8 transform transition duration-100 '
+                />
+                <AiOutlineInstagram
+                    className='pr-2 text-white hover:scale-110 h-8 w-8 transform transition duration-100 '
+                />
                 <RxHamburgerMenu
                     onClick={() => setMenuVisible(!menuVisible)}
-                    className={'text-white hover:scale-110 h-8 w-8 transform transition duration-100 ' + (menuVisible ? 'rotate-90 ' : '')} />
+                    className={'text-white hover:scale-110 h-8 w-8 transform transition duration-100 ' + (menuVisible ? 'rotate-90 ' : '')}
+                />
             </div>
             <div
                 className={`${menuVisible ? 'translate-x-0' : 'translate-x-full'
@@ -105,9 +113,9 @@ export default function Home() {
                                 <div className='over-xl:absolute bottom-16 left-16 over-xl:left-52 '>
                                     atto supports
                                     <div
-                                        className='max-w-sm mx-auto '>
+                                        className='max-w-sm mx-auto'>
                                         <Image
-                                            className='mx-auto '
+                                            className='mx-auto  '
                                             alt='DFYC logo'
                                             src='/dfyc_logo_small.jpg'
                                             width={472}
