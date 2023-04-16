@@ -1,8 +1,8 @@
-import Image from 'next/image'
+import Image from 'next/image';
 import Link from 'next/link';
+import { useState } from 'react';
+import { RxHamburgerMenu } from 'react-icons/rx';
 import AttoPage from '~/components/page';
-import { RxHamburgerMenu } from 'react-icons/rx'
-import { useEffect, useState } from 'react';
 import { api } from '~/utils/api';
 
 function Menu() {
@@ -101,13 +101,13 @@ export default function Home() {
                                     href={'/apply'}>Apply</Link>
                             </div>
                             <div className='h-5' />
-                            <div className='bellow-xl:pt-5 bellow-xl:w-full bellow-xl:object-center ' >
+                            <div className='bellow-xl:pt-5 bellow-xl:w-full bellow-xl:object-center bellow-nd:order-4 ' >
                                 <div className='over-xl:absolute bottom-16 left-16 over-xl:left-52 '>
                                     atto supports
                                     <div
-                                        className='max-w-sm mx-auto'>
+                                        className='max-w-sm mx-auto '>
                                         <Image
-                                            className='mx-auto'
+                                            className='mx-auto '
                                             alt='DFYC logo'
                                             src='/dfyc_logo_small.jpg'
                                             width={472}
@@ -124,7 +124,7 @@ export default function Home() {
 
                         <div className='place-content-center w-full over-xl:py-16'>
                             <Image
-                                className='object-center mx-auto'
+                                className='object-center mx-auto '
                                 alt='Atto logo'
                                 width={1890 / 3}
                                 height={1417 / 3}
@@ -148,78 +148,113 @@ export default function Home() {
                 </div>
             </div >
             <div id='what-we-do'>
-                <div className='min-h-screen w-full bg-[#FF955F] '>
-                    <div className='p-10 items-center flex flex-row text-[#8C2F00] bellow-md:flex-col over-lg:max-w-3xl '>
-                        <div
-                            className='h-full ltr '
-                            style={{
-                                width: '100%',
-                            }}
-                        >
-                            <h1 className='text-3xl'>
+                <div className='min-h-screen w-full bg-[#FF955F] text-[#8C2F00]'>
+                    <div className='p-10 '>
+                        <div className='my-auto'>
+                            <h1 className='text-center text-3xl pb-5'>
                                 What we do
                             </h1>
-                            <p className='py-2'>
-                                Professional actors with professional directors
-                            </p>
-                            <p className='py-2'>
-                                On Saturdays professional actors of all ages are welcome to take part in our drop-in scene studies. Our aim is to create a truly safe space to fail, succeed, learn & work on that craft with the guidance of leading directors.
-                            </p>
-                            <p className='py-2'>
-                                Workshops will take place at Downside Fisher Youth Club, Coxson Place, Druid Street, London, SE1 2EZ. A 10 minute walk from London Bridge Station.
-                            </p>
-                            <p className='py-2'>
-                                Workshops help support the running of the Downside Fisher Youth Club who help socially excluded children & young people from Bermondsey & its neighbouring areas.
-                            </p>
-                        </div>
-                        <div
-                            className=' border-solid  '
-                        >
-                            <Image
-                                src='/workshop/dev_4.png'
-                                alt='Workshop picture'
-                                width={502}
-                                height={756}
-                                // style={{
-                                //     objectFit: 'none',
-                                // }}
-                                className='rounded-lg'
-
-                            //2005 × 3024
-                            />
-
-
+                            <div className='bg-white rounded-lg mx-auto flex flex-row bellow-md:flex-col over-lg:max-w-5xl text-xl '>
+                                <div
+                                    className='w-full p-5 over-md:pr-10'
+                                >
+                                    <p className='py-2'>
+                                        Professional actors with professional directors
+                                    </p>
+                                    <p className='py-2'>
+                                        On Saturdays professional actors of all ages are welcome to take part in our drop-in scene studies. Our aim is to create a truly safe space to fail, succeed, learn & work on that craft with the guidance of leading directors.
+                                    </p>
+                                    <p className='py-2'>
+                                        Workshops will take place at Downside Fisher Youth Club, Coxson Place, Druid Street, London, SE1 2EZ. A 10 minute walk from London Bridge Station.
+                                    </p>
+                                    <p className='py-2'>
+                                        Workshops help support the running of the Downside Fisher Youth Club who help socially excluded children & young people from Bermondsey & its neighbouring areas.
+                                    </p>
+                                </div>
+                                <div>
+                                    <Image
+                                        src='/workshop/dev_4.png'
+                                        alt='Workshop picture'
+                                        width={502}
+                                        height={756}
+                                        className='over-md:rounded-r bellow-md:rounded-b'
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div >
             <div id='testimonials'>
-                <div className='min-h-screen w-full grid grid-cols-1 bg-white'>
-                    <div className='p-10 text-[#8C2F00] '>
-                        <div className='h-full '>
-                            <h1 className='text-3xl text-center'>
+                <div className='min-h-screen w-full bg-white text-[#8C2F00] '>
+                    <div className='p-10 '>
+                        <div className='h-full'>
+                            <h1 className='text-3xl text-center mb-10'>
                                 Testimonials
                             </h1>
-                            <div className='max-w-screen-sm'>
-                                <p className='py-2'>
-                                    Ayo - “I really loved the workshop because I learned something new that was very effective I will take with me for the rest of my acting career”
-                                </p>
+                            <div className='over-lg:max-w-5xl mx-auto rounded-lg p-5 bg-[#FF955F] text-white text-xl mb-20'>
+                                <div className='flex above-md:flex-row bellow-md:flex-col'>
+                                    <Image
+                                        alt='Ayo'
+                                        src='/workshop/ayo_small.png'
+                                        width={816}
+                                        height={642}
+                                        className='rounded-lg'
+                                    />
+                                    <div className='p-5 items-center justify-center my-auto'>
+                                        “I really loved the workshop because I learned something new that was very effective I will take with me for the rest of my acting career”
+                                        <p className='text-right'>
+                                            - Ayo
+                                        </p>
+                                    </div>
+                                </div>
 
-                                <p className='py-2'>
-                                    Ella Dorman-Gajic - “ An engaging and informative 2 hours, learning from a highly skilled director”
-                                </p>
+                                <div className='flex above-md:flex-row bellow-md:flex-col '>
+                                    <div className='p-5 items-center justify-center my-auto'>
+                                        “An engaging and informative 2 hours, learning from a highly skilled director”
+                                        <div className='text-right'>
+                                            - Ella Dorman-Gajic
+                                        </div>
+                                    </div>
+                                    <Image
+                                        alt='Ayo'
+                                        src='/workshop/ella_small.png'
+                                        width={816}
+                                        height={642}
+                                        className='rounded-lg bellow-md:order-first'
+                                    />
+                                </div>
+                            </div>
+                        </div>
 
-                                <p className='py-2'>
-                                    Atto Participant - “Great! Fun location and very inclusive”
-                                </p>
 
-                                <p className='py-2'>
-                                    Atto Participant - “ I liked that I didn’t feel pressure or nervous in the room, the director was friendly and communicative, easy to talk to and discuss where to go with the text”
-                                </p>
+                        <div className='over-lg:max-w-5xl mx-auto rounded-lg p-5 bg-[#FF955F] text-white text-xl'>
+                            <div className='flex flex-row '>
+                                <div className='py-10 max-w-lg mx-auto '>
+                                    <p className='py-5 text-3xl text-center'>
+                                        Other participants
+                                    </p>
+                                    <div className='py-5'>
+                                        “Great! Fun location and very inclusive”
+                                        <p className='text-right'>
+                                            - Atto Participant
+                                        </p>
+                                    </div>
 
-                                <p className='py-2'>
-                                    Atto Participant - “I learnt about the importance of punctuation!”
-                                </p>
+                                    <div className='py-5'>
+                                        “I liked that I didn’t feel pressure or nervous in the room, the director was friendly and communicative, easy to talk to and discuss where to go with the text”
+                                        <p className='text-right'>
+                                            - Atto Participant
+                                        </p>
+                                    </div>
+
+                                    <div className='py-5'>
+                                        “I learnt about the importance of punctuation!”
+                                        <p className='text-right'>
+                                            - Atto Participant
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
