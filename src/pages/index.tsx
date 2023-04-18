@@ -6,6 +6,11 @@ import { AiOutlineInstagram, AiOutlineTwitter } from 'react-icons/ai';
 import AttoPage from '~/components/page';
 import { api } from '~/utils/api';
 
+import attoLogo from '/public/logo_with_name.png'
+import dfycLogo from '/public/dfyc_logo_small.jpg'
+import workshopBannerImage from '/public/workshop/dvelped_nice_pic_scaled.png'
+import whatWeDoImage from '/public/workshop/dev_4.png'
+
 function Menu() {
     const [menuVisible, setMenuVisible] = useState(false)
 
@@ -87,7 +92,7 @@ export default function Home() {
                     <div className='relative over-sm:h-64 bellow-sm:h-52 w-full top-0 bg-gray-500 '>
                         <div className='blur-sm h-full w-full'>
                             <Image
-                                src='/workshop/dvelped_nice_pic_scaled.png'
+                                src={workshopBannerImage}
                                 alt='Picture of workshop'
                                 style={{ objectFit: 'cover' }}
                                 priority
@@ -117,9 +122,7 @@ export default function Home() {
                                         <Image
                                             className='mx-auto  '
                                             alt='DFYC logo'
-                                            src='/dfyc_logo_small.jpg'
-                                            width={472}
-                                            height={508}
+                                            src={dfycLogo}
                                             style={{
                                                 width: '50%',
                                             }}
@@ -132,11 +135,9 @@ export default function Home() {
 
                         <div className='place-content-center w-full over-xl:py-16'>
                             <Image
-                                className='object-center mx-auto '
+                                className='mx-auto bellow-xl:w-1/2 over-xl:w-full'
                                 alt='Atto logo'
-                                width={1890 / 3}
-                                height={1417 / 3}
-                                src='/logo_with_name.png'
+                                src={attoLogo}
                                 priority
                             />
                         </div>
@@ -162,7 +163,7 @@ export default function Home() {
                             <h1 className='text-center text-3xl pb-5'>
                                 What we do
                             </h1>
-                            <div className='bg-white rounded-lg mx-auto flex flex-row bellow-md:flex-col over-lg:max-w-5xl text-xl '>
+                            <div className='bg-white rounded-lg mx-auto flex flex-row bellow-lg:flex-col over-lg:max-w-5xl text-xl '>
                                 <div
                                     className='w-full p-5 over-md:pr-10'
                                 >
@@ -179,13 +180,14 @@ export default function Home() {
                                         Workshops help support the running of the Downside Fisher Youth Club who help socially excluded children & young people from Bermondsey & its neighbouring areas.
                                     </p>
                                 </div>
-                                <div>
+                                <div
+                                    className='w-full'
+                                >
                                     <Image
-                                        src='/workshop/dev_4.png'
+                                        src={whatWeDoImage}
                                         alt='Workshop picture'
-                                        width={502}
-                                        height={756}
-                                        className='over-md:rounded-r bellow-md:rounded-b'
+                                        className='h-full w-full over-lg:rounded-r bellow-lg:rounded-b'
+                                        style={{ objectFit: 'cover' }}
                                     />
                                 </div>
                             </div>
@@ -202,13 +204,15 @@ export default function Home() {
                             </h1>
                             <div className='over-lg:max-w-5xl mx-auto rounded-lg p-5 bg-[#FF955F] text-white text-xl mb-20'>
                                 <div className='flex above-md:flex-row bellow-md:flex-col'>
-                                    <Image
-                                        alt='Ayo'
-                                        src='/workshop/ayo_small.png'
-                                        width={816}
-                                        height={642}
-                                        className='rounded-lg'
-                                    />
+                                    <div className='p-2'>
+                                        <Image
+                                            alt='Ayo'
+                                            src='/workshop/ayo_small.png'
+                                            width={816}
+                                            height={642}
+                                            className='rounded-lg'
+                                        />
+                                    </div>
                                     <div className='p-5 items-center justify-center my-auto'>
                                         “I really loved the workshop because I learned something new that was very effective I will take with me for the rest of my acting career”
                                         <p className='text-right'>
@@ -224,13 +228,15 @@ export default function Home() {
                                             - Ella Dorman-Gajic
                                         </div>
                                     </div>
-                                    <Image
-                                        alt='Ayo'
-                                        src='/workshop/ella_small.png'
-                                        width={816}
-                                        height={642}
-                                        className='rounded-lg bellow-md:order-first'
-                                    />
+                                    <div className='p-2 bellow-md:order-first'>
+                                        <Image
+                                            alt='Ayo'
+                                            src='/workshop/ella_small.png'
+                                            width={892}
+                                            height={664}
+                                            className='rounded-lg '
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -259,14 +265,14 @@ export default function Home() {
                     </div>
                 </div>
             </div >
-            <div id='news-letter' className='h-96 w-full bg-[#FF955F]'>
+            <div id='news-letter' className=' w-full bg-[#FF955F]'>
                 <div className='p-10 text-[#8C2F00]'>
                     <div className='h-full items-center flex flex-col'>
                         <h1 className='text-3xl text-center'>
                             Subscribe to our news letter
                         </h1>
 
-                        <div className='max-w-xl w-full'>
+                        <div className='max-w-xl w-full pb-2'>
                             <form className='mt-5 '>
                                 <label className='pt-2 block text-gray-700 text-sm font-bold mb-2'>
                                     {mutation.isError && isFieldWrong('email') && (
