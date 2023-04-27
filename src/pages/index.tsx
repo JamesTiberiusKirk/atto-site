@@ -90,7 +90,7 @@ export default function Home() {
             <div id='home' >
                 <div className='min-h-screen  w-full bg-[#FF955F] bellow-xl:text-center bellow-xl:object-center' >
                     <div className='relative over-sm:h-64 bellow-sm:h-52 w-full top-0 bg-gray-500 '>
-                        <div className='blur-sm h-full w-full'>
+                        <div className='h-full w-full'>
                             <Image
                                 src={workshopBannerImage}
                                 alt='Picture of workshop'
@@ -115,7 +115,7 @@ export default function Home() {
                             </div>
                             <div className='h-5' />
                             <div className='bellow-xl:pt-5 bellow-xl:w-full bellow-xl:object-center bellow-nd:order-4 ' >
-                                <div className='over-xl:absolute bottom-16 left-16 over-xl:left-52 '>
+                                <div className='text-xl over-xl:absolute bottom-16 left-16 over-xl:left-52 '>
                                     atto supports
                                     <div
                                         className='max-w-sm mx-auto'>
@@ -135,7 +135,7 @@ export default function Home() {
 
                         <div className='place-content-center w-full over-xl:py-16'>
                             <Image
-                                className='mx-auto bellow-xl:w-1/2 over-xl:w-full'
+                                className='mx-auto bellow-xl:w-full bellow-xl:h-full over-xl:w-full'
                                 alt='Atto logo'
                                 src={attoLogo}
                                 priority
@@ -146,7 +146,7 @@ export default function Home() {
             </div >
             <div id='workshops'>
                 <div className='min-h-screen w-full grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-8 bg-white'>
-                    <div className='p-10 container flex flex-col  text-[#8C2F00] text-3xl'>
+                    <div className='p-10 container flex flex-col  text-t[#8C2F00] text-3xl'>
                         <div className='h-full ltr '>
                             <h1>
                                 Workshops
