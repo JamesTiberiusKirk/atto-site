@@ -90,3 +90,32 @@ dev 13
 DSC06414 copy 
 
 
+# Feedback round 1 
+
+## Opening page
+- [x]Lets try it with the atto logo being bigger 
+- [x]the downside logo needs to be central below the text “atto supports” 
+- [x]“atto supports and the downside logo can be smaller
+- [x]is there a way you can have the “apply” button transform when hovered over in some way. Movement and colour would be the best.
+- [x]Can the “apply” button be slightly bigger
+    - **NOTES:** Have made it bigger and could make it even bigger, but it was looking a bit odd to me when testing.
+- [x]Can the picture at the top be unblured 
+    - **QUESTION:** Are you happy with the quality of the picture?
+
+## What we do
+- [x]"Professional actors with professional directors” can this be in a different colour and bigger, this is the header of the text.
+    - **NOTES:** made the font bigger but also made sure not to make it bigger than the actual page title itself
+- [ ]can you centre the text swell so there not a gap at the bottom of the box
+- [ ]can we swap in the photo for this one <!-- TODO: Find the photo which is on the email -->
+- [ ]Also this is where I would like to put the video in the future. So on top of this image need a play button that links to youtube video but this can be done later not urgent. 
+    - **NOTE:** Not sure how well this would work as this picture is a portrait and the vid I'm assuming would be landscape
+- [x]can you put an apply button at the bottom of the text as well 
+
+## Other participants 
+- [x]Can you put the text to the left of the box and have a slideshow of the other pics I sent on the right handside of the box. 
+- [ ]can you put an apply button at the bottom of this as well
+
+## Footer
+- [x]Can we have twitter and insta link in the footer and the email address: info@attoworkshops.com
+- [x]https://twitter.com/attoworkshops
+- [x]https://instagram.com/attoworkshops?igshid=Mzc1MmZhNjY=

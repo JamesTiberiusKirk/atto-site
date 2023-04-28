@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { AiOutlineInstagram, AiOutlineTwitter } from 'react-icons/ai';
+import { AiOutlineInstagram, AiOutlineTwitter, AiOutlineMail } from 'react-icons/ai';
 import { Carousel } from 'react-responsive-carousel';
 
 import AttoPage from '~/components/page';
@@ -12,7 +12,6 @@ import attoLogo from '/public/logo_with_name.png'
 import dfycLogo from '/public/dfyc_logo_small.jpg'
 import workshopBannerImage from '/public/workshop/dvelped_nice_pic_scaled.png'
 import whatWeDoImage from '/public/workshop/dev_4.png'
-import carouselStyles from '~/styles/carousel.module.css'
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
@@ -153,7 +152,7 @@ export default function Home() {
                                 </h1>
                                 <div className='h-5' />
                                 <Link
-                                    className='px-5 py-3 bg-[#8C2F00] text-gray-100 font-bold rounded-full'
+                                    className='text-4xl px-5 py-3 bg-[#8C2F00] text-gray-100 font-bold rounded-full hover:bg-[#e64d00]'
                                     href={'/apply'}>Apply</Link>
                             </div>
                         </div>
@@ -211,25 +210,31 @@ export default function Home() {
                                 What we do
                             </h1>
                             <div className='bg-white rounded-lg mx-auto flex flex-row bellow-lg:flex-col over-lg:max-w-5xl text-xl '>
-                                <div
-                                    className='w-full p-5 over-md:pr-10'
-                                >
-                                    <p className='py-2'>
+                                <div className='flex flex-col w-full p-5 over-md:pr-10'>
+                                    <p className='py-2 text-2xl'>
                                         Professional actors with professional directors
                                     </p>
-                                    <p className='py-2'>
-                                        On Saturdays professional actors of all ages are welcome to take part in our drop-in scene studies. Our aim is to create a truly safe space to fail, succeed, learn & work on that craft with the guidance of leading directors.
-                                    </p>
-                                    <p className='py-2'>
-                                        Workshops will take place at Downside Fisher Youth Club, Coxson Place, Druid Street, London, SE1 2EZ. A 10 minute walk from London Bridge Station.
-                                    </p>
-                                    <p className='py-2'>
-                                        Workshops help support the running of the Downside Fisher Youth Club who help socially excluded children & young people from Bermondsey & its neighbouring areas.
-                                    </p>
+                                    <div className='h-full '>
+                                        <div
+                                            className='inline-block align-baseline '>
+                                            <div>
+                                                <p className='py-2'>
+                                                    On Saturdays professional actors of all ages are welcome to take part in our drop-in scene studies. Our aim is to create a truly safe space to fail, succeed, learn & work on that craft with the guidance of leading directors.
+                                                </p>
+                                                <p className='py-2'>
+                                                    Workshops will take place at Downside Fisher Youth Club, Coxson Place, Druid Street, London, SE1 2EZ. A 10 minute walk from London Bridge Station.
+                                                </p>
+                                                <p className='py-2'>
+                                                    Workshops help support the running of the Downside Fisher Youth Club who help socially excluded children & young people from Bermondsey & its neighbouring areas.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <Link
+                                        className='text-center align-bottom px-4 py-2 bg-[#8C2F00] text-gray-100 font-bold rounded-full hover:bg-[#e64d00]'
+                                        href={'/apply'}>Apply</Link>
                                 </div>
-                                <div
-                                    className='w-full'
-                                >
+                                <div className='w-full'>
                                     <Image
                                         src={whatWeDoImage}
                                         alt='Workshop picture'
@@ -307,6 +312,10 @@ export default function Home() {
                                         <div className='py-5'>
                                             “I learnt about the importance of punctuation!”
                                         </div>
+
+                                        <Link
+                                            className='text-center align-bottom px-4 py-2 bg-[#8C2F00] text-gray-100 font-bold rounded-full hover:bg-[#e64d00]'
+                                            href={'/apply'}>Apply</Link>
                                     </div>
                                     <div
                                         className='mx-auto'
@@ -329,6 +338,7 @@ export default function Home() {
                                             ))}
                                         </Carousel>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -348,6 +358,14 @@ export default function Home() {
                                 <AiOutlineInstagram
                                     className='pr-2 hover:scale-110 h-10 w-10 transform transition duration-100'
                                 />
+                            </a>
+                            <a target='_blank' href='mailto://info@attoworkshops.com' className='flex flex-row'>
+                                <AiOutlineMail
+                                    className='pr-2 hover:scale-110 h-10 w-10 transform transition duration-100'
+                                />
+                                <p className='pt-2'>
+                                    info@attoworkshops.com
+                                </p>
                             </a>
                         </div>
                         <h1 className='text-3xl text-center'>
