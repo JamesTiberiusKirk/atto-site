@@ -4,23 +4,21 @@ import { useState } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { AiOutlineInstagram, AiOutlineTwitter, AiOutlineMail } from 'react-icons/ai';
 import { Carousel } from 'react-responsive-carousel';
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 import AttoPage from '~/components/page';
 import { api } from '~/utils/api';
 
 import attoLogo from '/public/logo_with_name.png'
 import dfycLogo from '/public/dfyc_logo_small.jpg'
-import workshopBannerImage from '/public/workshop/dvelped_nice_pic_scaled.png'
-import whatWeDoImage from '/public/workshop/dev_4.png'
-
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-
-import caruselImage1 from '/public/workshop/DSC06413.png'
-import caruselImage2 from '/public/workshop/DSC06435.png'
-import caruselImage3 from '/public/workshop/DSC06437.png'
-import caruselImage4 from '/public/workshop/DSC06451.png'
-import caruselImage5 from '/public/workshop/dev_9.png'
-import caruselImage6 from '/public/workshop/dev_13.png'
+import workshopBannerImage from '/public/small/workshop/dvelped_nice_pic_scaled.png'
+import whatWeDoImage from '/public/webp/workshop/dev_4.webp'
+import caruselImage1 from '/public/webp/workshop/DSC06413.webp'
+import caruselImage2 from '/public/webp/workshop/DSC06435.webp'
+import caruselImage3 from '/public/webp/workshop/DSC06437.webp'
+import caruselImage4 from '/public/webp/workshop/DSC06451.webp'
+import caruselImage5 from '/public/webp/workshop/dev_9.webp'
+import caruselImage6 from '/public/webp/workshop/dev_13.webp'
 
 const caruselData = [
     {
