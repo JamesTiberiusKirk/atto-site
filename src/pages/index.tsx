@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { AiOutlineInstagram, AiOutlineTwitter } from 'react-icons/ai';
+import { Carousel } from 'react-responsive-carousel';
+
 import AttoPage from '~/components/page';
 import { api } from '~/utils/api';
 
@@ -10,6 +12,43 @@ import attoLogo from '/public/logo_with_name.png'
 import dfycLogo from '/public/dfyc_logo_small.jpg'
 import workshopBannerImage from '/public/workshop/dvelped_nice_pic_scaled.png'
 import whatWeDoImage from '/public/workshop/dev_4.png'
+import carouselStyles from '~/styles/carousel.module.css'
+
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+
+import caruselImage1 from '/public/workshop/DSC06413.png'
+import caruselImage2 from '/public/workshop/DSC06435.png'
+import caruselImage3 from '/public/workshop/DSC06437.png'
+import caruselImage4 from '/public/workshop/DSC06451.png'
+import caruselImage5 from '/public/workshop/dev_9.png'
+import caruselImage6 from '/public/workshop/dev_13.png'
+
+const caruselData = [
+    {
+        image: caruselImage1,
+        imageAlt: 'image1',
+    },
+    {
+        image: caruselImage2,
+        imageAlt: 'image2',
+    },
+    {
+        image: caruselImage3,
+        imageAlt: 'image3',
+    },
+    {
+        image: caruselImage4,
+        imageAlt: 'image4',
+    },
+    {
+        image: caruselImage5,
+        imageAlt: 'image5',
+    },
+    {
+        image: caruselImage6,
+        imageAlt: 'image6',
+    },
+]
 
 function Menu() {
     const [menuVisible, setMenuVisible] = useState(false)
@@ -252,22 +291,43 @@ export default function Home() {
                         </div>
 
 
-                        <div className='over-lg:max-w-5xl mx-auto rounded-lg p-5 bg-[#FF955F] text-white text-xl'>
-                            <div className='flex flex-row '>
-                                <div className='py-10 max-w-lg mx-auto '>
-                                    <p className='py-5 text-3xl text-center'>
-                                        Other participants
-                                    </p>
-                                    <div className='py-5'>
-                                        “Great! Fun location and very inclusive”
+                        <div className='h-full'>
+                            <div className='over-lg:max-w-5xl mx-auto rounded-lg p-5 bg-[#FF955F] text-white text-xl mb-20'>
+                                <h1 className='text-3xl text-center pb-5'>
+                                    Other participants
+                                </h1>
+                                <div className='flex over-xl:flex-row bellow-xl:flex-col'>
+                                    <div className='max-w-lg mx-auto '>
+                                        <div className='py-5'>
+                                            “Great! Fun location and very inclusive”
+                                        </div>
+                                        <div className='py-5'>
+                                            “I liked that I didn’t feel pressure or nervous in the room, the director was friendly and communicative, easy to talk to and discuss where to go with the text”
+                                        </div>
+                                        <div className='py-5'>
+                                            “I learnt about the importance of punctuation!”
+                                        </div>
                                     </div>
-
-                                    <div className='py-5'>
-                                        “I liked that I didn’t feel pressure or nervous in the room, the director was friendly and communicative, easy to talk to and discuss where to go with the text”
-                                    </div>
-
-                                    <div className='py-5'>
-                                        “I learnt about the importance of punctuation!”
+                                    <div
+                                        className='mx-auto'
+                                        style={{
+                                            maxWidth: '500px',
+                                        }}>
+                                        <Carousel
+                                            renderArrowPrev={(onClickHandler: () => void, hasPrev: boolean, label: string) => (
+                                                <button type="button" aria-label={label} className='control-arrow control-prev rounded-l-lg' onClick={onClickHandler} />
+                                            )}
+                                            renderArrowNext={(onClickHandler: () => void, hasNext: boolean, label: string) => (
+                                                <button type="button" aria-label={label} className='control-arrow control-next rounded-r-lg' onClick={onClickHandler} />
+                                            )}
+                                            autoPlay={true} infiniteLoop={true} showStatus={false}
+                                            showArrows={true} showThumbs={false}>
+                                            {caruselData.map((v, i) => (
+                                                <div key={i}>
+                                                    <Image className='rounded-lg' priority src={v.image} alt={v.imageAlt} />
+                                                </div>
+                                            ))}
+                                        </Carousel>
                                     </div>
                                 </div>
                             </div>
