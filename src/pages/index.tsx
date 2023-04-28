@@ -17,12 +17,16 @@ function Menu() {
     return (
         <>
             <div className='z-30 top-10 right-10 fixed bg-[#f0631c] p-4 rounded-lg flex flex-row'>
-                <AiOutlineTwitter
-                    className='pr-2 text-white hover:scale-110 h-8 w-8 transform transition duration-100 '
-                />
-                <AiOutlineInstagram
-                    className='pr-2 text-white hover:scale-110 h-8 w-8 transform transition duration-100 '
-                />
+                <a target='_blank' href='https://twitter.com/attoworkshops'>
+                    <AiOutlineTwitter
+                        className='pr-2 text-white hover:scale-110 h-8 w-8 transform transition duration-100'
+                    />
+                </a>
+                <a target='_blank' href='https://instagram.com/attoworkshops'>
+                    <AiOutlineInstagram
+                        className='pr-2 text-white hover:scale-110 h-8 w-8 transform transition duration-100'
+                    />
+                </a>
                 <RxHamburgerMenu
                     onClick={() => setMenuVisible(!menuVisible)}
                     className={'text-white hover:scale-110 h-8 w-8 transform transition duration-100 ' + (menuVisible ? 'rotate-90 ' : '')}
@@ -34,7 +38,7 @@ function Menu() {
             >
                 {menuVisible && (
                     <nav className='bg-[#f0631c] rounded-lg shadow-lg grid text-white text-2xl z-40'>
-                        <Link href={'/apply'} className='grid-cols-1  p-2 mr-4 '>
+                        <Link href='/apply' className='grid-cols-1  p-2 mr-4 '>
                             Apply
                         </Link>
                         <a
@@ -88,7 +92,7 @@ export default function Home() {
         <AttoPage>
             <Menu />
             <div id='home' >
-                <div className='min-h-screen  w-full bg-[#FF955F] bellow-xl:text-center bellow-xl:object-center' >
+                <div className='min-h-screen text-[#8C2F00] w-full bg-[#FF955F] bellow-xl:text-center bellow-xl:object-center' >
                     <div className='relative over-sm:h-64 bellow-sm:h-52 w-full top-0 bg-gray-500 '>
                         <div className='h-full w-full'>
                             <Image
@@ -113,33 +117,37 @@ export default function Home() {
                                     className='px-5 py-3 bg-[#8C2F00] text-gray-100 font-bold rounded-full'
                                     href={'/apply'}>Apply</Link>
                             </div>
-                            <div className='h-5' />
-                            <div className='bellow-xl:pt-5 bellow-xl:w-full bellow-xl:object-center bellow-nd:order-4 ' >
-                                <div className='text-xl over-xl:absolute bottom-16 left-16 over-xl:left-52 '>
-                                    atto supports
-                                    <div
-                                        className='max-w-sm mx-auto'>
-                                        <Image
-                                            className='mx-auto  '
-                                            alt='DFYC logo'
-                                            src={dfycLogo}
-                                            style={{
-                                                width: '50%',
-                                            }}
-                                            priority
-                                        />
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
-                        <div className='place-content-center w-full over-xl:py-16'>
+                        <div className='place-content-center w-full'>
                             <Image
-                                className='mx-auto bellow-xl:w-full bellow-xl:h-full over-xl:w-full'
+                                className='mx-auto bellow-lg:w-full'
                                 alt='Atto logo'
                                 src={attoLogo}
                                 priority
+                                style={{
+                                    maxWidth: '500px',
+                                }}
                             />
+                        </div>
+
+                        <div className='bellow-xl:pt-5 bellow-xl:w-full bellow-xl:object-center' >
+                            <div className='text-xl over-xl:absolute bottom-16 left-16 over-xl:left-52 bellow-xl:pb-10'>
+                                atto supports
+                                <div
+                                    className='max-w-sm mx-auto'>
+                                    <Image
+                                        className='mx-auto '
+                                        alt='DFYC logo'
+                                        src={dfycLogo}
+                                        style={{
+                                            width: '50%',
+                                            maxWidth: '100px',
+                                        }}
+                                        priority
+                                    />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -206,6 +214,7 @@ export default function Home() {
                                 <div className='flex above-md:flex-row bellow-md:flex-col'>
                                     <div className='p-2'>
                                         <Image
+                                            priority
                                             alt='Ayo'
                                             src='/workshop/ayo_small.png'
                                             width={816}
@@ -230,6 +239,7 @@ export default function Home() {
                                     </div>
                                     <div className='p-2 bellow-md:order-first'>
                                         <Image
+                                            priority
                                             alt='Ayo'
                                             src='/workshop/ella_small.png'
                                             width={892}
@@ -268,6 +278,18 @@ export default function Home() {
             <div id='news-letter' className=' w-full bg-[#FF955F]'>
                 <div className='p-10 text-[#8C2F00]'>
                     <div className='h-full items-center flex flex-col'>
+                        <div className='flex flex-row'>
+                            <a target='_blank' href='https://twitter.com/attoworkshops'>
+                                <AiOutlineTwitter
+                                    className='pr-2 hover:scale-110 h-10 w-10 transform transition duration-100'
+                                />
+                            </a>
+                            <a target='_blank' href='https://instagram.com/attoworkshops'>
+                                <AiOutlineInstagram
+                                    className='pr-2 hover:scale-110 h-10 w-10 transform transition duration-100'
+                                />
+                            </a>
+                        </div>
                         <h1 className='text-3xl text-center'>
                             Subscribe to our news letter
                         </h1>
