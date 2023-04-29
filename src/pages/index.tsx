@@ -12,7 +12,7 @@ import { api } from '~/utils/api';
 import attoLogo from '/public/logo_with_name.png'
 import dfycLogo from '/public/dfyc_logo_small.jpg'
 import workshopBannerImage from '/public/small/workshop/dvelped_nice_pic_scaled.png'
-import whatWeDoImage from '/public/webp/workshop/dev_4.webp'
+import whatWeDoImage from '/public/webp/workshop/dev_10_crop.webp'
 import caruselImage1 from '/public/webp/workshop/DSC06413.webp'
 import caruselImage2 from '/public/webp/workshop/DSC06435.webp'
 import caruselImage3 from '/public/webp/workshop/DSC06437.webp'
@@ -209,23 +209,20 @@ export default function Home() {
                             </h1>
                             <div className='bg-white rounded-lg mx-auto flex flex-row bellow-lg:flex-col over-lg:max-w-5xl text-xl '>
                                 <div className='flex flex-col w-full p-5 over-md:pr-10'>
-                                    <p className='py-2 text-2xl'>
-                                        Professional actors with professional directors
-                                    </p>
-                                    <div className='h-full '>
-                                        <div
-                                            className='inline-block align-baseline '>
-                                            <div>
-                                                <p className='py-2'>
-                                                    On Saturdays professional actors of all ages are welcome to take part in our drop-in scene studies. Our aim is to create a truly safe space to fail, succeed, learn & work on that craft with the guidance of leading directors.
-                                                </p>
-                                                <p className='py-2'>
-                                                    Workshops will take place at Downside Fisher Youth Club, Coxson Place, Druid Street, London, SE1 2EZ. A 10 minute walk from London Bridge Station.
-                                                </p>
-                                                <p className='py-2'>
-                                                    Workshops help support the running of the Downside Fisher Youth Club who help socially excluded children & young people from Bermondsey & its neighbouring areas.
-                                                </p>
-                                            </div>
+                                    <div className='h-full flex flex-row'>
+                                        <div className='my-auto'>
+                                            <p className='py-2 text-2xl'>
+                                                Professional actors with professional directors
+                                            </p>
+                                            <p className='py-2'>
+                                                On Saturdays professional actors of all ages are welcome to take part in our drop-in scene studies. Our aim is to create a truly safe space to fail, succeed, learn & work on that craft with the guidance of leading directors.
+                                            </p>
+                                            <p className='py-2'>
+                                                Workshops will take place at Downside Fisher Youth Club, Coxson Place, Druid Street, London, SE1 2EZ. A 10 minute walk from London Bridge Station.
+                                            </p>
+                                            <p className='py-2'>
+                                                Workshops help support the running of the Downside Fisher Youth Club who help socially excluded children & young people from Bermondsey & its neighbouring areas.
+                                            </p>
                                         </div>
                                     </div>
                                     <Link
@@ -258,7 +255,7 @@ export default function Home() {
                                         <Image
                                             priority
                                             alt='Ayo'
-                                            src='/webp/workshop/ayo_small.png'
+                                            src='/workshop/ayo_small.png'
                                             width={816}
                                             height={642}
                                             className='rounded-lg'
@@ -283,7 +280,7 @@ export default function Home() {
                                         <Image
                                             priority
                                             alt='Ayo'
-                                            src='/webp/workshop/ella_small.png'
+                                            src='/workshop/ella_small.png'
                                             width={892}
                                             height={664}
                                             className='rounded-lg '
@@ -300,7 +297,7 @@ export default function Home() {
                                     Other participants
                                 </h1>
                                 <div className='flex over-xl:flex-row bellow-xl:flex-col'>
-                                    <div className='max-w-lg mx-auto '>
+                                    <div className='max-w-lg over-xl:pr-5'>
                                         <div className='py-5'>
                                             “Great! Fun location and very inclusive”
                                         </div>
@@ -311,9 +308,11 @@ export default function Home() {
                                             “I learnt about the importance of punctuation!”
                                         </div>
 
-                                        <Link
-                                            className='text-center align-bottom px-4 py-2 bg-[#8C2F00] text-gray-100 font-bold rounded-full hover:bg-[#e64d00]'
-                                            href={'/apply'}>Apply</Link>
+                                        <div className='flex flex-col  py-5 w-full'>
+                                            <Link
+                                                className='text-center align-bottom px-4 py-2 bg-[#8C2F00] text-gray-100 font-bold rounded-full hover:bg-[#e64d00]'
+                                                href='/apply'>Apply</Link>
+                                        </div>
                                     </div>
                                     <div
                                         className='mx-auto'
@@ -336,7 +335,6 @@ export default function Home() {
                                             ))}
                                         </Carousel>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
