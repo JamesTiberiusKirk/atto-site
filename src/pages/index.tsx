@@ -255,7 +255,7 @@ export default function Home() {
                                         <Image
                                             priority
                                             alt='Ayo'
-                                            src='/workshop/ayo_small.png'
+                                            src='/small/workshop/ayo_small.png'
                                             width={816}
                                             height={642}
                                             className='rounded-lg'
@@ -280,7 +280,7 @@ export default function Home() {
                                         <Image
                                             priority
                                             alt='Ayo'
-                                            src='/workshop/ella_small.png'
+                                            src='/small/workshop/ella_small.png'
                                             width={892}
                                             height={664}
                                             className='rounded-lg '
