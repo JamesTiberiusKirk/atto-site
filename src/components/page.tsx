@@ -7,7 +7,7 @@ type AttoPageProps = {
 }
 
 export default function AttoPage({ children }: AttoPageProps) {
-    const ogImageUrl = '/api/og'
+    const ogImageUrl = 'https://attoworkshops.com/api/og'
     return (
         <>
             <Head>
