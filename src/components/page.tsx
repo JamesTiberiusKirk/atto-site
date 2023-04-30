@@ -18,7 +18,7 @@ export default function AttoPage({ children }: AttoPageProps) {
                 <meta name="twitter:site" content="@attoworkshops" />
                 <meta name="twitter:title" content="atto workshops" />
                 <meta name="twitter:description" content="Checkout and apply to atto workshops." />
-                {/* <meta name="twitter:image" content="/logo.png" /> */}
+                <meta name="twitter:image" content={ogImageUrl} />
                 <meta name="og:image" content={ogImageUrl} />
             </Head>
             <main>
