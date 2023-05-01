@@ -20,7 +20,7 @@ export const applicationRouter = createTRPCRouter({
             credits: z.string(),
             emailPreference: z.boolean(),
         }))
-        .mutation(async ({ input }: NewApplicationProps) => {
+        .mutation(({ input }: NewApplicationProps) => {
             console.log('inserting: ', input)
 
             newApplication(input).then(insert => {
