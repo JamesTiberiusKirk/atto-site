@@ -120,3 +120,12 @@ DSC06414 copy
 - [x]https://instagram.com/attoworkshops
 - [ ]https://vimeo.com/820843498
     - **NOTES:** video is under age restriction or something
+
+## Extras
+- [ ] Add temp content
+```
+More dates coming soon... 
+Sign up to our news letter to be the first to hear. 
+<News letter signup>
+```
+- [ ] Add email admin reporting

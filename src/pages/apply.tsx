@@ -9,41 +9,49 @@ import Link from 'next/link';
 export default function Apply() {
     const router = useRouter()
     const mutation = api.apply.new.useMutation({
-        onMutate: () => {
-            void router.push('/confirmation')
+        onSuccess: () => {
+            void router.push('/confirmation?t=appl')
         }
     })
 
+    // TODO: Add workshops 
     const workshopOptions = [
-        {
-            display: 'Workshop a',
-            name: 'workshop_a',
-        },
-        {
-            display: 'Workshop b',
-            name: 'workshop_b',
-        },
-        {
-            display: 'Workshop c',
-            name: 'workshop_c',
-        },
-    ]
+    ] as {
+        display: string,
+        name: string,
+    }[]
 
     const [name, setName] = useState('')
     const [pronouns, setPronouns] = useState('')
     const [email, setEmail] = useState('')
-    const [workshop, setWorkshop] = useState('')
+    const [workshops, setWorkshops] = useState<string[]>([])
     const [credits, setCredits] = useState('')
     const [emailPreference, setEmailPreference] = useState(false)
 
+    const toggleWorkshop = (workshop: string) => {
+        const index = workshops.indexOf(workshop)
+        const copy = [...workshops]
+        console.log(index, copy)
+        if (index === -1) {
+            copy.push(workshop)
+        } else {
+            copy.splice(index, 1)
+        }
+        console.log(index, copy)
+        setWorkshops(copy)
+    }
+
+
     function handleSendForm(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
+        if (workshopOptions.length === 0) return
+
         console.log('handle send form');
         mutation.mutate({
             name,
             email,
             pronouns,
-            workshop,
+            workshops,
             credits,
             emailPreference,
         });
@@ -109,19 +117,20 @@ export default function Apply() {
                         <div className='flex items-center mb-4'>
                             <label>
                                 Select workshop:
-                                {
-                                    workshopOptions.map(w => (
-                                        <label key={w.name} className='pt-2 block text-gray-700 text-sm font-bold mb-2 ml-2 '>
-                                            <input
-                                                className='w-4 h-4'
-                                                type='radio'
-                                                checked={workshop === w.name}
-                                                onChange={() => setWorkshop(w.name)}
-                                                value={w.name} />
-                                            {w.display}
-                                        </label>
-                                    ))
-                                }
+                                {workshopOptions.length > 0 ? workshopOptions.map(w => (
+                                    <div key={w.name} className='flex items-center'>
+                                        <input
+                                            checked={workshops.find(v => v === w.name) === w.name}
+                                            id='checked-checkbox'
+                                            type='checkbox'
+                                            onChange={() => toggleWorkshop(w.name)}
+                                            value={w.name}
+                                            className='w-4 h-4 text-red-600 bg-gray-100 border-gray-300 rounded focus:ring-red-500  focus:ring-2' />
+                                        <label className='ml-2 text-sm font-medium'>{w.display}</label>
+                                    </div>
+                                )) : (
+                                    <p>Not currently taking applictions, please check again later</p>
+                                )}
                             </label>
                         </div>
 
@@ -141,12 +150,16 @@ export default function Apply() {
                             <label className='ml-2 text-sm font-medium text-gray-700'>I don&apos;t wish to be emailed with atto news &apos; upcoming workshops.</label>
                         </div>
 
-                        {mutation.isError && (
+                        {(mutation.isError && mutation.error?.data?.code) == 'INTERNAL_SERVER_ERROR' && (
                             <div className='text-red-600'>Error has occured when sending forms</div>
                         )}
 
-                        <button type='submit' className='mt-5 w-full  bg-[#8C2F00] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline'
-                            onClick={(e) => handleSendForm(e)} disabled={mutation.isLoading}>
+                        <button type='submit' className={`mt-5 w-full bg-[#8C2F00]  text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline ${workshopOptions.length === 0 ?
+                            'opacity-50 cursor-not-allowed' :
+                            'hover:bg-red-700'}`
+                        }
+                            onClick={(e) => handleSendForm(e)}
+                            disabled={mutation.isLoading || workshopOptions.length === 0}>
                             {mutation.isLoading ?
                                 (<div role='status'>
                                     <svg aria-hidden='true' role='status' className='inline w-4 h-4 mr-3 text-white animate-spin' viewBox='0 0 100 101' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -160,11 +173,11 @@ export default function Apply() {
                     </form>
                     <p className='text-white'>
                         <span className='text-red-800'>*</span> If you are unable to attend a workshop, and have given at least 48 hours notice, we will offer a full refund or workshop credit.
-                        24 hours notice, we can only offer a workshop credit.
+                        If given 24 hours notice, we can only offer a workshop credit.
                     </p>
                 </div>
             </div>
-        </AttoPage>
+        </AttoPage >
     )
 }
 

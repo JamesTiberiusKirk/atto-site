@@ -25,10 +25,16 @@ export const contactFormsRouter = createTRPCRouter({
         }))
         .mutation(async ({ input }: NewcontactusProps) => {
             console.log('new contact me form', input)
-            const dbInsertionResult = await newContactus(input)
-            console.log('db insertion result', dbInsertionResult)
+            newContactus(input).then(dbInsertionResult => {
+                console.log('db insertion result', dbInsertionResult)
+            }).catch(err => {
+                console.error('error inserting: ', err)
+            })
 
-            const emailResult = await sendContactusReceipt(input)
-            console.log('email sent', emailResult)
+            sendContactusReceipt(input).then(emailResult => {
+                console.log('email sent', emailResult)
+            }).catch(err => {
+                console.error('error inserting: ', err)
+            })
         }),
 });

@@ -16,22 +16,31 @@ export const applicationRouter = createTRPCRouter({
             name: z.string(),
             email: z.string().email(),
             pronouns: z.string(),
-            workshop: z.string(),
+            workshops: z.string().array(),
             credits: z.string(),
             emailPreference: z.boolean(),
         }))
         .mutation(async ({ input }: NewApplicationProps) => {
             console.log('inserting: ', input)
 
-            const insert = await newApplication(input)
-            console.log('Inserted application: ', insert)
+            newApplication(input).then(insert => {
+                console.log('Inserted application: ', insert)
+            }).catch(err => {
+                console.error('error inserting application: ', err)
+            })
 
-            const emailResponse = await sendApplicationReceipt(input)
-            console.log('Email sent', emailResponse)
+            sendApplicationReceipt(input).then(emailResponse => {
+                console.log('Email sent', emailResponse)
+            }).catch(err => {
+                console.error('error sending email', err)
+            })
 
             if (input.emailPreference) {
-                const newsSubscriptionInsertion = await newNewsSubscription(input.email)
-                console.log('Inserted news subscription', newsSubscriptionInsertion)
+                newNewsSubscription(input.email).then(newNewsSubscription => {
+                    console.log('Inserted news subscription', newNewsSubscription)
+                }).catch(err => {
+                    console.log('error inserting news subscription', err)
+                })
             }
         }),
 });

@@ -2,7 +2,7 @@ export type Application = {
     name: string
     email: string
     pronouns: string
-    workshop: string
+    workshops: string[]
     credits: string
     emailPreference: boolean
 }
