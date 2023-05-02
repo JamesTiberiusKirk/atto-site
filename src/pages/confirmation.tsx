@@ -15,7 +15,7 @@ export default function Confirmation() {
                 <h1 className="text-5xl bellow-sm:text-4xl font-extrabold tracking-tight text-white sm:text-[5rem]">
                     {content}
                     <br />
-                    <span className="text-6xl bellow-sm:text-5xl text-transparent bg-clip-text bg-gradient-to-br from-emerald-100 to-emerald-600 sm:text-[5rem]">
+                    <span className="text-6xl bellow-sm:text-5xl text-green-800 sm:text-[5rem]">
                         atto {' '}
                     </span>
                     workshops

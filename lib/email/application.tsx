@@ -1,6 +1,29 @@
 import { Client } from 'node-mailjet';
 import type { SendEmailV3_1, LibraryResponse } from 'node-mailjet';
 import type { Application } from 'types/application';
+import ReactDOMServer from 'react-dom/server';
+
+function EmailHTML(application: Application) {
+    return ReactDOMServer.renderToString(
+        <>
+            <h1>Dear {application.name}</h1>
+            <p
+                style={{
+                    fontSize: '20px',
+                }}
+            >Thank you for your application to atto workshops, we will be in-touch shortly.</p>
+            <br />
+            <br />
+            <br />
+            <img src='https://attoworkshops.com/logo_with_name.png'
+                style={{
+                    width: '200px',
+                    left: '0',
+                }}
+            />
+        </>
+    )
+}
 
 export default async function sendApplicationReceipt(application: Application) {
     const mailjet = new Client({
@@ -21,9 +44,8 @@ export default async function sendApplicationReceipt(application: Application) {
                     },
                 ],
                 Subject: 'Atto application',
-                HTMLPart: `<h1>Dear ${application.name}</h1>
-<p>Thank you for your application to atto!<br />
-Your application will be reviewed and we will shortly get in touch with you.</p>`,
+                TextPart: `Thank you for your application to atto workshops we will be in-touch shortly.`,
+                HTMLPart: EmailHTML(application),
             },
         ],
     };

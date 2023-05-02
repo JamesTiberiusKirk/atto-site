@@ -2,7 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { RxHamburgerMenu } from 'react-icons/rx';
-import { AiOutlineInstagram, AiOutlineTwitter, AiOutlineMail } from 'react-icons/ai';
+import { AiOutlineInstagram, AiOutlineTwitter, AiOutlineMail, AiOutlinePlayCircle } from 'react-icons/ai';
 import { Carousel } from 'react-responsive-carousel';
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
@@ -172,7 +172,11 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className='w-full gap-4 grid over-xl:grid-flow-col bellow-xl:grid-flow-row over-xl:px-20 over-xl:pl-40 '>
+                    <div
+                        style={{
+                            height: '100%',
+                        }}
+                        className='w-full gap-4 grid over-xl:grid-flow-col bellow-xl:grid-flow-row over-xl:px-20 over-xl:pl-40'>
                         <div className='bellow-sm:p-16 px-16 py-10 text-[#8C2F00] text-3xl'>
                             <div>
                                 <h1>
@@ -186,7 +190,7 @@ export default function Home() {
                             </div>
                         </div>
 
-                        <div className='place-content-center w-full'>
+                        <div className='over-xl:pt-40 place-content-center w-full'>
                             <Image
                                 className='mx-auto bellow-lg:w-full'
                                 alt='Atto logo'
@@ -199,22 +203,23 @@ export default function Home() {
                         </div>
 
                         <div className='bellow-xl:pt-5 bellow-xl:w-full bellow-xl:object-center' >
-                            <div className='text-xl over-xl:absolute bottom-16 left-16 over-xl:left-52 bellow-xl:pb-10'>
-                                atto supports
-                                <div
-                                    className='max-w-sm mx-auto'>
-                                    <Image
-                                        className='mx-auto '
-                                        alt='DFYC logo'
-                                        src={dfycLogo}
-                                        style={{
-                                            width: '50%',
-                                            maxWidth: '100px',
-                                        }}
-                                        priority
-                                    />
+                            <a target='_blank' href={'http://www.downside-fisher.org/'}>
+                                <div className='text-xl over-xl:absolute bottom-16 left-16 over-xl:left-52 bellow-xl:pb-10'>
+                                    atto supports
+                                    <div className='max-w-sm mx-auto'>
+                                        <Image
+                                            className='transform transition duration-100 hover:scale-110 mx-auto '
+                                            alt='DFYC logo'
+                                            src={dfycLogo}
+                                            style={{
+                                                width: '50%',
+                                                maxWidth: '100px',
+                                            }}
+                                            priority
+                                        />
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -264,13 +269,25 @@ export default function Home() {
                                         className='text-center align-bottom px-4 py-2 bg-[#8C2F00] text-gray-100 font-bold rounded-full hover:bg-[#e64d00]'
                                         href={'/apply'}>Apply</Link>
                                 </div>
-                                <div className='w-full'>
+                                <div className='w-full inline-block relative'>
                                     <Image
                                         src={whatWeDoImage}
                                         alt='Workshop picture'
-                                        className='h-full w-full over-lg:rounded-r bellow-lg:rounded-b'
+                                        className='block h-full w-full over-lg:rounded-r bellow-lg:rounded-b'
                                         style={{ objectFit: 'cover' }}
                                     />
+
+                                    <div
+                                        style={{
+                                            WebkitTransform: 'translateX(50%) translateY(-50%)',
+                                        }}
+                                        className='absolute top-1/2 right-1/2'>
+                                        <a target='_blank' href='https://vimeo.com/820843498'>
+                                            <AiOutlinePlayCircle
+                                                className='pr-2 text-white hover:text-gray-400 hover:scale-105 h-28 w-28 transform transition duration-100'
+                                            />
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1,6 +1,32 @@
 import { Client } from 'node-mailjet';
 import type { SendEmailV3_1, LibraryResponse } from 'node-mailjet';
+import ReactDOMServer from 'react-dom/server';
 import type { ContactUs } from '~/server/api/routers/contactus';
+
+
+function EmailHTML(contactus: ContactUs) {
+    return ReactDOMServer.renderToString(
+        <>
+            <h1>Dear {contactus.name}</h1>
+            <p
+                style={{
+                    fontSize: '20px',
+                }}>
+                Thank you for your contact request to atto!<br />
+                We will get back to you as soon as possible.
+            </p>
+            <br />
+            <br />
+            <br />
+            <img src='https://attoworkshops.com/logo_with_name.png'
+                style={{
+                    width: '200px',
+                    left: '0',
+                }}
+            />
+        </>
+    )
+}
 
 export default async function sendContactusReceipt(contactus: ContactUs) {
     const mailjet = new Client({
@@ -21,11 +47,7 @@ export default async function sendContactusReceipt(contactus: ContactUs) {
                     },
                 ],
                 Subject: 'Atto contact request',
-                HTMLPart: `<h1>Dear ${contactus.name}</h1>
-<p>
-Thank you for your contact request to atto!<br />
-We will get back to you as soon as possible.
-</p>`,
+                HTMLPart: EmailHTML(contactus),
             },
         ],
     };
