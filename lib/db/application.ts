@@ -24,7 +24,7 @@ export async function getAllApplicationsInPast(h: number): Promise<Application[]
     if (!process.env.MONGO_DB_APPLICATION_COLLECTION || !db) return
 
     try {
-        console.log('Inserting into collection', process.env.MONGO_DB_APPLICATION_COLLECTION)
+        console.log(`Quering collection ${process.env.MONGO_DB_APPLICATION_COLLECTION} for any new records in the past ${h}`)
         const collection = db.collection(process.env.MONGO_DB_APPLICATION_COLLECTION)
         const res = await collection.find<Application>({
             _id: {
