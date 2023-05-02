@@ -1,7 +1,7 @@
 {
     "crons": [
         {
-            "path": "/api/cron/admin_reporting",
+            "path": "/api/cron/admin_reporting?key=hardcodedKey2231",
             "schedule": "0 20 * * *"
         }
     ]
