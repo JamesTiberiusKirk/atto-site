@@ -30,9 +30,11 @@ export const applicationRouter = createTRPCRouter({
 
             if (insertRes?.error) {
                 console.error('Error inserting application record: ', insertRes.error)
+                return
             }
             if (emailResponse.error) {
                 console.error('Error sending application receipt: ', emailResponse.error)
+                return
             }
 
             console.log('Inserted new application: ', insertRes?.data)
@@ -42,6 +44,7 @@ export const applicationRouter = createTRPCRouter({
                 const newNewsSubscriptionRes = await newNewsSubscription(input.email)
                 if (newNewsSubscriptionRes?.error) {
                     console.error('Error inserting email subscription record: ', newNewsSubscriptionRes.error)
+                    return
                 }
 
                 console.log('Inserted new email subscription record: ', newNewsSubscriptionRes?.data)

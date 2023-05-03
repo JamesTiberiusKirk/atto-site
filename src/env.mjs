@@ -14,6 +14,7 @@ const server = z.object({
     MJ_APIKEY_PRIVATE: z.string(),
     MJ_SENDER_EMAIL: z.string(),
     MJ_SENDER_NAME: z.string(),
+    ADMIN_EMAILS: z.string(),
 });
 
 /**
@@ -40,6 +41,7 @@ const processEnv = {
     MJ_APIKEY_PRIVATE: process.env.MJ_APIKEY_PRIVATE,
     MJ_SENDER_EMAIL: process.env.MJ_SENDER_EMAIL,
     MJ_SENDER_NAME: process.env.MJ_SENDER_NAME,
+    ADMIN_EMAILS: process.env.ADMIN_EMAILS,
 };
 
 // Don't touch the part below

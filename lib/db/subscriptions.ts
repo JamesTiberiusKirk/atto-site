@@ -33,7 +33,7 @@ export async function removeNewsSubscription(email: string) {
     }
 }
 
-export async function getAllNewsSubscriptionInPast(h: number): Promise<any[] | undefined> {
+export async function getAllNewsSubscriptionInPast(h: number) {
     const db = await connectToDatabase()
 
     if (!process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION || !db) return
@@ -47,8 +47,14 @@ export async function getAllNewsSubscriptionInPast(h: number): Promise<any[] | u
             }
         }).toArray()
 
-        return res
+        const result: string[] = []
+
+        for (const email of res) {
+            result.push(email['email'] as string)
+        }
+
+        return { data: result, error: undefined }
     } catch (e) {
-        console.error(e)
+        return { data: undefined, error: e }
     }
 }

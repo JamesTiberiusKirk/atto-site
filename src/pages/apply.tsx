@@ -4,6 +4,7 @@ import AttoPage from '~/components/page';
 import { api } from '~/utils/api';
 import { TbChairDirector } from 'react-icons/tb'
 import Link from 'next/link';
+import { WorkshopOptions } from 'types/workshop';
 
 // TODO: need to handle input validation here
 export default function Apply() {
@@ -13,21 +14,6 @@ export default function Apply() {
             void router.push('/confirmation?t=appl')
         }
     })
-
-    // TODO: Add workshops 
-    const workshopOptions = [
-        {
-            display: 'Harold Pinter The Caretaker',
-            name: 'HAROLD_PINTER_THE_CARETAKER'
-        },
-        {
-            display: 'Harold Pinter Betrayer',
-            name: 'HAROLD_PINTER_BETRAYER'
-        },
-    ] as {
-        display: string,
-        name: string,
-    }[]
 
     const [name, setName] = useState('')
     const [pronouns, setPronouns] = useState('')
@@ -52,7 +38,7 @@ export default function Apply() {
 
     function handleSendForm(e: React.MouseEvent<HTMLButtonElement>) {
         e.preventDefault();
-        if (workshopOptions.length === 0) return
+        if (WorkshopOptions.length === 0) return
 
         console.log('handle send form');
         mutation.mutate({
@@ -88,10 +74,6 @@ export default function Apply() {
                                 color='white'
                             />
                         </Link>
-                        {/* <GiDirectorChair */}
-                        {/*     className='h-24 w-24' */}
-                        {/*     color='white' */}
-                        {/* /> */}
                     </div>
                     <p className='text-white py-5'>
                         Please choose the workshops you wish to attend. We advise choosing more than one, to avoid missing out as workshops can fill up.
@@ -125,7 +107,7 @@ export default function Apply() {
                         <div className='flex items-center mb-4'>
                             <label>
                                 Select workshop:
-                                {workshopOptions.length > 0 ? workshopOptions.map(w => (
+                                {WorkshopOptions.length > 0 ? WorkshopOptions.map(w => (
                                     <div key={w.name} className='flex items-center'>
                                         <input
                                             checked={workshops.find(v => v === w.name) === w.name}
@@ -162,12 +144,12 @@ export default function Apply() {
                             <div className='text-red-600'>Error has occured when sending forms</div>
                         )}
 
-                        <button type='submit' className={`mt-5 w-full bg-[#8C2F00]  text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline ${workshopOptions.length === 0 ?
+                        <button type='submit' className={`mt-5 w-full bg-[#8C2F00]  text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline ${WorkshopOptions.length === 0 ?
                             'opacity-50 cursor-not-allowed' :
                             'hover:bg-red-700'}`
                         }
                             onClick={(e) => handleSendForm(e)}
-                            disabled={mutation.isLoading || workshopOptions.length === 0}>
+                            disabled={mutation.isLoading || WorkshopOptions.length === 0}>
                             {mutation.isLoading ?
                                 (<div role='status'>
                                     <svg aria-hidden='true' role='status' className='inline w-4 h-4 mr-3 text-white animate-spin' viewBox='0 0 100 101' fill='none' xmlns='http://www.w3.org/2000/svg'>

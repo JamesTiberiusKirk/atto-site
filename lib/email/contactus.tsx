@@ -52,9 +52,13 @@ export default async function sendContactusReceipt(contactus: ContactUs) {
         ],
     };
 
-    const result: LibraryResponse<SendEmailV3_1.Response> = await mailjet
-        .post('send', { version: 'v3.1' })
-        .request(data);
+    try {
+        const result: LibraryResponse<SendEmailV3_1.Response> = await mailjet
+            .post('send', { version: 'v3.1' })
+            .request(data)
+        return { data: result.body.Messages[0] }
+    } catch (e) {
+        return { error: e }
+    }
 
-    return result.body.Messages[0];
 }

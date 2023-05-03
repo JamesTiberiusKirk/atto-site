@@ -18,7 +18,7 @@ export async function newApplication(application: Application) {
     }
 }
 
-export async function getAllApplicationsInPast(h: number): Promise<Application[] | undefined> {
+export async function getAllApplicationsInPast(h: number) {
     const db = await connectToDatabase()
 
     if (!process.env.MONGO_DB_APPLICATION_COLLECTION || !db) return
@@ -33,9 +33,10 @@ export async function getAllApplicationsInPast(h: number): Promise<Application[]
         }).toArray()
 
 
-        return res
+        return { data: res, error: undefined }
     } catch (e) {
         console.error(e)
+        return { data: undefined, error: e }
     }
 
 }

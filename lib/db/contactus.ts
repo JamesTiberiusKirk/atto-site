@@ -12,13 +12,13 @@ export async function newContactus(contactus: ContactUs) {
         const collection = db.collection(process.env.MONGO_DB_CONTACTS_COLLECTION)
         const res = await collection.insertOne(contactus)
 
-        return res.insertedId
+        return { data: res.insertedId }
     } catch (e) {
-        console.error(e)
+        return { error: e }
     }
 }
 
-export async function getAllContactRequestInPast(h: number): Promise<ContactUs[] | undefined> {
+export async function getAllContactRequestInPast(h: number) {
     const db = await connectToDatabase()
 
     if (!process.env.MONGO_DB_CONTACTS_COLLECTION || !db) return
@@ -32,8 +32,8 @@ export async function getAllContactRequestInPast(h: number): Promise<ContactUs[]
             }
         }).toArray()
 
-        return res
+        return { data: res }
     } catch (e) {
-        console.error(e)
+        return { error: e }
     }
 }

@@ -13,6 +13,10 @@ export const newsLetterRouter = createTRPCRouter({
             console.log('new subscriber to the news letter: ', input)
 
             const inserted = await newNewsSubscription(input)
+            if (inserted?.error) {
+                console.error('Error inserting new subscription: ', inserted.error)
+                return
+            }
             console.log('Inserted: ', inserted)
         }),
     delete: publicProcedure.input(z.string().email())
