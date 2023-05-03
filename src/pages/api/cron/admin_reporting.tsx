@@ -8,7 +8,7 @@ import ReactDOMServer from 'react-dom/server';
 import type { Application } from 'types/application';
 import { WorkshopOptions } from 'types/workshop';
 import { env } from '~/env.mjs';
-import { ContactUs } from '~/server/api/routers/contactus';
+import type { ContactUs } from '~/server/api/routers/contactus';
 
 type GelerateEmailStringProps = {
     applications?: Application[],
@@ -26,23 +26,27 @@ function GenerateEmailString({ applications, contactRequests, newsSubscriptions 
         return ''
     }
 
+    const aLen = applications?.length || 0
+    const cLen = contactRequests?.length || 0
+    const nLen = newsSubscriptions?.length || 0
+
     return ReactDOMServer.renderToString(
         <>
-            <h1>Administrator's report</h1>
+            <h1>Administrator&apos;s report</h1>
 
             <p style={{ fontSize: '15px' }}>
                 In the past 24 hours we have:
             </p>
             <p style={{ fontSize: '15px' }}>
-                {applications?.length === 0 ? 'No new applications' : `Applications: ${applications?.length} new`}
+                {applications && aLen === 0 ? 'No new applications' : `Applications: ${aLen} new`}
             </p>
 
             <p style={{ fontSize: '15px' }}>
-                {contactRequests?.length === 0 ? 'No new contact us requests' : `Contact us requests: ${contactRequests?.length} new`}
+                {contactRequests && cLen === 0 ? 'No new contact us requests' : `Contact us requests: ${cLen} new`}
             </p>
 
             <p style={{ fontSize: '15px' }}>
-                {newsSubscriptions?.length === 0 ? 'No new news letter subscriptions' : `News letter subscriptions: ${newsSubscriptions?.length} new`}
+                {newsSubscriptions && nLen === 0 ? 'No new news letter subscriptions' : `News letter subscriptions: ${nLen} new`}
             </p>
 
             {applications && applications?.length > 0 && (
@@ -82,7 +86,7 @@ function GenerateEmailString({ applications, contactRequests, newsSubscriptions 
                             </p>
                             <ul>
                                 {a.workshops.map(w => (
-                                    <li style={{ fontSize: '15px' }}>
+                                    <li key={w} style={{ fontSize: '15px' }}>
                                         {lookupWorkshop(w) + ' '}
                                     </li>
                                 ))}
