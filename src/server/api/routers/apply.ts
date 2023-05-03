@@ -20,27 +20,31 @@ export const applicationRouter = createTRPCRouter({
             credits: z.string(),
             emailPreference: z.boolean(),
         }))
-        .mutation(({ input }: NewApplicationProps) => {
-            console.log('inserting: ', input)
+        .mutation(async ({ input }: NewApplicationProps) => {
+            console.log('New application: ', input)
 
-            newApplication(input).then(insert => {
-                console.log('Inserted application: ', insert)
-            }).catch(err => {
-                console.error('error inserting application: ', err)
-            })
+            const [insertRes, emailResponse] = await Promise.all([
+                newApplication(input),
+                sendApplicationReceipt(input),
+            ])
 
-            sendApplicationReceipt(input).then(emailResponse => {
-                console.log('Email sent', emailResponse)
-            }).catch(err => {
-                console.error('error sending email', err)
-            })
+            if (insertRes?.error) {
+                console.error('Error inserting application record: ', insertRes.error)
+            }
+            if (emailResponse.error) {
+                console.error('Error sending application receipt: ', emailResponse.error)
+            }
+
+            console.log('Inserted new application: ', insertRes?.data)
+            console.log('Sent application receipt: ', emailResponse.data)
 
             if (input.emailPreference) {
-                newNewsSubscription(input.email).then(newNewsSubscription => {
-                    console.log('Inserted news subscription', newNewsSubscription)
-                }).catch(err => {
-                    console.log('error inserting news subscription', err)
-                })
+                const newNewsSubscriptionRes = await newNewsSubscription(input.email)
+                if (newNewsSubscriptionRes?.error) {
+                    console.error('Error inserting email subscription record: ', newNewsSubscriptionRes.error)
+                }
+
+                console.log('Inserted new email subscription record: ', newNewsSubscriptionRes?.data)
             }
         }),
 });
