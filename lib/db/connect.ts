@@ -1,15 +1,31 @@
-import * as mongoDB from "mongodb";
+import { MongoClient } from 'mongodb'
+import { env } from '~/env.mjs'
 
-export async function connectToDatabase() {
-    if (!process.env.MONGO_URL) return
+const uri = env.MONGODB_URI
+const options = {}
 
-    try {
-        const client: mongoDB.MongoClient = new mongoDB.MongoClient(process.env.MONGO_URL);
-        await client.connect();
-        const db: mongoDB.Db = client.db(process.env.MONGO_NAME);
+let client
+let clientPromise: Promise<MongoClient>
 
-        return db
-    } catch (e) {
-        console.log(e)
+if (process.env.NODE_ENV === 'development') {
+    // In development mode, use a global variable so that the value
+    // is preserved across module reloads caused by HMR (Hot Module Replacement).
+    let globalWithMongo = global as typeof globalThis & {
+        _mongoClientPromise?: Promise<MongoClient>
     }
+
+    if (!globalWithMongo._mongoClientPromise) {
+        client = new MongoClient(uri, options)
+        globalWithMongo._mongoClientPromise = client.connect()
+    }
+    clientPromise = globalWithMongo._mongoClientPromise
+} else {
+    // In production mode, it's best to not use a global variable.
+    client = new MongoClient(uri, options)
+    clientPromise = client.connect()
 }
+console.log('Connecting to mongodb')
+
+// Export a module-scoped MongoClient promise. By doing this in a
+// separate module, the client can be shared across functions.
+export default clientPromise

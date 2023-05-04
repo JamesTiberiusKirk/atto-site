@@ -1,15 +1,15 @@
 import { ObjectId } from "mongodb";
 import type { ContactUs } from "~/server/api/routers/contactus";
-import { connectToDatabase } from "./connect";
+import clientPromise from "./connect";
+import { env } from "~/env.mjs";
 
 export async function newContactus(contactus: ContactUs) {
-    const db = await connectToDatabase()
-
-    if (!process.env.MONGO_DB_CONTACTS_COLLECTION || !db) return
+    const client = await clientPromise
+    const db = client.db()
 
     try {
-        console.log('Inserting into collection', process.env.MONGO_DB_CONTACTS_COLLECTION)
-        const collection = db.collection(process.env.MONGO_DB_CONTACTS_COLLECTION)
+        console.log('Inserting into collection', env.MONGO_DB_CONTACTS_COLLECTION)
+        const collection = db.collection(env.MONGO_DB_CONTACTS_COLLECTION)
         const res = await collection.insertOne(contactus)
 
         return { data: res.insertedId }
@@ -19,13 +19,12 @@ export async function newContactus(contactus: ContactUs) {
 }
 
 export async function getAllContactRequestInPast(h: number) {
-    const db = await connectToDatabase()
-
-    if (!process.env.MONGO_DB_CONTACTS_COLLECTION || !db) return
+    const client = await clientPromise
+    const db = client.db()
 
     try {
-        console.log(`Quering collection ${process.env.MONGO_DB_CONTACTS_COLLECTION} for any new records in the past ${h} hours`,)
-        const collection = db.collection(process.env.MONGO_DB_CONTACTS_COLLECTION)
+        console.log(`Quering collection ${env.MONGO_DB_CONTACTS_COLLECTION} for any new records in the past ${h} hours`,)
+        const collection = db.collection(env.MONGO_DB_CONTACTS_COLLECTION)
         const res = await collection.find<ContactUs>({
             _id: {
                 $gt: ObjectId.createFromTime(Date.now() / 1000 - h * 60 * 60)

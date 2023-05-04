@@ -6,6 +6,7 @@ import { z } from "zod";
  */
 const server = z.object({
     NODE_ENV: z.enum(["development", "test", "production"]),
+    MONGODB_URI: z.string(),
     MONGO_URL: z.string(),
     MONGO_DB_APPLICATION_COLLECTION: z.string(),
     MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION: z.string(),
@@ -33,6 +34,7 @@ const client = z.object({
  */
 const processEnv = {
     NODE_ENV: process.env.NODE_ENV,
+    MONGODB_URI: process.env.MONGODB_URI,
     MONGO_URL: process.env.MONGO_URL,
     MONGO_DB_APPLICATION_COLLECTION: process.env.MONGO_DB_APPLICATION_COLLECTION,
     MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION: process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION,
