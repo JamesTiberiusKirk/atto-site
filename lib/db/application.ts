@@ -31,7 +31,6 @@ export async function getAllApplicationsInPast(h: number) {
             }
         }).toArray()
 
-
         return { data: res, error: undefined }
     } catch (e) {
         console.error(e)
