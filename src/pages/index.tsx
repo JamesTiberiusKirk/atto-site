@@ -65,16 +65,23 @@ function WorkshopCard({ workshop }: WorkshopCardProps) {
     <div className="m-5 min-w-fit">
       <div className="flex flex-col items-center text-center">
         {workshop.imgPath ? (
-          <div className="h-40 w-40 overflow-hidden rounded-full">
-            <Image
-              src={workshop.imgPath}
-              alt={"Headshot " + workshop.instructorName}
-              width={200}
-              height={200}
-            />
+          <div className="h-40 w-40 transform overflow-hidden rounded-full transition duration-100 hover:scale-110">
+            <Link href={"/apply?opt=" + workshop.key}>
+              <Image
+                src={workshop.imgPath}
+                alt={"Headshot " + workshop.instructorName}
+                width={200}
+                height={200}
+              />
+            </Link>
           </div>
         ) : (
-          <MdAccountCircle size={160} />
+          <Link href={"/apply"}>
+            <MdAccountCircle
+              className="transform transition duration-100 hover:scale-110"
+              size={160}
+            />
+          </Link>
         )}
 
         <a className="flex" target="_blank" href={workshop.link}>
@@ -96,12 +103,8 @@ function WorkshopCard({ workshop }: WorkshopCardProps) {
           {workshop.type} <br />
           {workshop.date} <br />
           {workshop.time} <br />
-          {/* {workshop.price} <br /> */}
         </p>
 
-        {/* <p className="mt-2 text-sm text-white">{workshop.type}</p> */}
-        {/* <p className="mt-2 text-sm text-white">{workshop.date}</p> */}
-        {/* <p className="mt-2 text-sm text-white">{workshop.time}</p> */}
         <p className="mt-2 text-sm text-white">{workshop.price}</p>
       </div>
     </div>
@@ -312,6 +315,14 @@ export default function Home() {
                   {workshops.map((w, i) => (
                     <WorkshopCard key={i} workshop={w} />
                   ))}
+                </div>
+                <div className="mt-5 ">
+                  <Link
+                    className="rounded-full bg-[#8C2F00] px-5 py-3 text-4xl font-bold text-gray-100 hover:bg-[#e64d00]"
+                    href={"/apply"}
+                  >
+                    Apply
+                  </Link>
                 </div>
               </div>
             </div>

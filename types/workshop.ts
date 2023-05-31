@@ -36,6 +36,7 @@ export const workshops = [
       "My Three Sisters - The Bush",
       "Bugsy Malone - Alexander Palace & UK Tour",
     ],
+    imgPath: "/headshots/thumbnail_MichellePayne.jpg",
     type: "Scene Study",
     date: "Saturday 15th July",
     time: " 10AM - 1PM",
