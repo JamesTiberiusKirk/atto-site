@@ -7,47 +7,58 @@ import { z } from "zod";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 type NewApplicationProps = {
-    input: Application
-}
+  input: Application;
+};
 
 export const applicationRouter = createTRPCRouter({
-    new: publicProcedure
-        .input(z.object({
-            name: z.string(),
-            email: z.string().email(),
-            pronouns: z.string(),
-            workshops: z.string().array(),
-            credits: z.string(),
-            emailPreference: z.boolean(),
-        }))
-        .mutation(async ({ input }: NewApplicationProps) => {
-            console.log('New application: ', input)
+  new: publicProcedure
+    .input(
+      z.object({
+        name: z.string(),
+        email: z.string().email(),
+        pronouns: z.string(),
+        workshops: z.string().array(),
+        credits: z.string(),
+        emailPreference: z.boolean(),
+      })
+    )
+    .mutation(async ({ input }: NewApplicationProps) => {
+      console.log("New application: ", input);
 
-            const [insertRes, emailResponse] = await Promise.all([
-                newApplication(input),
-                sendApplicationReceipt(input),
-            ])
+      const [insertRes, emailResponse] = await Promise.all([
+        newApplication(input),
+        sendApplicationReceipt(input),
+      ]);
 
-            if (insertRes?.error) {
-                console.error('Error inserting application record: ', insertRes.error)
-                return
-            }
-            if (emailResponse.error) {
-                console.error('Error sending application receipt: ', emailResponse.error)
-                return
-            }
+      if (insertRes?.error) {
+        console.error("Error inserting application record: ", insertRes.error);
+        return;
+      }
+      if (emailResponse.error) {
+        console.error(
+          "Error sending application receipt: ",
+          emailResponse.error
+        );
+        return;
+      }
 
-            console.log('Inserted new application: ', insertRes?.data)
-            console.log('Sent application receipt: ', emailResponse.data)
+      console.log("Inserted new application: ", insertRes?.data);
+      console.log("Sent application receipt: ", emailResponse.data);
 
-            if (input.emailPreference) {
-                const newNewsSubscriptionRes = await newNewsSubscription(input.email)
-                if (newNewsSubscriptionRes?.error) {
-                    console.error('Error inserting email subscription record: ', newNewsSubscriptionRes.error)
-                    return
-                }
+      if (!input.emailPreference) {
+        const newNewsSubscriptionRes = await newNewsSubscription(input.email);
+        if (newNewsSubscriptionRes?.error) {
+          console.error(
+            "Error inserting email subscription record: ",
+            newNewsSubscriptionRes.error
+          );
+          return;
+        }
 
-                console.log('Inserted new email subscription record: ', newNewsSubscriptionRes?.data)
-            }
-        }),
+        console.log(
+          "Inserted new email subscription record: ",
+          newNewsSubscriptionRes?.data
+        );
+      }
+    }),
 });
