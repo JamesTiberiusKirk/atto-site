@@ -310,8 +310,7 @@ export default function Home() {
             <div className="flex h-full flex-col">
               <h1 className="mb-10 text-center text-3xl">Workshops</h1>
               <div className="my-auto mx-auto mb-20 rounded-lg bg-[#FF955F] p-10 text-center text-2xl text-white">
-                <div className="flex items-stretch over-lg:flex-row over-lg:flex-wrap bellow-lg:flex-col">
-                  {/* <div className="grid over-xl:grid-cols-5 over-lg:grid-cols-4 over-md:grid-flow-col over-md:grid-flow-row-dense over-md:grid-cols-3 bellow-md:grid-flow-row"> */}
+                <div className="flex flex-wrap justify-center over-lg:flex-row bellow-lg:flex-col">
                   {workshops.map((w, i) => (
                     <WorkshopCard key={i} workshop={w} />
                   ))}
