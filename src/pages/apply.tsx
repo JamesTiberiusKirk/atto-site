@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AttoPage from "~/components/page";
 import { api } from "~/utils/api";
 import { TbChairDirector } from "react-icons/tb";
@@ -9,6 +9,8 @@ import { workshops } from "types/workshop";
 // TODO: need to handle input validation here
 export default function Apply() {
   const router = useRouter();
+  const selected = router.query["opt"];
+
   const mutation = api.apply.new.useMutation({
     onSuccess: () => {
       void router.push("/confirmation?t=appl");
@@ -58,6 +60,23 @@ export default function Apply() {
   const getErrorMessages = (fieldName: string): string[] => {
     return mutation.error?.data?.zodError?.fieldErrors[fieldName] as string[];
   };
+
+  // Emtpy array means it only runs once
+  useEffect(() => {
+    if (selected && typeof selected === "string") {
+      console.log("string", selected);
+      toggleWorkshop(selected);
+    }
+
+    if (selected && typeof selected === "object") {
+      console.log("array", selected);
+      selected.map((s) => {
+        toggleWorkshop(s);
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <AttoPage>
