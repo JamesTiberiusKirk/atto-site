@@ -40,6 +40,8 @@ export default function Apply() {
   function handleSendForm(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
     if (workshops.length === 0) return;
+    if (name.length === 0) return;
+    if (email.length === 0) return;
 
     console.log("handle send form");
     mutation.mutate({
@@ -52,7 +54,7 @@ export default function Apply() {
     });
   }
 
-  const isFieldWrong = (fieldName: string): boolean => {
+  const isFieldErrored = (fieldName: string): boolean => {
     if (!mutation.isError) return false;
     return mutation.error.data?.zodError?.fieldErrors[fieldName] !== undefined;
   };
@@ -96,7 +98,13 @@ export default function Apply() {
           </p>
           <form className="mb-4 rounded bg-white px-8 pt-6 pb-8 shadow-md">
             <label className="mb-2 block text-sm font-bold text-gray-700">
-              Name:
+              {mutation.isError && isFieldErrored("name") ? (
+                <span className="text-red-600">
+                  Name: {getErrorMessages("name").map((s) => s + " ")}
+                </span>
+              ) : (
+                <>Name:</>
+              )}
               <input
                 className="focus:shadow-outline w-full appearance-none rounded-full border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                 value={name}
@@ -106,7 +114,13 @@ export default function Apply() {
               />
             </label>
             <label className="mb-2 block pt-2 text-sm font-bold text-gray-700">
-              Pronouns:
+              {mutation.isError && isFieldErrored("pronouns") ? (
+                <span className="text-red-600">
+                  Pronouns: {getErrorMessages("pronouns").map((s) => s + " ")}
+                </span>
+              ) : (
+                <>Pronouns:</>
+              )}
               <input
                 className="focus:shadow-outline w-full appearance-none rounded-full border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
                 value={pronouns}
@@ -116,7 +130,7 @@ export default function Apply() {
               />
             </label>
             <label className="mb-2 block pt-2 text-sm font-bold text-gray-700">
-              {mutation.isError && isFieldWrong("email") ? (
+              {mutation.isError && isFieldErrored("email") ? (
                 <span className="text-red-600">
                   Email: {getErrorMessages("email").map((s) => s + " ")}
                 </span>
@@ -185,12 +199,12 @@ export default function Apply() {
               </label>
             </div>
 
-            {(mutation.isError && mutation.error?.data?.code) ==
-              "INTERNAL_SERVER_ERROR" && (
-              <div className="text-red-600">
-                Error has occured when sending forms
-              </div>
-            )}
+            {mutation.isError &&
+              mutation.error?.data?.code == "INTERNAL_SERVER_ERROR" && (
+                <div className="text-red-600">
+                  Error has occured when sending forms
+                </div>
+              )}
 
             <button
               type="submit"
