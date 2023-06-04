@@ -5,3 +5,12 @@ html {
 
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "Sk-Modernist";
+  src: url("/fonts/sk-modernist-regular-webfont.ttf") format("truetype");
+}
+
+body {
+  font-family: "Sk-Modernist";
+}
