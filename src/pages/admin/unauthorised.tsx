@@ -1,5 +1,3 @@
-import Link from "next/link";
-import { TbChairDirector } from "react-icons/tb";
 import AttoPage from "~/components/page";
 
 export default function Unauthorised() {
