@@ -1,3 +1,5 @@
+import { withSessionSsr } from "lib/auth/withSession";
+
 export default function AdminHome() {
   return (
     <>
@@ -5,3 +7,22 @@ export default function AdminHome() {
     </>
   );
 }
+
+export const getServerSideProps = withSessionSsr(function getServerSideProps({
+  req,
+}) {
+  const user = req.session.user;
+
+  if (!user) {
+    return {
+      redirect: {
+        destination: "/admin/unauthorised",
+        permanent: true,
+      },
+    };
+  }
+
+  return {
+    props: {},
+  };
+});
