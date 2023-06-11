@@ -18,24 +18,40 @@ export async function newContactus(contactus: ContactUs) {
   }
 }
 
-export async function getAllContactRequestInPast(h: number) {
+export async function getAllContactRequestInPast(h?: number) {
   const client = await clientPromise;
   const db = client.db();
 
   try {
-    console.log(
-      `Quering collection ${env.MONGO_DB_CONTACTS_COLLECTION} for any new records in the past ${h} hours`
-    );
     const collection = db.collection(env.MONGO_DB_CONTACTS_COLLECTION);
-    const res = await collection
-      .find<ContactUs>({
+
+    let filter = {};
+    if (h) {
+      filter = {
         _id: {
           $gt: ObjectId.createFromTime(Date.now() / 1000 - h * 60 * 60),
         },
-      })
-      .toArray();
+      };
+      console.log(
+        `Quering collection ${env.MONGO_DB_APPLICATION_COLLECTION} for any new records in the past ${h}`
+      );
+    } else {
+      console.log(
+        `Quering collection ${env.MONGO_DB_APPLICATION_COLLECTION} for all records`
+      );
+    }
+    const res = await collection.find<ContactUs>(filter).toArray();
 
-    return { data: res };
+    const contactUsRequests: ContactUs[] = res.map((c) => {
+      return {
+        name: c.name,
+        email: c.email,
+        pronouns: c.pronouns,
+        message: c.message,
+      };
+    });
+
+    return { data: contactUsRequests };
   } catch (e) {
     return { error: e };
   }
