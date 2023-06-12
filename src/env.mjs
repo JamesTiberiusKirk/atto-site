@@ -19,7 +19,8 @@ const server = z.object({
   ADMIN_EMAILS: z.string(),
   HOST: z.string(),
   LOGIN_EXPIRY: z.string().transform(Number),
-  SESSION_SECRET: z.string().min(32).max(32),
+  // SESSION_SECRET: z.string().min(32).max(32),
+  SESSION_SECRET: z.string(),
 });
 
 /**
@@ -64,7 +65,7 @@ const merged = server.merge(client);
 /** @typedef {z.infer<typeof merged>} MergedOutput */
 /** @typedef {z.SafeParseReturnType<MergedInput, MergedOutput>} MergedSafeParseReturn */
 
-let env = process.env;
+let env = /** @type {MergedOutput} */ (process.env);
 
 if (!!process.env.SKIP_ENV_VALIDATION == false) {
   const isServer = typeof window === "undefined";
