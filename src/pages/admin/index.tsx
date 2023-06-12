@@ -17,7 +17,6 @@ type AdminProps = {
 };
 
 export default function Admin(props: AdminProps) {
-  console.log(props);
   return (
     <AttoPage>
       <div className="flex min-h-screen flex-col items-center bg-[#FF955F] px-4 py-16">
