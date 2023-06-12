@@ -10,6 +10,10 @@ export type Workshop = {
   link: string;
 };
 
+export function getWorkshopByKey(key: string): Workshop | undefined {
+  return workshops.find((w) => w.key === key);
+}
+
 export const workshops = [
   {
     instructorName: "Lucy Jane Atkinson",
