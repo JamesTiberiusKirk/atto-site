@@ -6,7 +6,7 @@ export async function storeLoginRequest(loginReq: LoginRequest) {
   const client = await clientPromise;
   const db = client.db();
   const collectionName = env.MONGO_DB_LOGIN_COLLECTION;
-  const expiryTime = env.LOGIN_EXPIRY;
+  const expiryTime = Number(env.LOGIN_EXPIRY);
 
   const currentTime = new Date();
   loginReq.issuesAt = Math.floor(currentTime.getTime() / 1000);

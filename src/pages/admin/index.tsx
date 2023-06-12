@@ -7,6 +7,7 @@ import type { LoginRequest } from "types/loginRequests";
 import { getWorkshopByKey } from "types/workshop";
 import AttoPage from "~/components/page";
 import type { ContactUs } from "~/server/api/routers/contactus";
+import { BsCloudDownload } from "react-icons/bs";
 
 type AdminProps = {
   user: LoginRequest;
@@ -23,9 +24,10 @@ export default function Admin(props: AdminProps) {
         <div className="inline-flex">
           <h1 className="text-3xl text-white ">Admin: {props.user.email}</h1>
         </div>
-        <div className="max-w-2/3 rounded-lg bg-white p-5">
+        <div className="max-w-2/3 inline rounded-lg bg-white p-5">
           <div className="pt-3 pl-3">
             <h1 className="text-2xl">Applications</h1>
+            <BsCloudDownload className="flex items-end" />
           </div>
           <table>
             <thead>

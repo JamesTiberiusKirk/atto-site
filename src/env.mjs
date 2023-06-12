@@ -18,9 +18,8 @@ const server = z.object({
   MJ_SENDER_NAME: z.string(),
   ADMIN_EMAILS: z.string(),
   HOST: z.string(),
-  LOGIN_EXPIRY: z.string().transform(Number),
-  // SESSION_SECRET: z.string().min(32).max(32),
-  SESSION_SECRET: z.string(),
+  LOGIN_EXPIRY: z.string(),
+  SESSION_SECRET: z.string().min(32).max(32),
 });
 
 /**
