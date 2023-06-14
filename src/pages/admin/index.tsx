@@ -55,7 +55,7 @@ export default function Admin(props: AdminProps) {
                     ))}
                   </td>
                   <td className="border px-4 py-2">
-                    {a.emailPreference ? "opt in" : "opt out"}
+                    {!a.emailPreference ? "opt in" : "opt out"}
                   </td>
                 </tr>
               ))}

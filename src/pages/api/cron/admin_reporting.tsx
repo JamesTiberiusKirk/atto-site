@@ -91,7 +91,7 @@ function GenerateEmailString({
               </ul>
 
               <p style={{ fontSize: "15px" }}>
-                Email preference: {a.emailPreference ? "opt in" : "opt out"}
+                Email preference: {!a.emailPreference ? "opt in" : "opt out"}
               </p>
             </div>
           ))}
