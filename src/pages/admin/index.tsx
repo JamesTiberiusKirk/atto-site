@@ -7,10 +7,8 @@ import type { LoginRequest } from "types/loginRequests";
 import { getWorkshopByKey } from "types/workshop";
 import AttoPage from "~/components/page";
 import type { ContactUs } from "~/server/api/routers/contactus";
-// import { BsCloudDownload } from "react-icons/bs";
-// import { CSVLink } from "react-csv";
-// import Link from "next/link";
-
+import { BsCloudDownload } from "react-icons/bs";
+import Link from "next/link";
 
 type AdminProps = {
   user: LoginRequest;
@@ -21,8 +19,6 @@ type AdminProps = {
 
 export default function Admin(props: AdminProps) {
   // console.log(props);
-  // const date = new Date();
-  // const dateString = `${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`;
   return (
     <AttoPage>
       <div className="flex min-h-screen flex-col items-center whitespace-pre-line bg-[#FF955F] px-4 py-16">
@@ -30,12 +26,19 @@ export default function Admin(props: AdminProps) {
           <h1 className="text-3xl text-white ">Admin: {props.user.email}</h1>
         </div>
         <div className="max-w-2/3 inline rounded-lg bg-white p-5">
-          <div className="pt-3 pl-3">
+          <div className="flex flex-row  pt-3 pl-3">
             <h1 className="text-2xl">Applications</h1>
-            {/* <Link href="/api/csv/applications"> */}
-            {/*   <BsCloudDownload className="flex items-end" /> */}
-            {/*   Download CSV */}
-            {/* </Link> */}
+            <div className="flex w-full flex-row">
+              <div className="w-full"></div>
+              <Link
+                href="/api/csv/applications"
+                className="text-md m-2 flex w-fit flex-row rounded-full bg-[#8C2F00] px-3 py-1 font-bold text-gray-100 hover:bg-[#e64d00]"
+              >
+                CSV
+                <div className="w-1"></div>
+                <BsCloudDownload className="m-" />
+              </Link>
+            </div>
           </div>
           <table>
             <thead>
@@ -49,7 +52,7 @@ export default function Admin(props: AdminProps) {
               </tr>
             </thead>
             <tbody>
-              {props.applications ? (
+              {props.applications && props.applications.length > 0 ? (
                 props.applications.map((a, k) => (
                   <tr key={k}>
                     <td className="border px-4 py-2">{a.name}</td>
@@ -83,13 +86,17 @@ export default function Admin(props: AdminProps) {
 
           <div className="pt-3 pl-3">
             <h1 className="text-2xl">Contact Requests</h1>
-            {/* <CSVLink */}
-            {/*   data={props.contactUsRequests} */}
-            {/*   filename={`contact-us-requests-${dateString}.csv`} */}
-            {/* > */}
-            {/*   <BsCloudDownload className="flex items-end" /> */}
-            {/*   Download CSV */}
-            {/* </CSVLink> */}
+            <div className="flex w-full flex-row">
+              <div className="w-full"></div>
+              <Link
+                href="/api/csv/contact_requests"
+                className="text-md m-2 flex w-fit flex-row rounded-full bg-[#8C2F00] px-3 py-1 font-bold text-gray-100 hover:bg-[#e64d00]"
+              >
+                CSV
+                <div className="w-1"></div>
+                <BsCloudDownload className="m-" />
+              </Link>
+            </div>
           </div>
           <table>
             <thead>
@@ -101,7 +108,7 @@ export default function Admin(props: AdminProps) {
               </tr>
             </thead>
             <tbody>
-              {props.contactUsRequests ? (
+              {props.contactUsRequests && props.contactUsRequests.length > 0 ? (
                 props.contactUsRequests.map((c, k) => (
                   <tr key={k}>
                     <td className="border px-4 py-2">{c.name}</td>
@@ -124,6 +131,17 @@ export default function Admin(props: AdminProps) {
 
           <div className="pt-3 pl-3">
             <h1 className="text-2xl">Subscriptions</h1>
+            <div className="flex w-full flex-row">
+              <div className="w-full"></div>
+              <Link
+                href="/api/csv/subscriptions"
+                className="text-md m-2 flex w-fit flex-row rounded-full bg-[#8C2F00] px-3 py-1 font-bold text-gray-100 hover:bg-[#e64d00]"
+              >
+                CSV
+                <div className="w-1"></div>
+                <BsCloudDownload className="m-" />
+              </Link>
+            </div>
           </div>
           <table>
             <thead>
@@ -132,7 +150,7 @@ export default function Admin(props: AdminProps) {
               </tr>
             </thead>
             <tbody>
-              {props.subscriptions ? (
+              {props.subscriptions && props.subscriptions.length > 0 ? (
                 props.subscriptions.map((a, k) => (
                   <tr key={k}>
                     <td className="border px-4 py-2">{a}</td>
