@@ -243,9 +243,8 @@ export default function Apply() {
           </form>
           <p className="text-white">
             <span className="text-red-800">*</span> If you are unable to attend
-            a workshop, and have given at least 48 hours notice, we will offer a
-            full refund or workshop credit. If given 24 hours notice, we can
-            only offer a workshop credit.
+            a workshop we can only offer a workshop credit. This is to keep atto
+            operable. We thank you for your understanding.
           </p>
         </div>
       </div>
