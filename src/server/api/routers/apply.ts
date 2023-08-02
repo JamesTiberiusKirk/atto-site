@@ -1,12 +1,14 @@
 import { newApplication } from "lib/db/application";
 import { newNewsSubscription } from "lib/db/subscriptions";
 import sendApplicationReceipt from "lib/email/application";
-import { Application, ApplicationSchema } from "types/application";
+import type { Application } from "types/application";
+import { ApplicationSchema } from "types/application";
+import type { z } from "zod";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
 type NewApplicationProps = {
-  input: Application;
+  input: z.infer<typeof ApplicationSchema>;
 };
 
 export const applicationRouter = createTRPCRouter({
@@ -16,8 +18,8 @@ export const applicationRouter = createTRPCRouter({
       console.log("New application: ", input);
 
       const [insertRes, emailResponse] = await Promise.all([
-        newApplication(input),
-        sendApplicationReceipt(input),
+        newApplication(input as Application),
+        sendApplicationReceipt(input as Application),
       ]);
 
       if (insertRes?.error) {
