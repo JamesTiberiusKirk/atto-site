@@ -14,7 +14,22 @@ export default withSessionRoute(async function application(req, res) {
     return;
   }
 
-  const csv = new ObjectsToCsv(applications.data);
+  const data = applications.data.map((a) => {
+    return {
+      name: a.name,
+      email: a.email,
+      pronouns: a.pronouns,
+      phoneNumber: a.phoneNumber,
+      workshops: a.workshops,
+      credits: a.credits,
+      emailPreference: a.emailPreference,
+      refereeName: a.referee?.name,
+      refereeEmail: a.referee?.email,
+      refereePronouns: a.referee?.pronouns,
+      refereePhoneNumber: a.referee?.phoneNumber,
+    };
+  });
+  const csv = new ObjectsToCsv(data);
   const date = new Date();
   const filename = `applications-${date.getDate()}-${date.getMonth()}-${date.getFullYear()}.csv`;
 

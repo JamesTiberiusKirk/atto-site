@@ -5,6 +5,8 @@ import { api } from "~/utils/api";
 import { TbChairDirector } from "react-icons/tb";
 import Link from "next/link";
 import { workshops } from "types/workshop";
+import { Application, ApplicationSchema, Referee } from "types/application";
+import { ZodError, ZodFormattedError } from "zod";
 
 // TODO: need to handle input validation here
 export default function Apply() {
@@ -20,9 +22,16 @@ export default function Apply() {
   const [name, setName] = useState("");
   const [pronouns, setPronouns] = useState("");
   const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [workshopsState, setWorkshopsState] = useState<string[]>([]);
   const [credits, setCredits] = useState("");
   const [emailPreference, setEmailPreference] = useState(false);
+  const [referred, setReferred] = useState(false);
+  const [referee, setReferee] = useState<Partial<Referee> | undefined>(
+    undefined
+  );
+  const [formErrors, setFormErrors] =
+    useState<ZodFormattedError<Application>>();
 
   const toggleWorkshop = (workshop: string) => {
     const index = workshopsState.indexOf(workshop);
@@ -39,39 +48,47 @@ export default function Apply() {
 
   function handleSendForm(e: React.MouseEvent<HTMLButtonElement>) {
     e.preventDefault();
-    if (workshops.length === 0) return;
-    if (name.length === 0) return;
-    if (email.length === 0) return;
+    // if (workshops.length === 0) return;
+    // if (name.length === 0) return;
+    // if (email.length === 0) return;
 
-    console.log("handle send form");
+    const form = ApplicationSchema.safeParse({
+      name,
+      email,
+      pronouns,
+      phoneNumber,
+      workshops: workshopsState,
+      credits,
+      emailPreference,
+      referee: referee as Referee,
+    });
+
+    if (form.success === false) {
+      const err = form.error as ZodError;
+      console.log("errors", formErrors);
+      setFormErrors(err.format() as ZodFormattedError<Application>);
+      return;
+    }
+
     mutation.mutate({
       name,
       email,
       pronouns,
+      phoneNumber,
       workshops: workshopsState,
       credits,
       emailPreference,
+      referee: referee as Referee,
     });
   }
-
-  const isFieldErrored = (fieldName: string): boolean => {
-    if (!mutation.isError) return false;
-    return mutation.error.data?.zodError?.fieldErrors[fieldName] !== undefined;
-  };
-
-  const getErrorMessages = (fieldName: string): string[] => {
-    return mutation.error?.data?.zodError?.fieldErrors[fieldName] as string[];
-  };
 
   // Emtpy array means it only runs once
   useEffect(() => {
     if (selected && typeof selected === "string") {
-      console.log("string", selected);
       toggleWorkshop(selected);
     }
 
     if (selected && typeof selected === "object") {
-      console.log("array", selected);
       selected.map((s) => {
         toggleWorkshop(s);
       });
@@ -98,9 +115,9 @@ export default function Apply() {
           </p>
           <form className="mb-4 rounded bg-white px-8 pt-6 pb-8 shadow-md">
             <label className="mb-2 block text-sm font-bold text-gray-700">
-              {mutation.isError && isFieldErrored("name") ? (
+              {formErrors && formErrors?.name ? (
                 <span className="text-red-600">
-                  Name: {getErrorMessages("name").map((s) => s + " ")}
+                  Name: {formErrors?.name?._errors.map((s) => s + " ")}
                 </span>
               ) : (
                 <>Name:</>
@@ -114,9 +131,9 @@ export default function Apply() {
               />
             </label>
             <label className="mb-2 block pt-2 text-sm font-bold text-gray-700">
-              {mutation.isError && isFieldErrored("pronouns") ? (
+              {formErrors && formErrors?.pronouns ? (
                 <span className="text-red-600">
-                  Pronouns: {getErrorMessages("pronouns").map((s) => s + " ")}
+                  Pronouns: {formErrors.pronouns._errors.map((s) => s + " ")}
                 </span>
               ) : (
                 <>Pronouns:</>
@@ -130,9 +147,9 @@ export default function Apply() {
               />
             </label>
             <label className="mb-2 block pt-2 text-sm font-bold text-gray-700">
-              {mutation.isError && isFieldErrored("email") ? (
+              {formErrors && formErrors.email ? (
                 <span className="text-red-600">
-                  Email: {getErrorMessages("email").map((s) => s + " ")}
+                  Email: {formErrors.email._errors.map((s) => s + " ")}
                 </span>
               ) : (
                 <>Email:</>
@@ -142,6 +159,23 @@ export default function Apply() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 name="email"
+                type="text"
+              />
+            </label>
+            <label className="mb-2 block text-sm font-bold text-gray-700">
+              {formErrors && formErrors.phoneNumber ? (
+                <span className="text-red-600">
+                  Phone number:{" "}
+                  {formErrors.phoneNumber._errors.map((s) => s + " ")}
+                </span>
+              ) : (
+                <>Phone number:</>
+              )}
+              <input
+                className="focus:shadow-outline w-full appearance-none rounded-full border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
+                name="phoneNumber"
                 type="text"
               />
             </label>
@@ -199,12 +233,129 @@ export default function Apply() {
               </label>
             </div>
 
-            {mutation.isError &&
-              mutation.error?.data?.code == "INTERNAL_SERVER_ERROR" && (
-                <div className="text-red-600">
-                  Error has occured when sending forms
-                </div>
-              )}
+            <div className="mb-4 flex items-center">
+              <input
+                className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+                checked={referred}
+                onChange={(e) => {
+                  e ? setReferee({}) : setReferee(undefined);
+                  setReferred(e.target.checked);
+                }}
+                type="checkbox"
+              />
+              <label className="ml-2 text-sm font-medium text-gray-700">
+                Have you been referred by anyone? <br />
+                <p className="text-xs">
+                  For every referal, both partiess get £10 off your next
+                  workshop!
+                </p>
+              </label>
+            </div>
+            <p className="ml-2 text-sm font-medium text-gray-700"></p>
+
+            {referred && referee && (
+              <div className="mx-auto w-3/4 items-center justify-center rounded bg-[#FF955F] p-2 text-white">
+                <label className="mb-2 block text-sm font-bold ">
+                  {formErrors &&
+                  formErrors.referee &&
+                  formErrors.referee.name ? (
+                    <span className="text-red-600">
+                      Name:{" "}
+                      {formErrors.referee.name._errors.map((s) => s + " ")}
+                    </span>
+                  ) : (
+                    <>Name:</>
+                  )}
+                  <input
+                    className="focus:shadow-outline w-full appearance-none rounded-full border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                    value={referee.name}
+                    onChange={(e) =>
+                      setReferee({ ...referee, name: e.target.value })
+                    }
+                    name="referee.name"
+                    type="text"
+                  />
+                </label>
+                <label className="mb-2 block pt-2 text-sm font-bold">
+                  {formErrors &&
+                  formErrors.referee &&
+                  formErrors.referee.pronouns ? (
+                    <span className="text-red-600">
+                      Pronouns:{" "}
+                      {formErrors.referee.pronouns._errors.map((s) => s + " ")}
+                    </span>
+                  ) : (
+                    <>Pronouns:</>
+                  )}
+                  <input
+                    className="focus:shadow-outline w-full appearance-none rounded-full border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                    value={referee.pronouns}
+                    onChange={(e) =>
+                      setReferee({ ...referee, pronouns: e.target.value })
+                    }
+                    name="referee.pronouns"
+                    type="text"
+                  />
+                </label>
+                <label className="mb-2 block pt-2 text-sm font-bold ">
+                  {formErrors &&
+                  formErrors.referee &&
+                  formErrors.referee.email ? (
+                    <span className="text-red-600">
+                      Email:{" "}
+                      {formErrors.referee.email._errors.map((s) => s + " ")}
+                    </span>
+                  ) : (
+                    <>Email:</>
+                  )}
+                  <input
+                    className="focus:shadow-outline w-full appearance-none rounded-full border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                    value={referee.email}
+                    onChange={(e) =>
+                      setReferee({ ...referee, email: e.target.value })
+                    }
+                    name="referee.email"
+                    type="text"
+                  />
+                </label>
+                <label className="mb-2 block text-sm font-bold">
+                  {formErrors &&
+                  formErrors.referee &&
+                  formErrors.referee.phoneNumber ? (
+                    <span className="text-red-600">
+                      Phone number:{" "}
+                      {formErrors.referee.phoneNumber._errors.map(
+                        (s) => s + " "
+                      )}
+                    </span>
+                  ) : (
+                    <>Phone number:</>
+                  )}
+                  <input
+                    className="focus:shadow-outline w-full appearance-none rounded-full border py-2 px-3 leading-tight text-gray-700 shadow focus:outline-none"
+                    value={referee.phoneNumber}
+                    onChange={(e) =>
+                      setReferee({ ...referee, phoneNumber: e.target.value })
+                    }
+                    name="referee.phoneNumber"
+                    type="text"
+                  />
+                </label>
+              </div>
+            )}
+
+            {/* {mutation.isError && */}
+            {/*   mutation.error?.data?.code == "INTERNAL_SERVER_ERROR" && ( */}
+            {/*     <div className="text-red-600"> */}
+            {/*       Error has occured when sending forms */}
+            {/*     </div> */}
+            {/*   )} */}
+
+            {mutation.isError && (
+              <div className="text-red-600">
+                Error has occured when sending forms
+              </div>
+            )}
 
             <button
               type="submit"

@@ -100,7 +100,7 @@ function WorkshopCard({ workshop }: WorkshopCardProps) {
         </div>
 
         <p className="mt-2 text-sm text-white">
-          {workshop.type} <br />
+          <div dangerouslySetInnerHTML={{ __html: workshop.type }} />
           {workshop.date} <br />
           {workshop.time} <br />
         </p>
@@ -413,7 +413,6 @@ export default function Home() {
                     <p className="text-right">- Ayo</p>
                   </div>
                 </div>
-
                 <div className="above-md:flex-row flex bellow-md:flex-col ">
                   <div className="my-auto items-center justify-center p-5">
                     “An engaging and informative 2 hours, learning from a highly
@@ -427,6 +426,42 @@ export default function Home() {
                       src="/small/workshop/ella_small.png"
                       width={892}
                       height={664}
+                      className="rounded-lg"
+                    />
+                  </div>
+                </div>
+
+                <div className="above-md:flex-row flex bellow-md:flex-col">
+                  <div className="p-2">
+                    <Image
+                      priority
+                      alt="Ayo"
+                      src="/headshots/placeholder.png"
+                      width={550}
+                      height={550}
+                      className="rounded-lg"
+                    />
+                  </div>
+                  <div className="my-auto items-center justify-center p-5">
+                    “The workshop was brilliant and felt like being in a (very
+                    exciting) rehearsal room for a couple of hours. It was
+                    creative and collaborative and enriching.”
+                    <p className="text-right"> - Imogen Wilde, IML</p>
+                  </div>
+                </div>
+                <div className="above-md:flex-row flex bellow-md:flex-col ">
+                  <div className="my-auto items-center justify-center p-5">
+                    “That was fun. I think it’s such a brilliant thing you are
+                    doing. Thanks for inviting me to be a part of it.”
+                    <div className="text-right">- Emma Baggott, Director</div>
+                  </div>
+                  <div className="p-2 bellow-md:order-first">
+                    <Image
+                      priority
+                      alt="Emma"
+                      src="/headshots/placeholder.png"
+                      width={512}
+                      height={512}
                       className="rounded-lg "
                     />
                   </div>
@@ -448,9 +483,6 @@ export default function Home() {
                       “I liked that I didn’t feel pressure or nervous in the
                       room, the director was friendly and communicative, easy to
                       talk to and discuss where to go with the text”
-                    </div>
-                    <div className="py-5">
-                      “I learnt about the importance of punctuation!”
                     </div>
 
                     <div className="flex w-full  flex-col py-5">

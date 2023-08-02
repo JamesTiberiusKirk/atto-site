@@ -2,6 +2,7 @@ import { ObjectId } from "mongodb";
 import type { Application } from "types/application";
 import clientPromise from "./connect";
 import { env } from "~/env.mjs";
+import { retryDelay } from "@trpc/client/dist/internals/retryDelay";
 
 export async function newApplication(application: Application) {
   const client = await clientPromise;
@@ -45,14 +46,18 @@ export async function getAllApplicationsInPast(h?: number) {
     const res = await collection.find<Application>(filter).toArray();
 
     const applications: Application[] = res.map((a) => {
-      return {
+      const res = {
         name: a.name,
         email: a.email,
         pronouns: a.pronouns,
         workshops: a.workshops,
         credits: a.credits,
         emailPreference: a.emailPreference,
-      };
+      } as Application;
+
+      if (a.phoneNumber) res.phoneNumber = a.phoneNumber;
+      if (a.referee) res.referee = a.referee;
+      return res;
     });
 
     return { data: applications, error: undefined };
