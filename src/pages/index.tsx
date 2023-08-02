@@ -459,10 +459,10 @@ export default function Home() {
                     <Image
                       priority
                       alt="Emma"
-                      src="/headshots/placeholder.png"
+                      src="/headshots/emma-baggott-headshot-2.jpg"
                       width={512}
                       height={512}
-                      className="rounded-lg "
+                      className="rounded-lg"
                     />
                   </div>
                 </div>

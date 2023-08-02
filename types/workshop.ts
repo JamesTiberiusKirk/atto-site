@@ -68,7 +68,7 @@ export const workshops = [
     key: "SCOTT_LE_CRASS",
     desc: [
       "Rose - Ambassador’s Theatre",
-      "Sid - York Theatre Roya",
+      "Sid - York Theatre Royal",
       "An Audience With Margaret’s Wardrobe - Jermyn Street Theatre",
       "Things That Make no Sense - Birmingham Rep",
       "The Dialogue Project - Almeida Theatre",

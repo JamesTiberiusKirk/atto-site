@@ -197,7 +197,7 @@ export default function Apply() {
                         className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-red-600 focus:ring-2  focus:ring-red-500"
                       />
                       <label className="ml-2 text-sm font-medium">
-                        {w.instructorName}
+                        {w.instructorName} - {w.date}
                       </label>
                     </div>
                   ))
@@ -233,7 +233,8 @@ export default function Apply() {
               </label>
             </div>
 
-            <div className="mb-4 flex items-center">
+            <br />
+            <div className="mb-4  flex items-center text-lg">
               <input
                 className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
                 checked={referred}
@@ -243,15 +244,14 @@ export default function Apply() {
                 }}
                 type="checkbox"
               />
-              <label className="ml-2 text-sm font-medium text-gray-700">
-                Have you been referred by anyone? <br />
-                <p className="text-xs">
-                  For every referal, both partiess get £10 off your next
-                  workshop!
+              <label className="ml-2 text-[#FF955F]">
+                <b>Refer a friend! </b>
+                <br />
+                <p className="text-sm text-gray-700">
+                  On referal, both partiess get £10 off your next workshop!
                 </p>
               </label>
             </div>
-            <p className="ml-2 text-sm font-medium text-gray-700"></p>
 
             {referred && referee && (
               <div className="mx-auto w-3/4 items-center justify-center rounded bg-[#FF955F] p-2 text-white">
