@@ -100,7 +100,7 @@ function WorkshopCard({ workshop }: WorkshopCardProps) {
         </div>
 
         <p className="mt-2 text-sm text-white">
-          <div dangerouslySetInnerHTML={{ __html: workshop.type }} />
+          <span dangerouslySetInnerHTML={{ __html: workshop.type }} />
           {workshop.date} <br />
           {workshop.time} <br />
         </p>

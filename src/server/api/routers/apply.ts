@@ -1,9 +1,12 @@
 import { newApplication } from "lib/db/application";
 import { newNewsSubscription } from "lib/db/subscriptions";
+import { GenerateApplicationAdminEmailString } from "lib/email/admin";
 import sendApplicationReceipt from "lib/email/application";
+import sendEmail from "lib/email/send";
 import type { Application } from "types/application";
 import { ApplicationSchema } from "types/application";
 import type { z } from "zod";
+import { env } from "~/env.mjs";
 
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
@@ -17,9 +20,23 @@ export const applicationRouter = createTRPCRouter({
     .mutation(async ({ input }: NewApplicationProps) => {
       console.log("New application: ", input);
 
+      const adminEmails = env.ADMIN_EMAILS.split(",");
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const adminEmailPromises: Promise<any>[] = [];
+      adminEmails.forEach((e) => {
+        adminEmailPromises.push(
+          sendEmail(
+            e,
+            GenerateApplicationAdminEmailString(input as Application)
+          )
+        );
+      });
+
       const [insertRes, emailResponse] = await Promise.all([
         newApplication(input as Application),
         sendApplicationReceipt(input as Application),
+        ...adminEmailPromises,
       ]);
 
       if (insertRes?.error) {
@@ -54,15 +71,3 @@ export const applicationRouter = createTRPCRouter({
       }
     }),
 });
-
-/*
- 
-1. Argument of type '({ input }: NewApplicationProps) => Promise<void>' is not assignable to parameter of type '(opts: ResolveOptions<{ _config: RootConfig<{ ctx: {}; meta: object; errorShape: { data: { zodError: typeToFlattenedError<any, string> | null; code: "PARSE_ERROR" | "BAD_REQUEST" | "INTERNAL_SERVER_ERROR" | ... 9 more ... | "CLIENT_CLOSED_REQUEST"; httpStatus: number; path?: string | undefined; stack?: string | unde...'.
-     Types of parameters '__0' and 'opts' are incompatible.
-       Type 'ResolveOptions<{ _config: RootConfig<{ ctx: {}; meta: object; errorShape: { data: { zodError: typeToFlattenedError<any, string> | null; code: "PARSE_ERROR" | "BAD_REQUEST" | "INTERNAL_SERVER_ERROR" | ... 9 more ... | "CLIENT_CLOSED_REQUEST"; httpStatus: number; path?: string | undefined; stack?: string | undefined; ...' is not assignable to type 'NewApplicationProps'.
-         The types of 'input.referee' are incompatible between these types.
-           Type '{ name: string; email: string; pronouns: string; } | undefined' is not assignable to type 'Referee | undefined'.
-             Property 'phoneNumber' is missing in type '{ name: string; email: string; pronouns: string; }' but required in type 'Referee'. [2345]
-
-
- */

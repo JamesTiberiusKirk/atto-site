@@ -93,6 +93,28 @@ function GenerateEmailString({
               <p style={{ fontSize: "15px" }}>
                 Email preference: {!a.emailPreference ? "opt in" : "opt out"}
               </p>
+
+              <p>
+                Referee:
+                {a.referee !== undefined ? (
+                  <>
+                    <b>Name: </b>
+                    {a.referee?.name}
+                    <br />
+                    <b>Pronouns: </b>
+                    {a.referee?.pronouns}
+                    <br />
+                    <b>Email: </b>
+                    {a.referee?.email}
+                    <br />
+                    <b>Phrone Number: </b>
+                    {a.referee?.phoneNumber}
+                    <br />
+                  </>
+                ) : (
+                  <>None</>
+                )}
+              </p>
             </div>
           ))}
         </div>
