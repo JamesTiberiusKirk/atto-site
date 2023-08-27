@@ -109,10 +109,6 @@ export default function Apply() {
               <TbChairDirector className="h-24 w-24" color="white" />
             </Link>
           </div>
-          <p className="py-5 text-white">
-            Please choose the workshops you wish to attend. We advise choosing
-            more than one, to avoid missing out as workshops can fill up.
-          </p>
           <form className="mb-4 rounded bg-white px-8 pt-6 pb-8 shadow-md">
             <label className="mb-2 block text-sm font-bold text-gray-700">
               {formErrors && formErrors?.name ? (

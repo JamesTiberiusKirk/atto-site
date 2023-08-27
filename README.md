@@ -1,60 +1,69 @@
 # TODOs:
+
 - [ ] Homepage
-    - [ ] Social media links at the top
-        - [ ] Twitter
-        - [ ] Instagram
-    - [ ] Atto supports...
+  - [ ] Social media links at the top
+    - [ ] Twitter
+    - [ ] Instagram
+  - [ ] Atto supports...
 - [ ] Menu hamburger
-    - [ ] application page
-    - [ ] contact me page
-    - [ ] ...?
+  - [ ] application page
+  - [ ] contact me page
+  - [ ] ...?
 - [ ] Application form page
-    - [ ] All the correct fields
-    - [ ] Including the correct workshops
-    - [ ] Input validation
-    - [ ] Thanks for your application screen
+  - [ ] All the correct fields
+  - [ ] Including the correct workshops
+  - [ ] Input validation
+  - [ ] Thanks for your application screen
 - [ ] Contact me form page
-    - [ ] Pretty much same functionality as application form but less fields
+  - [ ] Pretty much same functionality as application form but less fields
 
 # IDEAS
-- For admin login, worth just using admin email env variable (as array)
-    - then send a one time code to the email at login
-    - OR use OAuth with some provider and only let in if its the correct email
-    - option 1 is simpler
 
-# Notes: 
+- For admin login, worth just using admin email env variable (as array)
+  - then send a one time code to the email at login
+  - OR use OAuth with some provider and only let in if its the correct email
+  - option 1 is simpler
+
+# Notes:
+
 - Need atto supports bit
 - link to Twitter and insta
-- Hamburger Menu 
-    - Apply (separate page)
-    - Workshops (scroll down to the section)
-    - What we do (scroll down to the section)
-    - Testimonials (scroll down to the section)
-    - Contact us (scroll down to the section)
+- Hamburger Menu
+  - Apply (separate page)
+  - Workshops (scroll down to the section)
+  - What we do (scroll down to the section)
+  - Testimonials (scroll down to the section)
+  - Contact us (scroll down to the section)
 
 # Application form
+
 - Be able to select multiple workshops
 
 # Workshops section
+
 - Clicking on each is just a link to apply page
 - Still waiting on content
 
 # Photos
+
 - Background for top of the website (homepage) (instead of the orange) use "dvelped nice pic.png"
 - Background for the testimonials section use "web67" (think about doing some sliding animation)
 
 # Testimonials
+
 - Use "DSCO6624" pic - Ayo - We have a specific text for this one
 - Use "DSCO6550" pic - Anon (blue jumper on the right)
 - See about implementing a carousel for the testimonials
 
 # Email
+
 ```
 Thank you for applying to atto workshops, we will review your applicationa and respond shortly with next steps.
-If you have any qesutions please feel free to reach out 
+If you have any qesutions please feel free to reach out
 ```
 
-# Design 
+# Design
+
 https://paletton.com/#uid=20j0u0kk3BA0H+MbyP+sfu9zFhA
 
 ```
@@ -83,71 +92,138 @@ https://paletton.com/#uid=20j0u0kk3BA0H+MbyP+sfu9zFhA
 ```
 
 # Extras
+
 - [x] Add temp content
+
 ```
-More dates coming soon... 
-Sign up to our news letter to be the first to hear. 
+More dates coming soon...
+Sign up to our news letter to be the first to hear.
 <News letter signup>
 ```
+
 - [ ] Add email admin reporting
 
 ---
 
 # Pictures for the carousel
-dev 9 
-dev 13 
-DSC06414 copy 
 
+dev 9
+dev 13
+DSC06414 copy
 
-# Feedback round 1 
+# Feedback round 1
+
 ## Opening page
-- [x] Lets try it with the atto logo being bigger 
-- [x] the downside logo needs to be central below the text “atto supports” 
+
+- [x] Lets try it with the atto logo being bigger
+- [x] the downside logo needs to be central below the text “atto supports”
 - [x] “atto supports and the downside logo can be smaller
 - [x] is there a way you can have the “apply” button transform when hovered over in some way. Movement and colour would be the best.
 - [x] Can the “apply” button be slightly bigger
-    - **NOTES:** Have made it bigger and could make it even bigger, but it was looking a bit odd to me when testing.
-- [x] Can the picture at the top be unblured 
-    - **QUESTION:** Are you happy with the quality of the picture?
+  - **NOTES:** Have made it bigger and could make it even bigger, but it was looking a bit odd to me when testing.
+- [x] Can the picture at the top be unblured
+  - **QUESTION:** Are you happy with the quality of the picture?
 
 ## What we do
+
 - [x] "Professional actors with professional directors” can this be in a different colour and bigger, this is the header of the text.
-    - **NOTES:** made the font bigger but also made sure not to make it bigger than the actual page title itself
+  - **NOTES:** made the font bigger but also made sure not to make it bigger than the actual page title itself
 - [x] can you centre the text swell so there not a gap at the bottom of the box
 - [x] can we swap in the photo for this one <!-- TODO: Find the photo which is on the email -->
-- [ ] Also this is where I would like to put the video in the future. So on top of this image need a play button that links to youtube video but this can be done later not urgent. 
-    - **NOTE:** Not sure how well this would work as this picture is a portrait and the vid I'm assuming would be landscape
-- [x] can you put an apply button at the bottom of the text as well 
+- [ ] Also this is where I would like to put the video in the future. So on top of this image need a play button that links to youtube video but this can be done later not urgent.
+  - **NOTE:** Not sure how well this would work as this picture is a portrait and the vid I'm assuming would be landscape
+- [x] can you put an apply button at the bottom of the text as well
 
-## Other participants 
-- [x] Can you put the text to the left of the box and have a slideshow of the other pics I sent on the right handside of the box. 
+## Other participants
+
+- [x] Can you put the text to the left of the box and have a slideshow of the other pics I sent on the right handside of the box.
 - [x] can you put an apply button at the bottom of this as well
 
 ## Footer
+
 - [x] Can we have twitter and insta link in the footer and the email address: info@attoworkshops.com
 - [x] https://twitter.com/attoworkshops
 - [x] https://instagram.com/attoworkshops
 - [ ] https://vimeo.com/820843498
-    - **NOTES:** video is under age restriction or something
+  - **NOTES:** video is under age restriction or something
 
-# Feedback Round 2 
+# Feedback Round 2
+
 ## Opening page
-- [x] Lower the logo 
-    - **Notes:** So I've lowered it, but the way that the elements are laid out (code wise) means that it might be a bit awkward with how its displayed. If needed I could re-work it a bit.
+
+- [x] Lower the logo
+  - **Notes:** So I've lowered it, but the way that the elements are laid out (code wise) means that it might be a bit awkward with how its displayed. If needed I could re-work it a bit.
 - [x] Add a link to the downside fisher youth center `http://www.downside-fisher.org`
 
 ## What we do
+
 - [x] Maybe a link on top of the picture or the picture itself clickable which would take you to the video link in a separate tab
-    - **Notes:** On hover, the button also turns gray
+  - **Notes:** On hover, the button also turns gray
 
 ## Confirmation page
+
 - [x] Make the atto text solid green
 
 ## Email application receipt
-- [x] Change the text to 
+
+- [x] Change the text to
+
 ```
 Thank you for your application to atto workshops we will be in-touch shortly
 ```
-    - **Notes:** Took liberties and also added the logo to the emails
 
+- **Notes:** Took liberties and also added the logo to the emails
 
+# End of august changes
+
+```
+Hi Dumitru
+
+Hope you’re well.
+
+Please find attached the workshops for September and their headshots.
+
+Also can you replace Ella Dorman Gajic’s testimonial with this one if there room and the attached photo:
+
+ "I loved having the opportunity to work with Simon, he brought a fantastic energy in the room and created a safe and collaborative space to work and play. I really enjoyed exploring scenes from Jack Thorne’s A Christmas Carol and having the opportunity to explore & build on my choices and be re-directed and inspired by Simon’s wealth of knowledge and passion for the play! I haven’t experienced a workshop like this in a long time - it is worth every penny!" - Poppy Snow, HOA Agency
+
+Also can you replace: “Great! Fun location and very inclusive”
+With: "Really enjoyed the deep discussions we shared all together whilst working through the scripts. A refreshing atmosphere for a workshop!”
+
+Can you also change the first paragraph of the What we do section to : On Saturdays professional actors of all ages are welcome to take part in our drop-in scene studies. Our aim is to create a rehearsal room; a truly safe space to fail, succeed, learn & work on that craft with the guidance of leading directors.
+
+Can you also delete Please choose the workshops you wish to attend. We advise choosing more than one, to avoid missing out as workshops can fill up From the apply page.
+
+Thats all I can think of for now
+
+Thank you !
+
+```
+
+## TODOs:
+
+- [x] Update Workshops
+  - [ ] Change from the placeholder to a better quality headshot for Oscar
+- [x] Change Ella's testimonial with the following
+  ```
+  I loved having the opportunity to work with Simon, he brought a fantastic energy in the room and
+  created a safe and collaborative space to work and play. I really enjoyed exploring scenes from
+  Jack Thorne’s A Christmas Carol and having the opportunity to explore & build on my choices and
+  be re-directed and inspired by Simon’s wealth of knowledge and passion for the play! I haven’t
+  experienced a workshop like this in a long time - it is worth every penny!"
+  - Poppy Snow, HOA Agency
+  ```
+  - TODO: find out which headshot
+- [x] Replace: “Great! Fun location and very inclusive” With: "Really enjoyed the deep discussions we shared all together whilst working through the scripts. A refreshing atmosphere for a workshop!"
+- [x] Change first paragraph of what we do to the following
+  ```
+  On Saturdays professional actors of all ages are welcome to take part in our drop-in scene studies.
+  Our aim is to create a rehearsal room; a truly safe space to fail, succeed, learn & work on that craft
+  with the guidance of leading directors.
+  ```
+- [x] Delete the following from the applications page
+  ```
+  Please choose the workshops you wish to attend.
+  We advise choosing more than one,
+  to avoid missing out as workshops can fill up
+  ```

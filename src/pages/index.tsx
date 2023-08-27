@@ -414,16 +414,22 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="above-md:flex-row flex bellow-md:flex-col ">
-                  <div className="my-auto items-center justify-center p-5">
-                    “An engaging and informative 2 hours, learning from a highly
-                    skilled director”
-                    <div className="text-right">- Ella Dorman-Gajic</div>
+                  <div className="my-auto w-full items-center justify-center p-5">
+                    “I loved having the opportunity to work with Simon, he
+                    brought a fantastic energy in the room and created a safe
+                    and collaborative space to work and play. I really enjoyed
+                    exploring scenes from Jack Thorne’s A Christmas Carol and
+                    having the opportunity to explore & build on my choices and
+                    be re-directed and inspired by Simon’s wealth of knowledge
+                    and passion for the play! I haven’t experienced a workshop
+                    like this in a long time - it is worth every penny!”
+                    <div className="text-right">- Poppy Snow, HOA Agency</div>
                   </div>
-                  <div className="p-2 bellow-md:order-first">
+                  <div className="w-full p-2 bellow-md:order-first">
                     <Image
                       priority
                       alt="Ayo"
-                      src="/small/workshop/ella_small.png"
+                      src="/headshots/poppy.png"
                       width={892}
                       height={664}
                       className="rounded-lg"
@@ -477,7 +483,9 @@ export default function Home() {
                 <div className="flex over-xl:flex-row bellow-xl:flex-col">
                   <div className="max-w-lg over-xl:pr-5">
                     <div className="py-5">
-                      “Great! Fun location and very inclusive”
+                      “Really enjoyed the deep discussions we shared all
+                      together whilst working through the scripts. A refreshing
+                      atmosphere for a workshop!”
                     </div>
                     <div className="py-5">
                       “I liked that I didn’t feel pressure or nervous in the
