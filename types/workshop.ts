@@ -106,7 +106,7 @@ export const workshops = [
       "After October - Finborough Theatre (nominated 3 off west end awards)",
       "What They Took With Them: A List - National Theatre",
     ],
-    imgPath: "/headshots/placeholder.png",
+    imgPath: "/headshots/oscar_headshot.jpg",
     type: "Scene Study",
     date: "Saturday 23rd September",
     time: " 10AM - 1PM",
