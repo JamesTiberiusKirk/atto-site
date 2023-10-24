@@ -76,13 +76,13 @@ function WorkshopCard({ workshop }: WorkshopCardProps) {
                         </Link>
                     </div>
                 ) : (
-                        <Link href={"/apply"}>
-                            <MdAccountCircle
-                                className="transform transition duration-100 hover:scale-110"
-                                size={160}
-                            />
-                        </Link>
-                    )}
+                    <Link href={"/apply"}>
+                        <MdAccountCircle
+                            className="transform transition duration-100 hover:scale-110"
+                            size={160}
+                        />
+                    </Link>
+                )}
 
                 <a className="flex" target="_blank" href={workshop.link}>
                     <h1 className="mt-4 text-2xl font-bold">{workshop.instructorName}</h1>
@@ -177,8 +177,8 @@ function NewsLetterSignup() {
                         </svg>
                     </div>
                 ) : (
-                        "Submit"
-                    )}
+                    "Submit"
+                )}
             </button>
         </form>
     );
@@ -200,14 +200,13 @@ function Menu() {
                     onClick={() => setMenuVisible(!menuVisible)}
                     className={
                         "h-8 w-8 transform text-white transition duration-100 hover:scale-110 " +
-                            (menuVisible ? "rotate-90 " : "")
+                        (menuVisible ? "rotate-90 " : "")
                     }
                 />
             </div>
             <div
-                className={`${
-menuVisible ? "translate-x-0" : "translate-x-full"
-} fixed top-36 right-6 z-30 h-full w-64 transform p-4 transition-transform duration-500`}
+                className={`${menuVisible ? "translate-x-0" : "translate-x-full"
+                    } fixed top-36 right-6 z-30 h-full w-64 transform p-4 transition-transform duration-500`}
             >
                 {menuVisible && (
                     <nav className="z-40 grid rounded-lg bg-[#f0631c] text-2xl text-white shadow-lg">
@@ -271,15 +270,21 @@ export default function Home() {
                         </div>
 
                         <div className="w-full place-content-center over-xl:pt-40">
-                            <Image
+                            <div
                                 className="mx-auto bellow-lg:w-full"
-                                alt="Atto logo"
-                                src={attoLogo}
-                                priority
-                                style={{
-                                    maxWidth: "500px",
-                                }}
-                            />
+                            >
+                                <Image
+                                    alt="Atto logo"
+                                    src={attoLogo}
+                                    priority
+                                    style={{
+                                        maxWidth: "500px",
+                                    }}
+                                />
+                                <div className="-translate-y-10 text-center text-green-700 text-xl">
+                                    connect.play.grow
+                                </div>
+                            </div>
                         </div>
 
                         <div className="bellow-xl:w-full bellow-xl:object-center bellow-xl:pt-5">
@@ -338,13 +343,14 @@ export default function Home() {
                                     <div className="flex h-full flex-row">
                                         <div className="my-auto">
                                             <p className="py-2 text-2xl">
-                                                Professional actors with professional directors
+                                                Actors. Emerging Directors. Leading Professionals
                                             </p>
                                             <p className="py-2">
-                                                On Saturdays professional actors of all ages are welcome
-                                                to take part in our drop-in scene studies. Our aim is to
-                                                create a truly safe space to fail, succeed, learn & work
-                                                on that craft with the guidance of leading directors.
+                                                On Saturdays actors & emerging directors of all ages
+                                                are welcome to take part in our drop-in scene studies.
+                                                Our mission is to create a truly safe space to connect,
+                                                play, grow, learn & work on that craft with the guidance
+                                                of leading directors.
                                             </p>
                                             <p className="py-2">
                                                 Workshops will take place at Downside Fisher Youth Club,
@@ -352,9 +358,9 @@ export default function Home() {
                                                 walk from London Bridge Station.
                                             </p>
                                             <p className="py-2">
-                                                Workshops help support the running of the Downside
-                                                Fisher Youth Club who help socially excluded children &
-                                                young people from Bermondsey & its neighbouring areas.
+                                                Workshops help support the running of the Downside Fisher
+                                                Youth Club who help socially excluded children & young people
+                                                from Bermondsey & its neighbouring areas.
                                             </p>
                                         </div>
                                     </div>
@@ -455,6 +461,7 @@ export default function Home() {
                                         <p className="text-right"> - Imogen Wilde, IML</p>
                                     </div>
                                 </div>
+
                                 <div className="above-md:flex-row flex bellow-md:flex-col ">
                                     <div className="my-auto items-center justify-center p-5">
                                         “That was fun. I think it’s such a brilliant thing you are
@@ -470,6 +477,25 @@ export default function Home() {
                                             height={512}
                                             className="rounded-lg"
                                         />
+                                    </div>
+                                </div>
+
+                                <div className="above-md:flex-row flex bellow-md:flex-col">
+                                    <div className="p-2">
+                                        <Image
+                                            priority
+                                            alt="Ayo"
+                                            src="/headshots/placeholder.png"
+                                            width={550}
+                                            height={550}
+                                            className="rounded-lg"
+                                        />
+                                    </div>
+                                    <div className="my-auto items-center justify-center p-5">
+                                        “I loved that we got up on our feet straight away, i
+                                        loved how enthusiastic everyone was, I liked how the
+                                        exercises were new and something i hadn’t done before!”
+                                        <p className="text-right">  - Nastassja Dao</p>
                                     </div>
                                 </div>
                             </div>
@@ -514,25 +540,25 @@ export default function Home() {
                                                 hasPrev: boolean,
                                                 label: string
                                             ) => (
-                                                    <button
-                                                        type="button"
-                                                        aria-label={label}
-                                                        className="control-arrow control-prev rounded-l-lg"
-                                                        onClick={onClickHandler}
-                                                    />
-                                                )}
+                                                <button
+                                                    type="button"
+                                                    aria-label={label}
+                                                    className="control-arrow control-prev rounded-l-lg"
+                                                    onClick={onClickHandler}
+                                                />
+                                            )}
                                             renderArrowNext={(
                                                 onClickHandler: () => void,
                                                 hasNext: boolean,
                                                 label: string
                                             ) => (
-                                                    <button
-                                                        type="button"
-                                                        aria-label={label}
-                                                        className="control-arrow control-next rounded-r-lg"
-                                                        onClick={onClickHandler}
-                                                    />
-                                                )}
+                                                <button
+                                                    type="button"
+                                                    aria-label={label}
+                                                    className="control-arrow control-next rounded-r-lg"
+                                                    onClick={onClickHandler}
+                                                />
+                                            )}
                                             autoPlay={true}
                                             infiniteLoop={true}
                                             showStatus={false}
