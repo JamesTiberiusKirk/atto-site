@@ -15,6 +15,9 @@ export async function updateWorkshops(update: Workshop[]) {
 
     const collection = db.collection(colName);
 
+    // NOTE: I dont really wanna do this but i cba to figure out what else todo
+    // basically just wanted to insert whipe all table and readd it
+    // would be a bit too odd to do an update, insert and a delete on missing one
     await collection.deleteMany()
 
     const bulkOps = update.map(w => {
