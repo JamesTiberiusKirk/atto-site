@@ -208,6 +208,6 @@ export const workshops = [
     date: "Saturday 24 Februaruy",
     time: "3PM - 6PM",
     price: "£25",
-    link: "",
+    link: "https://www.marliehaco.com",
   },
 ] as Workshop[];
