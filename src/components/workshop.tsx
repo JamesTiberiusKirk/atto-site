@@ -76,7 +76,7 @@ export function WorkshopCard({ workshop }: WorkshopCardProps) {
         </div>
 
         <p className="mt-2 text-sm text-white">
-          <span dangerouslySetInnerHTML={{ __html: workshop.type }} /> <br />
+          <span dangerouslySetInnerHTML={{ __html: workshop.type.replaceAll("\n","<br/>") }} /> <br />
           {workshop.date} <br />
           {workshop.time} <br />
         </p>

@@ -26,7 +26,8 @@ import caruselImage4 from "/public/webp/workshop/DSC06451.webp";
 import whatWeDoImage from "/public/webp/workshop/dev_10_crop.webp";
 import caruselImage6 from "/public/webp/workshop/dev_13.webp";
 import caruselImage5 from "/public/webp/workshop/dev_9.webp";
-import { WorkshopCard, WorkshopsCard } from "~/components/workshop";
+import { WorkshopsCard } from "~/components/workshop";
+import { getAllWorkshops } from "lib/db/workshop";
 
 const caruselData = [
   {
@@ -181,7 +182,7 @@ function Menu() {
 interface HomeProps {
   workshops: Workshop[];
 }
-export default function Home({ workshops }: HomeProps) {
+export default function Home(props: HomeProps) {
   return (
     <AttoPage>
       <Menu />
@@ -261,7 +262,7 @@ export default function Home({ workshops }: HomeProps) {
           <div className="p-10 ">
             <div className="flex h-full flex-col">
               <h1 className="mb-10 text-center text-3xl">Workshops</h1>
-              <WorkshopsCard workshops={workshops}/>
+              <WorkshopsCard workshops={props.workshops}/>
             </div>
           </div>
         </div>
@@ -632,5 +633,10 @@ export default function Home({ workshops }: HomeProps) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/require-await
 export const getServerSideProps = async () => {
-  return { props: { workshops } };
+    const workshops = await getAllWorkshops(true)
+    if (workshops.error){
+      // TODO: need to figure out how to handle this
+    }
+
+  return { props: { workshops: workshops.data as Workshop[] } };
 };
