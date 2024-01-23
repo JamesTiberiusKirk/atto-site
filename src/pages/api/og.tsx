@@ -16,7 +16,9 @@ export default function Og() {
         }}
         tw="bg-[#FF955F]"
       >
+        {/* eslint-disable @next/next/no-img-element */}
         <img
+          alt="atto workshop"
           tw="mx-auto my-auto w-2/3"
           src="https://attoworkshops.com/logo_with_name.png"
         />

@@ -5,6 +5,7 @@ import { z } from "zod";
  * built with invalid env vars.
  */
 const server = z.object({
+  BLOB_READ_WRITE_TOKEN: z.string(),
   NODE_ENV: z.enum(["development", "test", "production"]),
   MONGODB_URI: z.string(),
   MONGO_URL: z.string(),
@@ -12,6 +13,7 @@ const server = z.object({
   MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION: z.string(),
   MONGO_DB_CONTACTS_COLLECTION: z.string(),
   MONGO_DB_LOGIN_COLLECTION: z.string(),
+  MONGO_DB_WORKSHOPS_COLLECTION: z.string(),
   MJ_APIKEY_PUBLIC: z.string(),
   MJ_APIKEY_PRIVATE: z.string(),
   MJ_SENDER_EMAIL: z.string(),
@@ -37,6 +39,7 @@ const client = z.object({
  * @type {Record<keyof z.infer<typeof server> | keyof z.infer<typeof client>, string | undefined>}
  */
 const processEnv = {
+  BLOB_READ_WRITE_TOKEN: process.env.NODE_ENV,
   NODE_ENV: process.env.NODE_ENV,
   MONGODB_URI: process.env.MONGODB_URI,
   MONGO_URL: process.env.MONGO_URL,
@@ -45,6 +48,7 @@ const processEnv = {
     process.env.MONGO_DB_NEWS_LETTER_SUBSCRIPTONS_COLLECTION,
   MONGO_DB_CONTACTS_COLLECTION: process.env.MONGO_DB_CONTACTS_COLLECTION,
   MONGO_DB_LOGIN_COLLECTION: process.env.MONGO_DB_LOGIN_COLLECTION,
+  MONGO_DB_WORKSHOPS_COLLECTION: process.env.MONGO_DB_WORKSHOPS_COLLECTION,
   MJ_APIKEY_PUBLIC: process.env.MJ_APIKEY_PUBLIC,
   MJ_APIKEY_PRIVATE: process.env.MJ_APIKEY_PRIVATE,
   MJ_SENDER_EMAIL: process.env.MJ_SENDER_EMAIL,

@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { type GetServerSideProps } from "next";
 import Link from "next/link";
 import { useState } from "react";
 import {
@@ -8,8 +7,6 @@ import {
   AiOutlinePlayCircle,
   AiOutlineTwitter,
 } from "react-icons/ai";
-import { IoMdOpen } from "react-icons/io";
-import { MdAccountCircle } from "react-icons/md";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -18,7 +15,6 @@ import AttoPage from "~/components/page";
 import { api } from "~/utils/api";
 
 import type { Workshop } from "types/workshop";
-import { workshops } from "types/workshop";
 import dfycLogo from "/public/dfyc_logo_small.jpg";
 import attoLogo from "/public/logo_with_name.png";
 import workshopBannerImage from "/public/small/workshop/dvelped_nice_pic_scaled.png";
@@ -29,6 +25,8 @@ import caruselImage4 from "/public/webp/workshop/DSC06451.webp";
 import whatWeDoImage from "/public/webp/workshop/dev_10_crop.webp";
 import caruselImage6 from "/public/webp/workshop/dev_13.webp";
 import caruselImage5 from "/public/webp/workshop/dev_9.webp";
+import { WorkshopsCard } from "~/components/workshop";
+import { getAllWorkshops } from "lib/db/workshop";
 
 const caruselData = [
   {
@@ -57,60 +55,6 @@ const caruselData = [
   },
 ];
 
-type WorkshopCardProps = {
-  workshop: Workshop;
-};
-
-function WorkshopCard({ workshop }: WorkshopCardProps) {
-  return (
-    <div className="m-5 min-w-fit">
-      <div className="flex flex-col items-center text-center">
-        {workshop.imgPath ? (
-          <div className="h-40 w-40 transform overflow-hidden rounded-full transition duration-100 hover:scale-110">
-            <Link href={"/apply?opt=" + workshop.key}>
-              <Image
-                src={workshop.imgPath}
-                alt={"Headshot " + workshop.instructorName}
-                width={200}
-                height={200}
-              />
-            </Link>
-          </div>
-        ) : (
-          <Link href={"/apply"}>
-            <MdAccountCircle
-              className="transform transition duration-100 hover:scale-110"
-              size={160}
-            />
-          </Link>
-        )}
-
-        <a className="flex" target="_blank" href={workshop.link}>
-          <h1 className="mt-4 text-2xl font-bold">{workshop.instructorName}</h1>
-          <IoMdOpen className="mr-1 mt-5" size={15} />
-        </a>
-        <div>
-          <p className="mt-2 text-sm text-white">
-            {workshop.desc.map((d, i) => (
-              <span key={i}>
-                {d}
-                <br />
-              </span>
-            ))}
-          </p>
-        </div>
-
-        <p className="mt-2 text-sm text-white">
-          <span dangerouslySetInnerHTML={{ __html: workshop.type }} /> <br />
-          {workshop.date} <br />
-          {workshop.time} <br />
-        </p>
-
-        <p className="mt-2 text-sm text-white">{workshop.price}</p>
-      </div>
-    </div>
-  );
-}
 
 function NewsLetterSignup() {
   const mutation = api.newsLetter.new.useMutation({
@@ -237,7 +181,7 @@ function Menu() {
 interface HomeProps {
   workshops: Workshop[];
 }
-export default function Home({ workshops }: HomeProps) {
+export default function Home(props: HomeProps) {
   return (
     <AttoPage>
       <Menu />
@@ -317,21 +261,7 @@ export default function Home({ workshops }: HomeProps) {
           <div className="p-10 ">
             <div className="flex h-full flex-col">
               <h1 className="mb-10 text-center text-3xl">Workshops</h1>
-              <div className="my-auto mx-auto mb-20 rounded-lg bg-[#FF955F] p-10 text-center text-2xl text-white">
-                <div className="flex flex-wrap justify-center over-lg:flex-row bellow-lg:flex-col">
-                  {workshops.map((w, i) => (
-                    <WorkshopCard key={i} workshop={w} />
-                  ))}
-                </div>
-                <div className="mt-5 ">
-                  <Link
-                    className="rounded-full bg-[#8C2F00] px-5 py-3 text-4xl font-bold text-gray-100 hover:bg-[#e64d00]"
-                    href={"/apply"}
-                  >
-                    Apply
-                  </Link>
-                </div>
-              </div>
+              <WorkshopsCard workshops={props.workshops}/>
             </div>
           </div>
         </div>
@@ -702,5 +632,10 @@ export default function Home({ workshops }: HomeProps) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/require-await
 export const getServerSideProps = async () => {
-  return { props: { workshops } };
+    const workshops = await getAllWorkshops(true)
+    if (workshops.error){
+      // TODO: need to figure out how to handle this
+    }
+
+  return { props: { workshops: workshops.data as Workshop[] } };
 };

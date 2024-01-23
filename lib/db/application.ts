@@ -2,7 +2,6 @@ import { ObjectId } from "mongodb";
 import type { Application } from "types/application";
 import clientPromise from "./connect";
 import { env } from "~/env.mjs";
-import { retryDelay } from "@trpc/client/dist/internals/retryDelay";
 
 export async function newApplication(application: Application) {
   const client = await clientPromise;
