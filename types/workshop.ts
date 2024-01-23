@@ -226,5 +226,6 @@ Vengeance - Pleasance Theatre`
     time: "3PM - 6PM",
     price: "£25",
     link: "",
+
   },
 ] as Workshop[];
