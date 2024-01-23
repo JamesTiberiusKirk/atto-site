@@ -1,10 +1,10 @@
 import { withSessionRoute } from 'lib/auth/withSession';
 import { updateWorkshops } from 'lib/db/workshop';
 import { ObjectId } from 'mongodb';
-import { Workshop } from 'types/workshop';
+import type { Workshop } from 'types/workshop';
 
 export default withSessionRoute(async function handler(req,res) {
-    let update = JSON.parse(req.body).workshops as Workshop[]
+    let update = (JSON.parse(req.body as string) as { workshops:Workshop[] }).workshops
 
     if (typeof update !== "object" || update.length === 0) return res.status(400).json({error: "invalid data"})
 

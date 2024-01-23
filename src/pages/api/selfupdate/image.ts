@@ -18,7 +18,7 @@ export default withSessionRoute(async function handler(req,res) {
     
     const environment = env.NODE_ENV
 
-    let filePath: string =`${environment}/${type}/${req.query.filename}`
+    const filePath =`${environment}/${type}/${req.query.filename as string}`
 
     const blob = await put(filePath, req, {
         access: 'public',

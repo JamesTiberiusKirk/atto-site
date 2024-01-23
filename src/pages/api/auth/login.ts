@@ -1,6 +1,6 @@
 import { login } from "lib/auth/login";
 import { withSessionRoute } from "lib/auth/withSession";
-import { LoginRequest } from "types/loginRequests";
+import type { LoginRequest } from "types/loginRequests";
 import { env } from "~/env.mjs";
 
 export default withSessionRoute(async function loginRoute(req, res) {

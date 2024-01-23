@@ -5,8 +5,9 @@ import { api } from "~/utils/api";
 import { TbChairDirector } from "react-icons/tb";
 import Link from "next/link";
 import { workshops } from "types/workshop";
-import { Application, ApplicationSchema, Referee } from "types/application";
-import { ZodError, ZodFormattedError } from "zod";
+import type { Application, Referee } from "types/application";
+import { ApplicationSchema } from "types/application";
+import type { ZodError, ZodFormattedError } from "zod";
 
 // TODO: need to handle input validation here
 export default function Apply() {

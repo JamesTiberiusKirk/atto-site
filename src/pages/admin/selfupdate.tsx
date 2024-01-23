@@ -1,9 +1,10 @@
 import { withSessionSsr } from "lib/auth/withSession";
 import type { LoginRequest } from "types/loginRequests";
 import AttoPage from "~/components/page";
-import { FormEvent, useEffect, useRef, useState } from "react";
-import { PutBlobResult } from "@vercel/blob";
-import { Workshop } from "types/workshop";
+import type { FormEvent } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { PutBlobResult } from "@vercel/blob";
+import type { Workshop } from "types/workshop";
 import { WorkshopsCard } from "~/components/workshop";
 import { getAllWorkshops } from "lib/db/workshop";
 
@@ -31,7 +32,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
       throw new Error('No file selected');
     }
 
-    const file = inputFileRef.current.files[0] as File;
+    const file = inputFileRef.current.files[0];
 
     const response = await fetch(
       `/api/selfupdate/image?type=headshot&filename=${encodeURIComponent(file.name)}`,
@@ -41,13 +42,16 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
       },
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
     const apiRes = await response.json()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (apiRes.error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
       setImageUploadError(apiRes.error)
       return
     } 
 
-    const url: string =(apiRes as PutBlobResult).url as string
+    const url = (apiRes as PutBlobResult).url 
     setCurrentWorkshop({
       ...currentWorkshop,
       imgPath: url,
@@ -55,7 +59,9 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
   }
 
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onRadioChange =  (e: any) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
     const key = e.currentTarget.value
     setCurrentWorkshop( workshops.find(w=>w.key===key))
   }
@@ -71,7 +77,8 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
       },
     );
 
-    const apiRes = await response.json()
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const apiRes = await response.json() as {data: any, error: string}
     if (apiRes.error) {
       setWorkshopUpdateError(apiRes.error)
     } 
@@ -80,6 +87,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
 
   useEffect(()=>{
     setHaChanged(!(JSON.stringify(workshops)===originalArray))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[workshops])
 
   useEffect(()=>{
@@ -91,6 +99,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
       } else return w
     })])
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[currentWorkshop])
 
   return (
@@ -196,7 +205,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
               <div className="p-5 bg-gray-100">
                 <div>
                   <h1>Upload picture for workshop</h1>
-                  <form onSubmit={formSubmit} >
+                  <form onSubmit={(event)=>void formSubmit(event)} >
                     <input
                       name="file" ref={inputFileRef} type="file" required />
                     <br/>
@@ -214,7 +223,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
 
                 <div>
                   <form>
-                    <label htmlFor="workshopFormInstructorName">Instructo's Name:</label>
+                    <label htmlFor="workshopFormInstructorName">Instructo&apos;s Name:</label>
                     <input
                       id="workshopFormInstructorName"
                       className="border-gray-200 border-solid border-2 p-2 w-full"
@@ -287,7 +296,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                     />
                     <br/>
 
-                    <label htmlFor="workshopFormLink">Portfolio Link: (MUST include "https://")</label>
+                    <label htmlFor="workshopFormLink">Portfolio Link: (MUST include &quot;https://&quot;)</label>
                     <input
                       id="workshopFormLint"
                       className="border-gray-200 border-solid border-2 p-2 w-full"
@@ -318,9 +327,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
           { hasChanged &&( <p className="text-red-400">Unsaved Changes</p> )}
           <button
             className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            onClick={
-              sendWorkshops
-            }
+            onClick={() => void sendWorkshops()}
           >
             {loading ? (
               <div role="status">

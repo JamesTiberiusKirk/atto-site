@@ -15,7 +15,6 @@ import AttoPage from "~/components/page";
 import { api } from "~/utils/api";
 
 import type { Workshop } from "types/workshop";
-import { workshops } from "types/workshop";
 import dfycLogo from "/public/dfyc_logo_small.jpg";
 import attoLogo from "/public/logo_with_name.png";
 import workshopBannerImage from "/public/small/workshop/dvelped_nice_pic_scaled.png";
