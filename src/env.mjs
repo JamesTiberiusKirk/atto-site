@@ -5,6 +5,7 @@ import { z } from "zod";
  * built with invalid env vars.
  */
 const server = z.object({
+  BLOB_READ_WRITE_TOKEN: z.string(),
   NODE_ENV: z.enum(["development", "test", "production"]),
   MONGODB_URI: z.string(),
   MONGO_URL: z.string(),
@@ -37,6 +38,7 @@ const client = z.object({
  * @type {Record<keyof z.infer<typeof server> | keyof z.infer<typeof client>, string | undefined>}
  */
 const processEnv = {
+  BLOB_READ_WRITE_TOKEN: process.env.NODE_ENV,
   NODE_ENV: process.env.NODE_ENV,
   MONGODB_URI: process.env.MONGODB_URI,
   MONGO_URL: process.env.MONGO_URL,

@@ -1,13 +1,14 @@
 export type Workshop = {
   instructorName: string;
   key: string;
-  imgPath?: string;
-  desc: string[];
+  imgPath: string;
+  desc: string[] | string;
   type: string;
   date: string;
   time: string;
   price: string;
   link: string;
+  display: boolean;
 };
 
 export function getWorkshopByKey(key: string): Workshop | undefined {
@@ -177,22 +178,22 @@ export const workshops = [
   //     price: "£25",
   //     link: "https://www.joshrochedirector.com",
   // },
-  // {
-  //   instructorName: "Bethany Pitts",
-  //   key: "BETHANY_PITTS",
-  //   desc: [
-  //     "Juniper & Jules - Soho Theatre ",
-  //     "The Beach House - Park Theatre",
-  //     "The Misandrist - Arcola Theatre",
-  //     "Sirens - Mercury Theatre",
-  //   ],
-  //   imgPath: "/headshots/bethany.jpeg",
-  //   type: "Truth in Character: Transforming The Impossible On Stage<br><br>Scene Study<br>Mr Burns by Anne Washburn",
-  //   date: "Saturday 16th December",
-  //   time: "10AM - 1PM",
-  //   price: "£25",
-  //   link: "https://www.theproductionexchange.com/creatives/bethany-pitts",
-  // },
+  {
+    instructorName: "Bethany Pitts",
+    key: "BETHANY_PITTS",
+    desc: [
+      "Juniper & Jules - Soho Theatre ",
+      "The Beach House - Park Theatre",
+      "The Misandrist - Arcola Theatre",
+      "Sirens - Mercury Theatre",
+    ],
+    imgPath: "/headshots/bethany.jpeg",
+    type: "Truth in Character: Transforming The Impossible On Stage<br><br>Scene Study<br>Mr Burns by Anne Washburn",
+    date: "Saturday 16th December",
+    time: "10AM - 1PM",
+    price: "£25",
+    link: "https://www.theproductionexchange.com/creatives/bethany-pitts",
+  },
   {
     instructorName: "Marlie Haco",
     key: "MARLIE_HACO",
@@ -203,6 +204,22 @@ export const workshops = [
       "Lovesick - The Hope Theatre",
       "Vengeance - Pleasance Theatre",
     ],
+    imgPath: "/headshots/marlie_haco.jpg",
+    type: "Scene Study<br>The Animal Kingdom by Ruby Thomas",
+    date: "Saturday 24 Februaruy",
+    time: "3PM - 6PM",
+    price: "£25",
+    link: "",
+  },
+  {
+    instructorName: "Marlie Haco test",
+    key: "MARLIE_HACO_TEST",
+    desc: `Anthropology - Hampstead Theatre (Assistant Director)
+Mary - Hampstead Theatre (Assistant Director)
+Proud - Kings Head Theatre
+Lovesick - The Hope Theatre
+Vengeance - Pleasance Theatre`
+    ,
     imgPath: "/headshots/marlie_haco.jpg",
     type: "Scene Study<br>The Animal Kingdom by Ruby Thomas",
     date: "Saturday 24 Februaruy",
