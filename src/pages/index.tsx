@@ -63,6 +63,7 @@ const testimonials: TestimonialsPorops = {
 that was very effective I will take with me for the rest of
 my acting career`,
       from: "Ayo",
+      display: true,
     },
     {
       headshot: "/headshots/poppy.png",
@@ -75,12 +76,14 @@ be re-directed and inspired by Simon’s wealth of knowledge
 and passion for the play! I haven’t experienced a workshop
 like this in a long time - it is worth every penny!`,
       from: "Poppy Snow, HOA Agency",
+      display: true,
     },
     {
       quote: `The workshop was brilliant and felt like being in a (very
 exciting) rehearsal room for a couple of hours. It was
 creative and collaborative and enriching.`,
       from: "Imogen Wilde, IML",
+      display: true,
     },
     {
       quote: `I loved having the opportunity to work with Simon, he
@@ -92,18 +95,21 @@ be re-directed and inspired by Simon’s wealth of knowledge
 and passion for the play! I haven’t experienced a workshop
 like this in a long time - it is worth every penny!`,
       from: "Imogen Wilde, IML",
+      display: true,
     },
     {
       quote: `The workshop was brilliant and felt like being in a (very
 exciting) rehearsal room for a couple of hours. It was
 creative and collaborative and enriching.`,
       from: "Imogen Wilde, IML",
+      display: true,
     },
     {
       quote: `The workshop was brilliant and felt like being in a (very
 exciting) rehearsal room for a couple of hours. It was
 creative and collaborative and enriching.`,
       from: "Imogen Wilde, IML",
+      display: true,
     },
   ],
   carouselData: {
@@ -289,7 +295,7 @@ export default function Home(props: HomeProps) {
               </div>
             </div>
 
-            <div className="w-full place-content-center over-xl:pt-40">
+            <div className="w-full place-content-center over-xl:pt-40 ">
               <div className="mx-auto bellow-lg:w-full">
                 <Image
                   alt="Atto logo"
@@ -298,6 +304,7 @@ export default function Home(props: HomeProps) {
                   style={{
                     maxWidth: "500px",
                   }}
+                  className="mx-auto"
                 />
                 <div className="-translate-y-10 text-center text-xl text-green-700">
                   connect.play.grow

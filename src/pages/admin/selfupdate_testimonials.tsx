@@ -38,7 +38,7 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
     const file = inputFileRef.current.files[0];
 
     const response = await fetch(
-      `/api/selfupdate/image?type=headshot&filename=${encodeURIComponent(file.name)}`,
+      `/api/selfupdate/image?type=testimonial_headshot&filename=${encodeURIComponent(file.name)}`,
       {
         method: 'POST',
         body: file,
@@ -385,10 +385,11 @@ export const getServerSideProps = withSessionSsr(
     // TODO: need to get all of the workshops from the db
     const testimonials = await getAllTestimonials()
     if (testimonials.error){
-      // TODO: need to figure out how to handle this
+      throw testimonials.error
     }
     
-    r.props.testimonials = testimonials.data as Testimonial[]
+    r.props.testimonials = testimonials.data?.testimonials as Testimonial[]
+    r.props.carouselData = testimonials.data?.carouselData as CarouselData
 
 
     return r;

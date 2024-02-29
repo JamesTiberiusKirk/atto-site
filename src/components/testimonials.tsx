@@ -12,22 +12,22 @@ interface TestimonialProps{
 }
 
 function Testimonial({testimonial, imgPos}: TestimonialProps){
-  const pos = imgPos === "left"?"order-first":"order-last"
-  const imgConditional = testimonial.headshot? "":"object-contain"
+  const pos = imgPos === "left"?"over-md:order-first":"over-md:order-last"
+  const imgConditional = testimonial.headshot? "":"w-2/3 object-contain"
 
   return (
-    <div className="above-md:flex-row flex bellow-md:flex-col">
-      <div className={`w-1/3 p-2 ${pos}`}>
+    <div className="over-md:flex-row flex flex-col mt-10">
+      <div className={`over-md:w-1/3 p-2 h-full ${pos}`}>
         <Image
           priority
           alt={testimonial.from}
           src={testimonial.headshot ? testimonial.headshot : "/headshots/placeholder.png"}
           width={500}
           height={500}
-          className={'w-full rounded-lg max-h-48 '+imgConditional}
+          className={'w-full rounded-lg over-md:max-h-48 mx-auto '+imgConditional}
         />
       </div>
-      <div className="w-2/3 my-auto items-center p-5">
+      <div className="over-md:w-2/3 my-auto items-center p-5">
         “{testimonial.quote}”
         <p className="text-right">- {testimonial.from}</p>
       </div>
@@ -44,7 +44,7 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
   return (
     <div>
       <div className="min-h-screen w-full bg-white text-[#8C2F00] ">
-        <div className="p-10 ">
+        <div className="p-10">
           <div className="h-full">
             <h1 className="mb-10 text-center text-3xl">Testimonials</h1>
             <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-lg:max-w-5xl">
@@ -62,12 +62,12 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
           <br />
 
           <div className="h-full">
-            <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-lg:max-w-5xl">
+            <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-md:max-w-5xl">
               <h1 className="pb-5 text-center text-3xl">
                 Other participants
               </h1>
-              <div className="flex over-xl:flex-row bellow-xl:flex-col">
-                <div className="max-w-lg over-xl:pr-5">
+              <div className="mx-auto flex over-xl:flex-row bellow-xl:flex-col">
+                <div className="mx-auto max-w-lg over-xl:pr-5">
                   {carouselData.quotes.map((quote)=>(
                   <div className="py-5">
                     “{quote}”
@@ -83,12 +83,13 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
                   </div>
                 </div>
                 <div
-                  className="mx-auto"
+                  className="over-md:mx-auto"
                   style={{
                     maxWidth: "500px",
                   }}
                 >
                   <Carousel
+                    className="over-md:mx-auto"
                     renderArrowPrev={(
                       onClickHandler: () => void,
                       hasPrev: boolean,

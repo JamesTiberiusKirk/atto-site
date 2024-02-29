@@ -11,6 +11,7 @@ export default function AttoPage({ children }: AttoPageProps) {
       <Head>
         <title>atto </title>
         <meta name="description" content="atto" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link rel="icon" href="/favicon.ico" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@attoworkshops" />
