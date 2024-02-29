@@ -6,24 +6,27 @@ import { useEffect, useRef, useState } from "react";
 import type { PutBlobResult } from "@vercel/blob";
 import type { Workshop } from "types/workshop";
 import { WorkshopsCard } from "~/components/workshop";
-import { getAllWorkshops } from "lib/db/workshop";
+import { getAllTestimonials } from "lib/db/testimonials";
+import type { CarouselData, Testimonial } from "types/testimonial";
 
-type SelfUpdatePageProps = {
+type SelfUpdateTestimonialsPageProps = {
   user: LoginRequest;
-  workshops: Workshop[];
+  testimonials: Testimonial[]
+  carouselData: CarouselData
 }
 
-export default function SelfUpdate(props: SelfUpdatePageProps) {
+export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPageProps) {
   const inputFileRef = useRef<HTMLInputElement>(null);
   const [imageUploadError, setImageUploadError] = useState<string | null>(null)
-  const [workshops, setWorkshops] = useState<Workshop[]>(props.workshops)
-  const [currentWorkshop, setCurrentWorkshop] = useState<Workshop|undefined>(props.workshops.find(w=>w.display))
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(props.testimonials)
+  const [carouselData, setCarouselData] = useState<CarouselData[]>(props.carouselData)
+  const [currentTestimonial, setCurrentTestimonial] = useState<Testimonial|undefined>()
   const [deletionConfirm, setDeletionConfirm] = useState<string|undefined>(undefined)
   const [workshopUpdateError, setWorkshopUpdateError] = useState<string | null>(null)
   const [hasChanged, setHaChanged] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
 
-  const originalArray = JSON.stringify(props.workshops)
+  const originalArray = JSON.stringify(props.testimonials)
 
   const formSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,8 +55,8 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
     } 
 
     const url = (apiRes as PutBlobResult).url 
-    setCurrentWorkshop({
-      ...currentWorkshop,
+    setCurrentTestimonial({
+      ...currentTestimonial,
       imgPath: url,
     } as Workshop)
   }
@@ -63,17 +66,17 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
   const onRadioChange =  (e: any) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
     const key = e.currentTarget.value
-    setCurrentWorkshop( workshops.find(w=>w.key===key))
+    setCurrentTestimonial(testimonials.find(t=>t.key===key))
   }
 
 
-  const sendWorkshops = async () => {
+  const sendTestimonials = async () => {
     setLoading(true)
     const response = await fetch(
-      `/api/selfupdate/workshops`,
+      `/api/selfupdate/testimonials`,
       {
         method: 'POST',
-        body: JSON.stringify({workshops:workshops}),
+        body: JSON.stringify({testimonials:testimonials, carouselData: carouselData }),
       },
     );
 
@@ -86,27 +89,15 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
   }
 
   useEffect(()=>{
-    setHaChanged(!(JSON.stringify(workshops)===originalArray))
+    setHaChanged(!(JSON.stringify(testimonials)===originalArray))
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[workshops])
-
-  useEffect(()=>{
-    // console.log("useEffect current workshop", currentWorkshop)
-
-    setWorkshops([...workshops.map(w=>{
-      if(w.key === currentWorkshop?.key) {
-        return { ...currentWorkshop } 
-      } else return w
-    })])
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[currentWorkshop])
+  },[testimonials])
 
   return (
     <AttoPage>
       <div className="p-4">
         <h1 className="p-6 mx-auto text-center text-3xl">
-          Self Update: Workshops
+          Self Update: Testimonials
         </h1>
         <div className="w-full flex flex-row">
           <div className="w-1/3 bg-[#FF955F] rounded-lg m-2 text-white">
@@ -127,12 +118,12 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                   </tr>
                 </thead>
                 <tbody>
-                  {workshops.map(w=>(
+                  {testimonials.map(w=>(
                     <tr key={w.key}>
                       <td>
                         <input
                           id={`select-${w.key}`}
-                          checked={(currentWorkshop?.key===w.key)}
+                          checked={(currentTestimonial?.key===w.key)}
                           value={w.key} 
                           type="radio"
                           onChange={onRadioChange}
@@ -148,7 +139,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                           type="checkbox"
                           checked={w.display}
                           onChange={() => {
-                            const update = workshops.map(wrk=>{
+                            const update = testimonials.map(wrk=>{
 
                               if (wrk.key===w.key){
                                 return {...wrk, display:!wrk.display}
@@ -156,7 +147,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
 
                               return wrk
                             })
-                            setWorkshops([...update])
+                            setTestimonials([...update])
                           }} />
                       </td>
 
@@ -165,7 +156,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                           <button
                             className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-3 rounded-full"
                             onClick={()=>{
-                              setWorkshops([...workshops.filter(work=>work.key!==w.key)])
+                              setTestimonials([...testimonials.filter(work=>work.key!==w.key)])
                               setDeletionConfirm("")
                             }}
                           >?</button>
@@ -185,9 +176,9 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                       <button
                         className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                         onClick={()=>{
-                          setWorkshops([...workshops, {
+                          setTestimonials([...testimonials, {
                             instructorName: "",
-                            key: `EMPTY-${workshops.length}`,
+                            key: `EMPTY-${testimonials.length}`,
                             imgPath: "",
                             desc: "",
                             type: "",
@@ -206,7 +197,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
             </div>
           </div>
           <div className="w-1/3 m-2">
-            {currentWorkshop && (
+            {currentTestimonial && (
               <div className="rounded-lg  p-5 bg-gray-200">
                 <div>
                   <h1>Upload picture for workshop</h1>
@@ -235,8 +226,8 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                       type="text"
                       name="intructor_name"
                       required
-                      value={currentWorkshop?.instructorName}
-                      onChange={(e)=>{setCurrentWorkshop({...currentWorkshop, instructorName:e.target.value})}}
+                      value={currentTestimonial?.instructorName}
+                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, instructorName:e.target.value})}}
                     />
                     <br/>
                     <label htmlFor="workshopFormDescription">Description:</label>
@@ -246,8 +237,8 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                       className="border-gray-200 p-2 border-solid border-2 w-full whitespace-pre-line"
                       name="desc"
                       rows={10}
-                      value={currentWorkshop?.desc}
-                      onChange={(e)=>{setCurrentWorkshop({...currentWorkshop, desc:e.target.value})}}
+                      value={currentTestimonial?.desc}
+                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, desc:e.target.value})}}
                       required
                     />
                     <br/>
@@ -259,8 +250,8 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                       className="border-gray-200 p-2 border-solid border-2 w-full whitespace-pre-line"
                       name="type"
                       rows={5}
-                      value={currentWorkshop?.type}
-                      onChange={(e)=>{setCurrentWorkshop({...currentWorkshop, type:e.target.value})}}
+                      value={currentTestimonial?.type}
+                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, type:e.target.value})}}
                       required
                     />
                     <br/>
@@ -272,8 +263,8 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                       type="text"
                       name="date"
                       required
-                      value={currentWorkshop?.date}
-                      onChange={(e)=>{setCurrentWorkshop({...currentWorkshop, date:e.target.value})}}
+                      value={currentTestimonial?.date}
+                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, date:e.target.value})}}
                     />
                     <br/>
 
@@ -284,8 +275,8 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                       type="text"
                       name="time"
                       required
-                      value={currentWorkshop?.time}
-                      onChange={(e)=>{setCurrentWorkshop({...currentWorkshop, time:e.target.value})}}
+                      value={currentTestimonial?.time}
+                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, time:e.target.value})}}
                     />
                     <br/>
 
@@ -296,8 +287,8 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                       type="text"
                       name="price"
                       required
-                      value={currentWorkshop?.price}
-                      onChange={(e)=>{setCurrentWorkshop({...currentWorkshop, price:e.target.value})}}
+                      value={currentTestimonial?.price}
+                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, price:e.target.value})}}
                     />
                     <br/>
 
@@ -308,8 +299,8 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
                       type="text"
                       name="Link"
                       required
-                      value={currentWorkshop?.link}
-                      onChange={(e)=>{setCurrentWorkshop({...currentWorkshop, link:e.target.value})}}
+                      value={currentTestimonial?.link}
+                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, link:e.target.value})}}
                     />
                     <br/>
                     <br/>
@@ -321,8 +312,8 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
 
           </div>
           <div className="w-1/3 p-2">
-            {currentWorkshop && (
-              <WorkshopsCard workshops={[currentWorkshop]}/>
+            {currentTestimonial && (
+              <WorkshopsCard workshops={[currentTestimonial]}/>
             )}
           </div>
 
@@ -332,7 +323,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
           { hasChanged &&( <p className="text-red-400">Unsaved Changes</p> )}
           <button
             className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            onClick={() => void sendWorkshops()}
+            onClick={() => void sendTestimonials()}
           >
             {loading ? (
               <div role="status">
@@ -388,16 +379,17 @@ export const getServerSideProps = withSessionSsr(
     const r = {
       props: {
         user: user,
-      } as SelfUpdatePageProps,
+      } as SelfUpdateTestimonialsPageProps,
     };
 
     // TODO: need to get all of the workshops from the db
-    const workshops = await getAllWorkshops()
-    if (workshops.error){
+    const testimonials = await getAllTestimonials()
+    if (testimonials.error){
       // TODO: need to figure out how to handle this
     }
     
-    r.props.workshops = workshops.data as Workshop[]
+    r.props.testimonials = testimonials.data as Testimonial[]
+
 
     return r;
   }
