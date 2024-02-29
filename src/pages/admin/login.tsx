@@ -4,6 +4,7 @@ import { TbChairDirector } from "react-icons/tb";
 import AttoPage from "~/components/page";
 import { api } from "~/utils/api";
 
+
 export default function LoginPage() {
   const [email, setEmail] = useState("");
 
@@ -50,6 +51,7 @@ export default function LoginPage() {
                 If email exists in the system, a login link will be sentout.
               </div>
             )}
+
 
             <button
               type="submit"

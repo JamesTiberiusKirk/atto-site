@@ -3,7 +3,6 @@
 - local dev login: [link which only works with development env set](http://localhost:3000/api/auth/login?token=1234) 
 
 
-
 # TODOs:
 
 - [ ] Homepage
