@@ -62,7 +62,7 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
           <br />
 
           <div className="h-full">
-            <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-md:max-w-5xl">
+            <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-md:max-w-5xl w-fit">
               <h1 className="pb-5 text-center text-3xl">
                 Other participants
               </h1>
