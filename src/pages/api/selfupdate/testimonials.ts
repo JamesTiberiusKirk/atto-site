@@ -1,9 +1,9 @@
 import { withSessionRoute } from 'lib/auth/withSession';
 import { updateTestimonials } from 'lib/db/testimonials';
-import { CarouselData, Testimonial } from 'types/testimonial';
+import type { CarouselData, Testimonial } from 'types/testimonial';
 
 export default withSessionRoute(async function handler(req,res) {
-    let update = (JSON.parse(req.body as string) as { testimonials:Testimonial[], carouselData: CarouselData })
+    const update = (JSON.parse(req.body as string) as { testimonials:Testimonial[], carouselData: CarouselData })
 
     if (typeof update !== "object") return res.status(400).json({error: "invalid data"})
 

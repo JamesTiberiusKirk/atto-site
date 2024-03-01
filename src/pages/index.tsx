@@ -19,7 +19,7 @@ import { WorkshopsCard } from "~/components/workshop";
 import { getAllWorkshops } from "lib/db/workshop";
 import Testimonials from "~/components/testimonials";
 import { getAllTestimonials } from "lib/db/testimonials";
-import { CarouselData, Testimonial } from "types/testimonial";
+import type { CarouselData, Testimonial } from "types/testimonial";
 
 import type { Workshop } from "types/workshop";
 

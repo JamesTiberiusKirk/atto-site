@@ -129,7 +129,7 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
                           width={500}
                           height={500}
                           src={v.link}
-                          alt={"image"+i}
+                          alt={`image ${i}`}
                         />
                       </div>
                     ))}

@@ -1,14 +1,14 @@
 import { withSessionSsr } from "lib/auth/withSession";
 import AttoPage from "~/components/page";
-import {  FormEvent, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import type { FormEvent } from "react";
 import { getAllTestimonials } from "lib/db/testimonials";
 import Testimonials from "~/components/testimonials";
 
 import type { CarouselData, Picture, Quotes, Testimonial } from "types/testimonial";
 import type { LoginRequest } from "types/loginRequests";
-import { PutBlobResult } from "@vercel/blob";
+import type { PutBlobResult } from "@vercel/blob";
 import Image from "next/image";
-import { api } from "~/utils/api";
 
 type SelfUpdateTestimonialsPageProps = {
   user: LoginRequest;
@@ -20,7 +20,6 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
   const [testimonials, setTestimonials] = useState<Testimonial[]>(props.testimonials??[])
   const [currenctlySelectedTestimonialIndex, setCurrenctlySelectedTestimonialIndex] = useState<number|undefined>(undefined)
   const [currenctlySelectedTestimonial, setCurrenctlySelectedTestimonial] = useState<Testimonial|undefined>(undefined)
-  // const [carouselData, setCarouselData] = useState<CarouselData>(props.carouselData)
   const [carouselQuotes, setCarouselQuotes] = useState<Quotes[]>(props.carouselData.quotes)
   const [carouselPictures, setCarouselPictures] = useState<Picture[]>(props.carouselData.pictures)
 
@@ -39,6 +38,8 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
     if (testimonials[currenctlySelectedTestimonialIndex]===undefined) return 
 
     setCurrenctlySelectedTestimonial(testimonials[currenctlySelectedTestimonialIndex])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[currenctlySelectedTestimonialIndex])
 
   let originalData = JSON.stringify({testimonials:props.testimonials??[], carouselData: props.carouselData})
@@ -52,12 +53,6 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
     })
     setHasChanged(now!==originalData)
 
-    // console.log("now\n",now)
-    // console.log("originalData\n",originalData)
-    // console.log("testimonials",testimonials)
-    // console.log("carouselDataPictures",carouselPictures)
-    // console.log("carouselDataQuotes",carouselQuotes)
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   },[testimonials, carouselQuotes, carouselPictures])
 
@@ -70,11 +65,11 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
     const t = testimonials
     t[currenctlySelectedTestimonialIndex] = currenctlySelectedTestimonial
     setTestimonials([...t])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   },[currenctlySelectedTestimonial])
 
   const onTestimonialDisplayChange = (key: number) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-    // const key = e.currentTarget.value
     if (testimonials[key]===undefined){
       return
     } 
@@ -152,7 +147,7 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
     if (currenctlySelectedTestimonial===undefined){return}
 
     const c = currenctlySelectedTestimonial
-    c!.headshot=url
+    c.headshot=url
     setCurrenctlySelectedTestimonial({...c})
   }
 
@@ -167,6 +162,7 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
       },
     );
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const apiRes = await response.json() as {data: any, error: string}
     if (apiRes.error) {
       setUpdateError(apiRes.error)
@@ -196,8 +192,8 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
   }
 
   const toggleCarouselPictureDisplay = (index:number) => {
-    if (!carouselPictures[index]) return
     const c = carouselPictures
+    if (!carouselPictures[index]) return
     c[index]!.display = !c[index]!.display
     setCarouselPictures([...c])
   }

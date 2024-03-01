@@ -1,7 +1,7 @@
-import { Workshop } from "types/workshop";
 import clientPromise from "./connect";
 import { env } from "~/env.mjs";
 import { ObjectId } from "mongodb";
+import type { Workshop } from "types/workshop";
 
 
 const colName = env.MONGO_DB_WORKSHOPS_COLLECTION

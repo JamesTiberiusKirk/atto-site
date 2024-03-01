@@ -39,7 +39,7 @@ export async function getAllTestimonials(display?: boolean) {
 
   try {
     const collection = db.collection(colName);
-    let filter: any = { type: "testimonials"};
+    const filter = { type: "testimonials"};
 
     console.log(
       `Quering collection ${colName} for all records`
