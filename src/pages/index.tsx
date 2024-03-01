@@ -17,7 +17,7 @@ import workshopBannerImage from "/public/small/workshop/dvelped_nice_pic_scaled.
 import whatWeDoImage from "/public/webp/workshop/dev_10_crop.webp";
 import { WorkshopsCard } from "~/components/workshop";
 import { getAllWorkshops } from "lib/db/workshop";
-import Testimonials, { TestimonialsPorops } from "~/components/testimonials";
+import Testimonials from "~/components/testimonials";
 import { getAllTestimonials } from "lib/db/testimonials";
 import { CarouselData, Testimonial } from "types/testimonial";
 
@@ -351,8 +351,6 @@ export const getServerSideProps = async () => {
     // TODO: need to figure out how to handle this
     throw (workshops.error || testimonials.error)
   }
-
-  console.log(testimonials.data?.carouselData)
 
   return {
     props: {

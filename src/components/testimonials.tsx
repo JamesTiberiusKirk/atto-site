@@ -13,7 +13,7 @@ interface TestimonialProps{
 
 function Testimonial({testimonial, imgPos}: TestimonialProps){
   const pos = imgPos === "left"?"over-md:order-first":"over-md:order-last"
-  const imgConditional = testimonial.headshot? " object-cover":"w-2/3 object-contain"
+  const imgConditional = testimonial.headshot? "object-cover":"w-2/3 object-contain"
 
   return (
     <div className="over-md:flex-row flex flex-col mt-10">
@@ -41,8 +41,6 @@ export interface TestimonialsPorops {
 }
 
 export default function Testimonials({testimonials, carouselData}:TestimonialsPorops){
-  console.log("testimonial comp",testimonials)
-  console.log("carouselData comp",carouselData)
   return (
     <div>
       <div className="p-10">
