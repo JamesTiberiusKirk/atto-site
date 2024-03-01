@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { cache, useState } from "react";
+import { useState } from "react";
 import {
   AiOutlineInstagram,
   AiOutlineMail,
@@ -9,135 +9,19 @@ import {
 } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-
 import AttoPage from "~/components/page";
 import { api } from "~/utils/api";
-
-import type { Workshop } from "types/workshop";
 import dfycLogo from "/public/dfyc_logo_small.jpg";
 import attoLogo from "/public/logo_with_name.png";
 import workshopBannerImage from "/public/small/workshop/dvelped_nice_pic_scaled.png";
-import caruselImage1 from "/public/webp/workshop/DSC06413.webp";
-import caruselImage2 from "/public/webp/workshop/DSC06435.webp";
-import caruselImage3 from "/public/webp/workshop/DSC06437.webp";
-import caruselImage4 from "/public/webp/workshop/DSC06451.webp";
 import whatWeDoImage from "/public/webp/workshop/dev_10_crop.webp";
-import caruselImage6 from "/public/webp/workshop/dev_13.webp";
-import caruselImage5 from "/public/webp/workshop/dev_9.webp";
 import { WorkshopsCard } from "~/components/workshop";
 import { getAllWorkshops } from "lib/db/workshop";
 import Testimonials, { TestimonialsPorops } from "~/components/testimonials";
 import { getAllTestimonials } from "lib/db/testimonials";
 import { CarouselData, Testimonial } from "types/testimonial";
 
-const caruselData = [
-  {
-    image: caruselImage1,
-    imageAlt: "image1",
-  },
-  {
-    image: caruselImage2,
-    imageAlt: "image2",
-  },
-  {
-    image: caruselImage3,
-    imageAlt: "image3",
-  },
-  {
-    image: caruselImage4,
-    imageAlt: "image4",
-  },
-  {
-    image: caruselImage5,
-    imageAlt: "image5",
-  },
-  {
-    image: caruselImage6,
-    imageAlt: "image6",
-  },
-];
-
-const testimonials: TestimonialsPorops = {
-  testimonials:[
-    {
-      headshot: "/small/workshop/ayo_small.png",
-      quote: `I really loved the workshop because I learned something new
-that was very effective I will take with me for the rest of
-my acting career`,
-      from: "Ayo",
-      display: true,
-    },
-    {
-      headshot: "/headshots/poppy.png",
-      quote: `I loved having the opportunity to work with Simon, he
-brought a fantastic energy in the room and created a safe
-and collaborative space to work and play. I really enjoyed
-exploring scenes from Jack Thorne’s A Christmas Carol and
-having the opportunity to explore & build on my choices and
-be re-directed and inspired by Simon’s wealth of knowledge
-and passion for the play! I haven’t experienced a workshop
-like this in a long time - it is worth every penny!`,
-      from: "Poppy Snow, HOA Agency",
-      display: true,
-    },
-    {
-      headshot: null,
-      quote: `The workshop was brilliant and felt like being in a (very
-exciting) rehearsal room for a couple of hours. It was
-creative and collaborative and enriching.`,
-      from: "Imogen Wilde, IML",
-      display: true,
-    },
-    {
-      headshot: null,
-      quote: `I loved having the opportunity to work with Simon, he
-brought a fantastic energy in the room and created a safe
-and collaborative space to work and play. I really enjoyed
-exploring scenes from Jack Thorne’s A Christmas Carol and
-having the opportunity to explore & build on my choices and
-be re-directed and inspired by Simon’s wealth of knowledge
-and passion for the play! I haven’t experienced a workshop
-like this in a long time - it is worth every penny!`,
-      from: "Imogen Wilde, IML",
-      display: true,
-    },
-    {
-      headshot: null,
-      quote: `The workshop was brilliant and felt like being in a (very
-exciting) rehearsal room for a couple of hours. It was
-creative and collaborative and enriching.`,
-      from: "Imogen Wilde, IML",
-      display: true,
-    },
-    {
-      headshot: null,
-      quote: `The workshop was brilliant and felt like being in a (very
-exciting) rehearsal room for a couple of hours. It was
-creative and collaborative and enriching.`,
-      from: "Imogen Wilde, IML",
-      display: true,
-    },
-  ],
-  carouselData: {
-    quotes:[
-      `Really enjoyed the deep discussions we shared all
-together whilst working through the scripts. A refreshing
-atmosphere for a workshop!`,
-      `I liked that I didn’t feel pressure or nervous in the
-room, the director was friendly and communicative, easy to
-talk to and discuss where to go with the text`,
-    ],
-    pictures: [
-      "/webp/workshop/DSC06413.webp",
-      "/webp/workshop/DSC06435.webp",
-      "/webp/workshop/DSC06437.webp",
-      "/webp/workshop/DSC06451.webp",
-      "/webp/workshop/dev_13.webp",
-      "/webp/workshop/dev_9.webp",
-    ],
-  }
-} 
-
+import type { Workshop } from "types/workshop";
 
 function NewsLetterSignup() {
   const mutation = api.newsLetter.new.useMutation({
@@ -418,7 +302,7 @@ export default function Home(props: HomeProps) {
       {(props.testimonials || props.carouselData) && (
         <div id="testimonials">
           <div className="min-h-screen w-full bg-white text-[#8C2F00] ">
-            <Testimonials   testimonials={props.testimonials ?? []} carouselData={props.carouselData ?? undefined} />
+            <Testimonials testimonials={props.testimonials as Testimonial[]} carouselData={props.carouselData as CarouselData} />
           </div>
         </div>
       )}
@@ -458,21 +342,23 @@ export default function Home(props: HomeProps) {
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/require-await
 export const getServerSideProps = async () => {
 
-    const [workshops, testimonials] = await Promise.all([
-      getAllWorkshops(true),
-      getAllTestimonials(true),
-    ])
+  const [workshops, testimonials] = await Promise.all([
+    getAllWorkshops(true),
+    getAllTestimonials(true),
+  ])
 
-    if (workshops.error || testimonials.error){
-      // TODO: need to figure out how to handle this
-      throw (workshops.error || testimonials.error)
-    }
+  if (workshops.error || testimonials.error){
+    // TODO: need to figure out how to handle this
+    throw (workshops.error || testimonials.error)
+  }
+
+  console.log(testimonials.data?.carouselData)
 
   return {
     props: {
       workshops: workshops.data as Workshop[],
       testimonials: testimonials.data?.testimonials ?? null,
-      caruselData: testimonials.data?.testimonials ?? null,
-    }
+      carouselData: testimonials.data?.carouselData ?? null,
+    } as HomeProps
   };
 };

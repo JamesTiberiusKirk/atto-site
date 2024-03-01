@@ -4,9 +4,11 @@ import {  FormEvent, useEffect, useRef, useState } from "react";
 import { getAllTestimonials } from "lib/db/testimonials";
 import Testimonials from "~/components/testimonials";
 
-import type { CarouselData, Testimonial } from "types/testimonial";
+import type { CarouselData, Picture, Quotes, Testimonial } from "types/testimonial";
 import type { LoginRequest } from "types/loginRequests";
 import { PutBlobResult } from "@vercel/blob";
+import Image from "next/image";
+import { api } from "~/utils/api";
 
 type SelfUpdateTestimonialsPageProps = {
   user: LoginRequest;
@@ -18,10 +20,15 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
   const [testimonials, setTestimonials] = useState<Testimonial[]>(props.testimonials??[])
   const [currenctlySelectedTestimonialIndex, setCurrenctlySelectedTestimonialIndex] = useState<number|undefined>(undefined)
   const [currenctlySelectedTestimonial, setCurrenctlySelectedTestimonial] = useState<Testimonial|undefined>(undefined)
-  const [carouselData, setCarouselData] = useState<CarouselData>(props.carouselData)
+  // const [carouselData, setCarouselData] = useState<CarouselData>(props.carouselData)
+  const [carouselQuotes, setCarouselQuotes] = useState<Quotes[]>(props.carouselData.quotes)
+  const [carouselPictures, setCarouselPictures] = useState<Picture[]>(props.carouselData.pictures)
 
   const inputFileRef = useRef<HTMLInputElement>(null);
+  const carouselInputFileRef = useRef<HTMLInputElement>(null);
   const [deletionConfirm, setDeletionConfirm] = useState<number|undefined>(undefined)
+  const [carouselQuoteDeletionConfirm, setCarouselQuoteDeletionConfirm] = useState<number|undefined>(undefined)
+  const [carouselPictureDeletionConfirm, setCarouselPictureDeletionConfirm] = useState<number|undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(false)
   const [updateError, setUpdateError] = useState<string | null>(null)
   const [hasChanged, setHasChanged] = useState<boolean>(false)
@@ -32,17 +39,27 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
     if (testimonials[currenctlySelectedTestimonialIndex]===undefined) return 
 
     setCurrenctlySelectedTestimonial(testimonials[currenctlySelectedTestimonialIndex])
-
-    console.log("currenctlySelected", currenctlySelectedTestimonialIndex, currenctlySelectedTestimonial)
-    console.log("evaluating in ", ((currenctlySelectedTestimonialIndex!==undefined) && (currenctlySelectedTestimonial!==undefined)))
   },[currenctlySelectedTestimonialIndex])
 
-  const originalData = JSON.stringify({testimonials:props.testimonials??[], carouselData})
+  let originalData = JSON.stringify({testimonials:props.testimonials??[], carouselData: props.carouselData})
   useEffect(()=>{
-    setHasChanged(JSON.stringify({testimonials, carouselData})!==originalData)
+    const now = JSON.stringify({
+      testimonials,
+      carouselData: {
+        quotes: carouselQuotes,
+        pictures: carouselPictures,
+      },
+    })
+    setHasChanged(now!==originalData)
+
+    // console.log("now\n",now)
+    // console.log("originalData\n",originalData)
+    // console.log("testimonials",testimonials)
+    // console.log("carouselDataPictures",carouselPictures)
+    // console.log("carouselDataQuotes",carouselQuotes)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[testimonials, carouselData])
+  },[testimonials, carouselQuotes, carouselPictures])
 
   // save currenctlySelectedTestimonial to the array
   useEffect(()=>{
@@ -55,23 +72,50 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
     setTestimonials([...t])
   },[currenctlySelectedTestimonial])
 
-
-
-
-
-
   const onTestimonialDisplayChange = (key: number) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
     // const key = e.currentTarget.value
-    console.log("KEY",key)
     if (testimonials[key]===undefined){
       return
     } 
-    console.log("updating")
     
     // NOTE: feels like this is a bomb waiting to go off but lsp erroring if i dont use the !
     testimonials[key]!.display = !(testimonials[key]?.display)
     setTestimonials([...testimonials])
+  }
+
+
+  const [carouselImageUploadError, setCarouselImageUploadError] = useState<string | null>(null)
+  const carouselFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (!carouselInputFileRef.current?.files || !carouselInputFileRef.current?.files[0]) {
+      console.log("no file selected")
+      throw new Error('No file selected');
+    }
+
+    const file = carouselInputFileRef.current.files[0];
+
+    const response = await fetch(
+      `/api/selfupdate/image?type=carousell&filename=${encodeURIComponent(file.name)}`,
+      {
+        method: 'POST',
+        body: file,
+      },
+    );
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+    const apiRes = await response.json()
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    if (apiRes.error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
+      setCarouselImageUploadError(apiRes.error)
+      return
+    } 
+    console.log(apiRes)
+
+    const url = (apiRes as PutBlobResult).url 
+    setCarouselPictures([...carouselPictures, {link:url, display:false}])
   }
 
   const [headshotImageUploadError, setHeadshotImageUploadError] = useState<string | null>(null)
@@ -87,7 +131,7 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
     const file = inputFileRef.current.files[0];
 
     const response = await fetch(
-      `/api/selfupdate/image?type=ts_headshot&filename=${encodeURIComponent(file.name)}`,
+      `/api/selfupdate/image?type=carousell&filename=${encodeURIComponent(file.name)}`,
       {
         method: 'POST',
         body: file,
@@ -105,9 +149,11 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
 
     const url = (apiRes as PutBlobResult).url 
 
-    const t = testimonials
-    t[currenctlySelectedTestimonialIndex]!.headshot = url
-    setTestimonials([...t])
+    if (currenctlySelectedTestimonial===undefined){return}
+
+    const c = currenctlySelectedTestimonial
+    c!.headshot=url
+    setCurrenctlySelectedTestimonial({...c})
   }
 
 
@@ -117,7 +163,7 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
       `/api/selfupdate/testimonials`,
       {
         method: 'POST',
-        body: JSON.stringify({testimonials, carouselData}),
+        body: JSON.stringify({testimonials, carouselData:{quotes:carouselQuotes, pictures:carouselPictures}}),
       },
     );
 
@@ -126,9 +172,35 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
       setUpdateError(apiRes.error)
     } 
     setLoading(false)
+
+    originalData = JSON.stringify({testimonials:props.testimonials??[], carouselData: props.carouselData})
+    setHasChanged(false)
   }
 
+  const newCarouselQuote = () => {
+    setCarouselQuotes([...carouselQuotes, {quote:"", display:false}])
+  }
 
+  const setCarouselQuote = (index:number, quote:string) => {
+    if (!carouselQuotes[index]) return
+    const c = carouselQuotes
+    c[index]!.quote = quote
+    setCarouselQuotes([...c])
+  }
+
+  const toggleCarouselQuoteDisplay = (index:number) => {
+    if (!carouselQuotes[index]) return
+    const c = carouselQuotes
+    c[index]!.display = !c[index]!.display
+    setCarouselQuotes([...c])
+  }
+
+  const toggleCarouselPictureDisplay = (index:number) => {
+    if (!carouselPictures[index]) return
+    const c = carouselPictures
+    c[index]!.display = !c[index]!.display
+    setCarouselPictures([...c])
+  }
   return (
     <AttoPage>
       <div className="p-4">
@@ -222,11 +294,77 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
                   </tr>
                 </tbody>
               </table>
+              {carouselPictures.length>0&&(
+                <div>
+                  <h1 className="p-6 mx-auto text-center text-xl">
+                    Currently stored testimonials:
+                  </h1>
+                  <div className="p-6 w-full">
+                    <table className="mx-auto">
+                      <thead>
+                        <tr>
+                          <th>Testimonials</th>
+                          <th>Display</th>
+                          {deletionConfirm ? (
+                            <th>You sure?</th>
+                          ) : (
+                              <th>Delete</th>
+                            )}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {carouselPictures.map((p,i)=>(
+                          <tr key={i}>
+                            <td>
+                              <Image
+                                src={p.link}
+                                width={150}
+                                height={150}
+                                alt={`Carousel Image ${i}`}
+                              />
+                            </td>
+
+                            <td>
+                              <input
+                                type="checkbox"
+                                checked={p.display}
+                                className="p-2 m-2"
+                                onChange={()=>toggleCarouselPictureDisplay(i)} />
+                            </td>
+                            <td>
+                              {carouselPictureDeletionConfirm == i ? (
+                                <button
+                                  className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-3 rounded-full"
+                                  onClick={()=>{
+                                    const p = carouselPictures
+                                    p.splice(i,1)
+                                    setCarouselPictures([...p])
+                                    setCarouselPictureDeletionConfirm(undefined)
+                                  }}
+                                >?</button>
+                              ) : (
+                                  <button
+                                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded-full"
+                                    onClick={()=>{
+                                      setCarouselPictureDeletionConfirm(i)
+                                    }}
+                                  >X</button>
+                                )}
+                            </td>
+                            <td/>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
           <div className="w-1/3 m-2">
-            {((currenctlySelectedTestimonialIndex!==undefined) && (currenctlySelectedTestimonial!==undefined)) && (
-              <div className="rounded-lg  p-5 bg-gray-200">
+            {((currenctlySelectedTestimonialIndex!==undefined) && (currenctlySelectedTestimonial!==undefined)) ? (
+              <div className="rounded-lg mb-2 p-5 bg-gray-200">
+                <h1>Testimonial</h1>
                 <div>
                   <h1>Upload picture for the testimonial</h1>
                   <form onSubmit={(event)=>void headshotFormSubmit(event)} >
@@ -246,24 +384,23 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
                 </div>
 
                 <div>
-                  <form>
-                    <label htmlFor="workshopFormInstructorName">Name:</label>
+                    <label htmlFor="testimonial_name">Name:</label>
                     <input
-                      id="workshopFormInstructorName"
+                      id="testimonial_name"
                       className="border-gray-200 border-solid border-2 p-2 w-full"
                       type="text"
-                      name="intructor_name"
+                      name="from"
                       required
                       value={currenctlySelectedTestimonial.from}
                       onChange={(e)=>{setCurrenctlySelectedTestimonial({...currenctlySelectedTestimonial, from:e.target.value})}}
                     />
                     <br/>
-                    <label htmlFor="workshopFormDescription">Quote:</label>
+                    <label htmlFor="testimonial_quote">Quote:</label>
                     <br/>
                     <textarea
-                      id="workshopFormDescription"
+                      id="testimonial_quote"
                       className="border-gray-200 p-2 border-solid border-2 w-full whitespace-pre-line"
-                      name="desc"
+                      name="quote"
                       rows={10}
                       value={currenctlySelectedTestimonial.quote}
                       onChange={(e)=>{setCurrenctlySelectedTestimonial({...currenctlySelectedTestimonial, quote:e.target.value})}}
@@ -271,7 +408,101 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
                     />
                     <br/>
                     <br/>
+                </div>
+              </div>
+            ):(
+
+              <div className="rounded-lg mb-2 p-5 bg-gray-200">
+                <h1>Testimonial</h1>
+                  <p>Please select a testimonial to edit on the left hand side</p>
+              </div>
+              )}
+
+            {((carouselQuotes!==undefined)) && (
+              <div className="rounded-lg p-5 bg-gray-200">
+                <h1>Carousel Data</h1>
+                <div>
+                  <h1>Upload picture for the coursel</h1>
+                  <form onSubmit={(event)=>void carouselFormSubmit(event)} >
+                    <input
+                      name="file" ref={carouselInputFileRef} type="file" required />
+                    <br/>
+                    <button 
+                      className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded-full my-2"
+                      type="submit">Upload</button>
                   </form>
+
+                  {carouselImageUploadError && (
+                    <div>
+                      Error: { carouselImageUploadError }
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <table className="w-full table-auto">
+                    <thead>
+                      <tr>
+                        <th>
+                          Quotes
+                        </th>
+                        <th>
+                          Display
+                        </th>
+                        {carouselQuoteDeletionConfirm ? (
+                          <th>Sure??</th>
+                        ) : (
+                            <th>Delete</th>
+                          )}
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {carouselQuotes.map((q,i)=>(
+                        <tr key={i}>
+                          <td>
+                            <textarea
+                              id="workshopFormInstructorName"
+                              className="border-gray-200 border-solid border-2 p-2 w-full"
+                              name="intructor_name"
+                              value={q.quote}
+                              onChange={(e)=>{setCarouselQuote(i, e.target.value)}}
+                            />
+                          </td>
+                          <td>
+                            <input
+                              type="checkbox"
+                              checked={q.display}
+                              className="p-2 m-2"
+                              onChange={()=>toggleCarouselQuoteDisplay(i)} />
+                          </td>
+                          <td>
+                            {carouselQuoteDeletionConfirm == i ? (
+                              <button
+                                className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-3 rounded-full"
+                                onClick={()=>{
+                                  const q = carouselQuotes
+                                  q.splice(i,1)
+                                  setCarouselQuotes([...q])
+                                  setCarouselQuoteDeletionConfirm(undefined)
+                                }}
+                              >?</button>
+                            ) : (
+                                <button
+                                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded-full"
+                                  onClick={()=>{
+                                    setCarouselQuoteDeletionConfirm(i)
+                                  }}
+                                >X</button>
+                              )}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <br/>
+                  <button
+                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                    onClick={()=>newCarouselQuote()}
+                  >New Quote</button>
                 </div>
               </div>
             )}
@@ -280,7 +511,13 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
           <div className="w-1/3 p-2">
             {testimonials.length>0 && (
               <div className="rounded-lg border border-2 border-black">
-                <Testimonials testimonials={testimonials} carouselData={carouselData}/>
+                <Testimonials
+                  testimonials={testimonials}
+                  carouselData={{
+                    quotes:carouselQuotes,
+                    pictures:carouselPictures,
+                  }}
+                />
               </div>
             )}
           </div>

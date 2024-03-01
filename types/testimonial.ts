@@ -5,7 +5,17 @@ export type Testimonial = {
   display: boolean
 }
 
+export type Quotes = {
+  quote: string,
+  display: boolean,
+}
+
+export type Picture = {
+  link: string,
+  display: boolean,
+}
+
 export type CarouselData = {
-  quotes: string[]
-  pictures: string[]
+  quotes: Quotes[],
+  pictures: Picture[],
 }

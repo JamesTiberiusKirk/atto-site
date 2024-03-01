@@ -23,13 +23,8 @@ export async function updateTestimonials(update: Testimonial[], carouselData: Ca
       carouselData: carouselData,
     }
 
-    console.log("UPDATE",u)
-    
-
     const collection = db.collection(colName);
     const res = await collection.updateOne({type:'testimonials'}, {$set:u}, {upsert:true})
-
-    console.log(res)
 
     return { data: res };
   } catch (e) {
@@ -65,9 +60,28 @@ export async function getAllTestimonials(display?: boolean) {
       } as Testimonial
     }) as Testimonial[]
 
+    let cQuotes = res?.carouselData.quotes.map(q=>{
+      return {
+        quote: q.quote,
+        display: q.display,
+      }
+    }) as {quote:string, display:boolean}[]
+
+    let cPics = res?.carouselData.pictures.map(p=>{
+      return {
+        link: p.link,
+        display: p.display,
+      }
+    }) as {link:string, display:boolean}[]
+
+    if(display){
+      cPics = cPics.filter(c=>c.display)
+      cQuotes = cQuotes.filter(c=>c.display)
+    }
+
     const c: CarouselData = {
-      quotes: res?.carouselData.quotes ? res?.carouselData.quotes : [],
-      pictures: res?.carouselData.pictures ? res?.carouselData.pictures : [],
+      quotes: cQuotes ? cQuotes : [],
+      pictures: cPics ? cPics : [],
     }
 
     return {

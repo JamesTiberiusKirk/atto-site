@@ -13,7 +13,7 @@ interface TestimonialProps{
 
 function Testimonial({testimonial, imgPos}: TestimonialProps){
   const pos = imgPos === "left"?"over-md:order-first":"over-md:order-last"
-  const imgConditional = testimonial.headshot? "":"w-2/3 object-contain"
+  const imgConditional = testimonial.headshot? " object-cover":"w-2/3 object-contain"
 
   return (
     <div className="over-md:flex-row flex flex-col mt-10">
@@ -24,11 +24,11 @@ function Testimonial({testimonial, imgPos}: TestimonialProps){
           src={testimonial.headshot ? testimonial.headshot : "/headshots/placeholder.png"}
           width={500}
           height={500}
-          className={'w-full rounded-lg over-md:max-h-48 mx-auto '+imgConditional}
+          className={'w-full rounded-lg over-md:max-h-48 mx-auto  '+imgConditional}
         />
       </div>
       <div className="over-md:w-2/3 my-auto items-center p-5">
-        “{testimonial.quote}”
+        “{testimonial.quote.trim()}”
         <p className="text-right">- {testimonial.from}</p>
       </div>
     </div>
@@ -37,10 +37,12 @@ function Testimonial({testimonial, imgPos}: TestimonialProps){
 
 export interface TestimonialsPorops {
   testimonials: Testimonial[]
-  carouselData?: CarouselData
+  carouselData: CarouselData
 }
 
 export default function Testimonials({testimonials, carouselData}:TestimonialsPorops){
+  console.log("testimonial comp",testimonials)
+  console.log("carouselData comp",carouselData)
   return (
     <div>
       <div className="p-10">
@@ -61,7 +63,7 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
         <br />
 
 
-        {(carouselData) && (
+        {(carouselData!=undefined) && (
           <div className="h-full">
             <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-md:max-w-5xl w-fit">
               <h1 className="pb-5 text-center text-3xl">
@@ -69,9 +71,9 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
               </h1>
               <div className="mx-auto flex over-xl:flex-row bellow-xl:flex-col">
                 <div className="mx-auto max-w-lg over-xl:pr-5">
-                  {carouselData.quotes.map((quote)=>(
-                    <div className="py-5">
-                      “{quote}”
+                  {carouselData.quotes.map((quote, i)=>(
+                    <div className="py-5" key={i}>
+                      “{quote.quote.trim()}”
                     </div>
                   ))}
                   <div className="flex w-full  flex-col py-5">
@@ -124,11 +126,11 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
                     {carouselData.pictures.map((v, i) => (
                       <div key={i}>
                         <Image
-                          className="rounded-lg"
+                          className="rounded-lg "
                           priority
                           width={500}
                           height={500}
-                          src={v}
+                          src={v.link}
                           alt={"image"+i}
                         />
                       </div>
