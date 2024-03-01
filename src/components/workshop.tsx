@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Workshop } from "types/workshop";
+import type { Workshop } from "types/workshop";
 import Link from "next/link";
 import { MdAccountCircle } from "react-icons/md";
 import { IoMdOpen } from "react-icons/io";

@@ -4,6 +4,7 @@ import type { LoginRequest } from "types/loginRequests";
 import { env } from "~/env.mjs";
 
 export default withSessionRoute(async function loginRoute(req, res) {
+  // get user from database then:
   const token = req.query["token"];
   if (!token || typeof token !== "string") return {};
 

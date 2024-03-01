@@ -104,12 +104,17 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
 
   return (
     <AttoPage>
-      <div >
+      <div className="p-4">
+        <h1 className="p-6 mx-auto text-center text-3xl">
+          Self Update: Workshops
+        </h1>
         <div className="w-full flex flex-row">
-          <div className="w-1/3">
-            Currently stored workshops:
-            <div className="p-5">
-              <table>
+          <div className="w-1/3 bg-[#FF955F] rounded-lg m-2 text-white">
+            <h1 className="p-6 mx-auto text-center text-xl">
+              Currently stored workshops:
+            </h1>
+            <div className="p-6 w-full">
+              <table className="mx-auto">
                 <thead>
                   <tr>
                     <th>Workshop</th>
@@ -200,9 +205,9 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
               </table>
             </div>
           </div>
-          <div className="w-1/3">
+          <div className="w-1/3 m-2">
             {currentWorkshop && (
-              <div className="p-5 bg-gray-100">
+              <div className="rounded-lg  p-5 bg-gray-200">
                 <div>
                   <h1>Upload picture for workshop</h1>
                   <form onSubmit={(event)=>void formSubmit(event)} >
@@ -315,7 +320,7 @@ export default function SelfUpdate(props: SelfUpdatePageProps) {
             )}
 
           </div>
-          <div className="w-1/3">
+          <div className="w-1/3 p-2">
             {currentWorkshop && (
               <WorkshopsCard workshops={[currentWorkshop]}/>
             )}

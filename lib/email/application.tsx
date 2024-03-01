@@ -19,8 +19,10 @@ function EmailHTML(application: Application) {
       <br />
       <br />
       <br />
+      { /* eslint-disable @next/next/no-img-element */ }
       <img
         src="https://attoworkshops.com/logo_with_name.png"
+        alt="atto logo with name"
         style={{
           width: "200px",
           left: "0",
