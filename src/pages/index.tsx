@@ -8,53 +8,20 @@ import {
   AiOutlineTwitter,
 } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-
 import AttoPage from "~/components/page";
 import { api } from "~/utils/api";
-
-import type { Workshop } from "types/workshop";
 import dfycLogo from "/public/dfyc_logo_small.jpg";
 import attoLogo from "/public/logo_with_name.png";
 import workshopBannerImage from "/public/small/workshop/dvelped_nice_pic_scaled.png";
-import caruselImage1 from "/public/webp/workshop/DSC06413.webp";
-import caruselImage2 from "/public/webp/workshop/DSC06435.webp";
-import caruselImage3 from "/public/webp/workshop/DSC06437.webp";
-import caruselImage4 from "/public/webp/workshop/DSC06451.webp";
 import whatWeDoImage from "/public/webp/workshop/dev_10_crop.webp";
-import caruselImage6 from "/public/webp/workshop/dev_13.webp";
-import caruselImage5 from "/public/webp/workshop/dev_9.webp";
 import { WorkshopsCard } from "~/components/workshop";
 import { getAllWorkshops } from "lib/db/workshop";
+import Testimonials from "~/components/testimonials";
+import { getAllTestimonials } from "lib/db/testimonials";
+import type { CarouselData, Testimonial } from "types/testimonial";
 
-const caruselData = [
-  {
-    image: caruselImage1,
-    imageAlt: "image1",
-  },
-  {
-    image: caruselImage2,
-    imageAlt: "image2",
-  },
-  {
-    image: caruselImage3,
-    imageAlt: "image3",
-  },
-  {
-    image: caruselImage4,
-    imageAlt: "image4",
-  },
-  {
-    image: caruselImage5,
-    imageAlt: "image5",
-  },
-  {
-    image: caruselImage6,
-    imageAlt: "image6",
-  },
-];
-
+import type { Workshop } from "types/workshop";
 
 function NewsLetterSignup() {
   const mutation = api.newsLetter.new.useMutation({
@@ -180,8 +147,11 @@ function Menu() {
 
 interface HomeProps {
   workshops: Workshop[];
+  testimonials: Testimonial[] | null,
+  carouselData: CarouselData | null,
 }
 export default function Home(props: HomeProps) {
+  console.log(props)
   return (
     <AttoPage>
       <Menu />
@@ -218,7 +188,7 @@ export default function Home(props: HomeProps) {
               </div>
             </div>
 
-            <div className="w-full place-content-center over-xl:pt-40">
+            <div className="w-full place-content-center over-xl:pt-40 ">
               <div className="mx-auto bellow-lg:w-full">
                 <Image
                   alt="Atto logo"
@@ -227,6 +197,7 @@ export default function Home(props: HomeProps) {
                   style={{
                     maxWidth: "500px",
                   }}
+                  className="mx-auto"
                 />
                 <div className="-translate-y-10 text-center text-xl text-green-700">
                   connect.play.grow
@@ -328,275 +299,13 @@ export default function Home(props: HomeProps) {
           </div>
         </div>
       </div>
-      <div id="testimonials">
-        <div className="min-h-screen w-full bg-white text-[#8C2F00] ">
-          <div className="p-10 ">
-            <div className="h-full">
-              <h1 className="mb-10 text-center text-3xl">Testimonials</h1>
-              <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-lg:max-w-5xl">
-                <div className="above-md:flex-row flex bellow-md:flex-col">
-                  <div className="p-2">
-                    <Image
-                      priority
-                      alt="Ayo"
-                      src="/small/workshop/ayo_small.png"
-                      width={816}
-                      height={642}
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div className="my-auto items-center justify-center p-5">
-                    “I really loved the workshop because I learned something new
-                    that was very effective I will take with me for the rest of
-                    my acting career”
-                    <p className="text-right">- Ayo</p>
-                  </div>
-                </div>
-                <div className="above-md:flex-row flex bellow-md:flex-col ">
-                  <div className="my-auto w-full items-center justify-center p-5">
-                    “I loved having the opportunity to work with Simon, he
-                    brought a fantastic energy in the room and created a safe
-                    and collaborative space to work and play. I really enjoyed
-                    exploring scenes from Jack Thorne’s A Christmas Carol and
-                    having the opportunity to explore & build on my choices and
-                    be re-directed and inspired by Simon’s wealth of knowledge
-                    and passion for the play! I haven’t experienced a workshop
-                    like this in a long time - it is worth every penny!”
-                    <div className="text-right">- Poppy Snow, HOA Agency</div>
-                  </div>
-                  <div className="w-full p-2 bellow-md:order-first">
-                    <Image
-                      priority
-                      alt="Ayo"
-                      src="/headshots/poppy.png"
-                      width={892}
-                      height={664}
-                      className="rounded-lg"
-                    />
-                  </div>
-                </div>
-
-                <br />
-
-                <div className="above-md:flex-row flex bellow-md:flex-col">
-                  <div className="p-2">
-                    <Image
-                      priority
-                      alt="placeholder"
-                      src="/headshots/placeholder.png"
-                      width={500}
-                      height={500}
-                      className="rounded-lg bellow-md:mx-auto"
-                    />
-                  </div>
-                  <div className="my-auto items-center justify-center p-5">
-                    “The workshop was brilliant and felt like being in a (very
-                    exciting) rehearsal room for a couple of hours. It was
-                    creative and collaborative and enriching.”
-                    <p className="text-right"> - Imogen Wilde, IML</p>
-                  </div>
-                </div>
-
-                <br />
-
-                <div className="above-md:flex-row flex bellow-md:flex-col ">
-                  <div className="my-auto items-center justify-center p-5">
-                    “That was fun. I think it’s such a brilliant thing you are
-                    doing. Thanks for inviting me to be a part of it.”
-                    <div className="text-right">- Emma Baggott, Director</div>
-                  </div>
-                  <div className="p-2 bellow-md:order-first">
-                    <Image
-                      priority
-                      alt="Emma"
-                      src="/headshots/emma-baggott-headshot-2.jpg"
-                      width={500}
-                      height={500}
-                      className="w-64 rounded-lg bellow-md:mx-auto"
-                    />
-                  </div>
-                </div>
-
-                <br />
-
-                <div className="above-md:flex-row flex bellow-md:flex-col">
-                  <div className="p-2">
-                    <Image
-                      priority
-                      alt="placehlder"
-                      src="/headshots/placeholder.png"
-                      width={500}
-                      height={500}
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div className="my-auto items-center justify-center p-5">
-                    “I loved that we got up on our feet straight away, i loved
-                    how enthusiastic everyone was, I liked how the exercises
-                    were new and something I hadn’t done before!”
-                    <p className="text-right"> - Nastassja Dao</p>
-                  </div>
-                </div>
-
-                <br />
-                <div className="above-md:flex-row flex bellow-md:flex-col ">
-                  <div className="my-auto items-center justify-center p-5">
-                    “Fun and interesting workshop, in an unusual format. Great
-                    chance to meet some likeminded actors, and understand a
-                    little of how Josh works, and would tackle a complex script.
-                    Looking forward to the next one.”
-                    <div className="text-right">
-                      - Lizzie Schenk, Jessica Lowe at Simon & How
-                    </div>
-                  </div>
-                  <div className="p-2 bellow-md:order-first bellow-md:max-w-xs">
-                    <Image
-                      priority
-                      alt="placehlder"
-                      src="/headshots/placeholder.png"
-                      width={500}
-                      height={500}
-                      className="rounded-lg"
-                    />
-                  </div>
-                </div>
-
-                <br />
-
-                <div className="above-md:flex-row flex bellow-md:flex-col">
-                  <div className="p-2">
-                    <Image
-                      priority
-                      alt="placehlder"
-                      src="/headshots/placeholder.png"
-                      width={500}
-                      height={500}
-                      className="rounded-lg"
-                    />
-                  </div>
-                  <div className="my-auto items-center justify-center p-5">
-                    “If acting is a muscle you have to keep working then Atto is
-                    like going to the orthopaedic clinic! Loved it definitely
-                    will be back.”
-                    <p className="text-right">
-                      - Claire Fairman, AAPA Casting and Talent management.
-                    </p>
-                  </div>
-                </div>
-
-                <br />
-
-                <div className="above-md:flex-row flex bellow-md:flex-col ">
-                  <div className="my-auto items-center justify-center p-5">
-                    “I haven&apos;t been in theatre workshop in some time so
-                    this was a fun environment. I got to test my craft, work on
-                    a piece that I might not get seen for and learn to work with
-                    a director and puzzle solve in a safe space. A lot of what
-                    we do right now is very much solo work; faceless auditions,
-                    so it was nice to have direction and see how I could make it
-                    work and be fearless.”
-                    <div className="text-right">
-                      - Dionne Neish Mondi Associates.
-                    </div>
-                  </div>
-                  <div className="p-2 bellow-md:order-first">
-                    <Image
-                      priority
-                      alt="placehlder"
-                      src="/headshots/placeholder.png"
-                      width={500}
-                      height={500}
-                      className="rounded-lg"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <br />
-
-            <div className="h-full">
-              <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-lg:max-w-5xl">
-                <h1 className="pb-5 text-center text-3xl">
-                  Other participants
-                </h1>
-                <div className="flex over-xl:flex-row bellow-xl:flex-col">
-                  <div className="max-w-lg over-xl:pr-5">
-                    <div className="py-5">
-                      “Really enjoyed the deep discussions we shared all
-                      together whilst working through the scripts. A refreshing
-                      atmosphere for a workshop!”
-                    </div>
-                    <div className="py-5">
-                      “I liked that I didn’t feel pressure or nervous in the
-                      room, the director was friendly and communicative, easy to
-                      talk to and discuss where to go with the text”
-                    </div>
-
-                    <div className="flex w-full  flex-col py-5">
-                      <Link
-                        className="rounded-full bg-[#8C2F00] px-4 py-2 text-center align-bottom font-bold text-gray-100 hover:bg-[#e64d00]"
-                        href="/apply"
-                      >
-                        Apply
-                      </Link>
-                    </div>
-                  </div>
-                  <div
-                    className="mx-auto"
-                    style={{
-                      maxWidth: "500px",
-                    }}
-                  >
-                    <Carousel
-                      renderArrowPrev={(
-                        onClickHandler: () => void,
-                        hasPrev: boolean,
-                        label: string
-                      ) => (
-                        <button
-                          type="button"
-                          aria-label={label}
-                          className="control-arrow control-prev rounded-l-lg"
-                          onClick={onClickHandler}
-                        />
-                      )}
-                      renderArrowNext={(
-                        onClickHandler: () => void,
-                        hasNext: boolean,
-                        label: string
-                      ) => (
-                        <button
-                          type="button"
-                          aria-label={label}
-                          className="control-arrow control-next rounded-r-lg"
-                          onClick={onClickHandler}
-                        />
-                      )}
-                      autoPlay={true}
-                      infiniteLoop={true}
-                      showStatus={false}
-                      showArrows={true}
-                      showThumbs={false}
-                    >
-                      {caruselData.map((v, i) => (
-                        <div key={i}>
-                          <Image
-                            className="rounded-lg"
-                            priority
-                            src={v.image}
-                            alt={v.imageAlt}
-                          />
-                        </div>
-                      ))}
-                    </Carousel>
-                  </div>
-                </div>
-              </div>
-            </div>
+      {(props.testimonials || props.carouselData) && (
+        <div id="testimonials">
+          <div className="min-h-screen w-full bg-white text-[#8C2F00] ">
+            <Testimonials testimonials={props.testimonials as Testimonial[]} carouselData={props.carouselData as CarouselData} />
           </div>
         </div>
-      </div>
+      )}
       <div id="news-letter" className=" w-full bg-[#FF955F]">
         <div className="p-10 text-[#8C2F00]">
           <div className="flex h-full flex-col items-center">
@@ -632,10 +341,22 @@ export default function Home(props: HomeProps) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/require-await
 export const getServerSideProps = async () => {
-    const workshops = await getAllWorkshops(true)
-    if (workshops.error){
-      // TODO: need to figure out how to handle this
-    }
 
-  return { props: { workshops: workshops.data as Workshop[] } };
+  const [workshops, testimonials] = await Promise.all([
+    getAllWorkshops(true),
+    getAllTestimonials(true),
+  ])
+
+  if (workshops.error || testimonials.error){
+    // TODO: need to figure out how to handle this
+    throw (workshops.error || testimonials.error)
+  }
+
+  return {
+    props: {
+      workshops: workshops.data as Workshop[],
+      testimonials: testimonials.data?.testimonials ?? null,
+      carouselData: testimonials.data?.carouselData ?? null,
+    } as HomeProps
+  };
 };

@@ -18,6 +18,7 @@ function EmailHTML(contactus: ContactUs) {
             <br />
             <br />
             <br />
+            {/* eslint-disable @next/next/no-img-element */}
             <img src='https://attoworkshops.com/logo_with_name.png'
                 style={{
                     width: '200px',
