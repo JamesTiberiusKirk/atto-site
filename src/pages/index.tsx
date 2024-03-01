@@ -27,6 +27,8 @@ import caruselImage5 from "/public/webp/workshop/dev_9.webp";
 import { WorkshopsCard } from "~/components/workshop";
 import { getAllWorkshops } from "lib/db/workshop";
 import Testimonials, { TestimonialsPorops } from "~/components/testimonials";
+import { getAllTestimonials } from "lib/db/testimonials";
+import { CarouselData, Testimonial } from "types/testimonial";
 
 const caruselData = [
   {
@@ -79,6 +81,7 @@ like this in a long time - it is worth every penny!`,
       display: true,
     },
     {
+      headshot: null,
       quote: `The workshop was brilliant and felt like being in a (very
 exciting) rehearsal room for a couple of hours. It was
 creative and collaborative and enriching.`,
@@ -86,6 +89,7 @@ creative and collaborative and enriching.`,
       display: true,
     },
     {
+      headshot: null,
       quote: `I loved having the opportunity to work with Simon, he
 brought a fantastic energy in the room and created a safe
 and collaborative space to work and play. I really enjoyed
@@ -98,6 +102,7 @@ like this in a long time - it is worth every penny!`,
       display: true,
     },
     {
+      headshot: null,
       quote: `The workshop was brilliant and felt like being in a (very
 exciting) rehearsal room for a couple of hours. It was
 creative and collaborative and enriching.`,
@@ -105,6 +110,7 @@ creative and collaborative and enriching.`,
       display: true,
     },
     {
+      headshot: null,
       quote: `The workshop was brilliant and felt like being in a (very
 exciting) rehearsal room for a couple of hours. It was
 creative and collaborative and enriching.`,
@@ -257,8 +263,11 @@ function Menu() {
 
 interface HomeProps {
   workshops: Workshop[];
+  testimonials: Testimonial[] | null,
+  carouselData: CarouselData | null,
 }
 export default function Home(props: HomeProps) {
+  console.log(props)
   return (
     <AttoPage>
       <Menu />
@@ -406,9 +415,13 @@ export default function Home(props: HomeProps) {
           </div>
         </div>
       </div>
-      <div id="testimonials">
-        <Testimonials   {...testimonials} />
-      </div>
+      {(props.testimonials || props.carouselData) && (
+        <div id="testimonials">
+          <div className="min-h-screen w-full bg-white text-[#8C2F00] ">
+            <Testimonials   testimonials={props.testimonials ?? []} carouselData={props.carouselData ?? undefined} />
+          </div>
+        </div>
+      )}
       <div id="news-letter" className=" w-full bg-[#FF955F]">
         <div className="p-10 text-[#8C2F00]">
           <div className="flex h-full flex-col items-center">
@@ -444,10 +457,22 @@ export default function Home(props: HomeProps) {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/require-await
 export const getServerSideProps = async () => {
-    const workshops = await getAllWorkshops(true)
-    if (workshops.error){
+
+    const [workshops, testimonials] = await Promise.all([
+      getAllWorkshops(true),
+      getAllTestimonials(true),
+    ])
+
+    if (workshops.error || testimonials.error){
       // TODO: need to figure out how to handle this
+      throw (workshops.error || testimonials.error)
     }
 
-  return { props: { workshops: workshops.data as Workshop[] } };
+  return {
+    props: {
+      workshops: workshops.data as Workshop[],
+      testimonials: testimonials.data?.testimonials ?? null,
+      caruselData: testimonials.data?.testimonials ?? null,
+    }
+  };
 };

@@ -1,5 +1,5 @@
 export type Testimonial = {
-  headshot?: string
+  headshot: string | null
   quote: string
   from: string
   display: boolean

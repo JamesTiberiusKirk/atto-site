@@ -1,13 +1,12 @@
 import { withSessionSsr } from "lib/auth/withSession";
-import type { LoginRequest } from "types/loginRequests";
 import AttoPage from "~/components/page";
-import type { FormEvent } from "react";
-import { useEffect, useRef, useState } from "react";
-import type { PutBlobResult } from "@vercel/blob";
-import type { Workshop } from "types/workshop";
-import { WorkshopsCard } from "~/components/workshop";
+import {  FormEvent, useEffect, useRef, useState } from "react";
 import { getAllTestimonials } from "lib/db/testimonials";
+import Testimonials from "~/components/testimonials";
+
 import type { CarouselData, Testimonial } from "types/testimonial";
+import type { LoginRequest } from "types/loginRequests";
+import { PutBlobResult } from "@vercel/blob";
 
 type SelfUpdateTestimonialsPageProps = {
   user: LoginRequest;
@@ -16,20 +15,70 @@ type SelfUpdateTestimonialsPageProps = {
 }
 
 export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPageProps) {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(props.testimonials??[])
+  const [currenctlySelectedTestimonialIndex, setCurrenctlySelectedTestimonialIndex] = useState<number|undefined>(undefined)
+  const [currenctlySelectedTestimonial, setCurrenctlySelectedTestimonial] = useState<Testimonial|undefined>(undefined)
+  const [carouselData, setCarouselData] = useState<CarouselData>(props.carouselData)
+
   const inputFileRef = useRef<HTMLInputElement>(null);
-  const [imageUploadError, setImageUploadError] = useState<string | null>(null)
-  const [testimonials, setTestimonials] = useState<Testimonial[]>(props.testimonials)
-  const [carouselData, setCarouselData] = useState<CarouselData[]>(props.carouselData)
-  const [currentTestimonial, setCurrentTestimonial] = useState<Testimonial|undefined>()
-  const [deletionConfirm, setDeletionConfirm] = useState<string|undefined>(undefined)
-  const [workshopUpdateError, setWorkshopUpdateError] = useState<string | null>(null)
-  const [hasChanged, setHaChanged] = useState<boolean>(false)
+  const [deletionConfirm, setDeletionConfirm] = useState<number|undefined>(undefined)
   const [loading, setLoading] = useState<boolean>(false)
+  const [updateError, setUpdateError] = useState<string | null>(null)
+  const [hasChanged, setHasChanged] = useState<boolean>(false)
 
-  const originalArray = JSON.stringify(props.testimonials)
 
-  const formSubmit = async (event: FormEvent<HTMLFormElement>) => {
+  useEffect(()=>{
+    if (currenctlySelectedTestimonialIndex===undefined) return 
+    if (testimonials[currenctlySelectedTestimonialIndex]===undefined) return 
+
+    setCurrenctlySelectedTestimonial(testimonials[currenctlySelectedTestimonialIndex])
+
+    console.log("currenctlySelected", currenctlySelectedTestimonialIndex, currenctlySelectedTestimonial)
+    console.log("evaluating in ", ((currenctlySelectedTestimonialIndex!==undefined) && (currenctlySelectedTestimonial!==undefined)))
+  },[currenctlySelectedTestimonialIndex])
+
+  const originalData = JSON.stringify({testimonials:props.testimonials??[], carouselData})
+  useEffect(()=>{
+    setHasChanged(JSON.stringify({testimonials, carouselData})!==originalData)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[testimonials, carouselData])
+
+  // save currenctlySelectedTestimonial to the array
+  useEffect(()=>{
+    if (currenctlySelectedTestimonial===undefined) return 
+    if (currenctlySelectedTestimonialIndex===undefined) return 
+    if (testimonials[currenctlySelectedTestimonialIndex]===undefined) return 
+
+    const t = testimonials
+    t[currenctlySelectedTestimonialIndex] = currenctlySelectedTestimonial
+    setTestimonials([...t])
+  },[currenctlySelectedTestimonial])
+
+
+
+
+
+
+  const onTestimonialDisplayChange = (key: number) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+    // const key = e.currentTarget.value
+    console.log("KEY",key)
+    if (testimonials[key]===undefined){
+      return
+    } 
+    console.log("updating")
+    
+    // NOTE: feels like this is a bomb waiting to go off but lsp erroring if i dont use the !
+    testimonials[key]!.display = !(testimonials[key]?.display)
+    setTestimonials([...testimonials])
+  }
+
+  const [headshotImageUploadError, setHeadshotImageUploadError] = useState<string | null>(null)
+  const headshotFormSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (currenctlySelectedTestimonialIndex === undefined) return 
 
     if (!inputFileRef.current?.files || !inputFileRef.current?.files[0]) {
       throw new Error('No file selected');
@@ -38,7 +87,7 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
     const file = inputFileRef.current.files[0];
 
     const response = await fetch(
-      `/api/selfupdate/image?type=testimonial_headshot&filename=${encodeURIComponent(file.name)}`,
+      `/api/selfupdate/image?type=ts_headshot&filename=${encodeURIComponent(file.name)}`,
       {
         method: 'POST',
         body: file,
@@ -50,48 +99,35 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (apiRes.error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-argument
-      setImageUploadError(apiRes.error)
+      setHeadshotImageUploadError(apiRes.error)
       return
     } 
 
     const url = (apiRes as PutBlobResult).url 
-    setCurrentTestimonial({
-      ...currentTestimonial,
-      imgPath: url,
-    } as Workshop)
+
+    const t = testimonials
+    t[currenctlySelectedTestimonialIndex]!.headshot = url
+    setTestimonials([...t])
   }
 
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onRadioChange =  (e: any) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
-    const key = e.currentTarget.value
-    setCurrentTestimonial(testimonials.find(t=>t.key===key))
-  }
-
-
-  const sendTestimonials = async () => {
+  const sendData = async () => {
     setLoading(true)
     const response = await fetch(
       `/api/selfupdate/testimonials`,
       {
         method: 'POST',
-        body: JSON.stringify({testimonials:testimonials, carouselData: carouselData }),
+        body: JSON.stringify({testimonials, carouselData}),
       },
     );
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const apiRes = await response.json() as {data: any, error: string}
     if (apiRes.error) {
-      setWorkshopUpdateError(apiRes.error)
+      setUpdateError(apiRes.error)
     } 
     setLoading(false)
   }
 
-  useEffect(()=>{
-    setHaChanged(!(JSON.stringify(testimonials)===originalArray))
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[testimonials])
 
   return (
     <AttoPage>
@@ -102,13 +138,13 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
         <div className="w-full flex flex-row">
           <div className="w-1/3 bg-[#FF955F] rounded-lg m-2 text-white">
             <h1 className="p-6 mx-auto text-center text-xl">
-              Currently stored workshops:
+              Currently stored testimonials:
             </h1>
             <div className="p-6 w-full">
               <table className="mx-auto">
                 <thead>
                   <tr>
-                    <th>Workshop</th>
+                    <th>Testimonials</th>
                     <th>Display</th>
                     {deletionConfirm ? (
                       <th>You sure?</th>
@@ -118,76 +154,68 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
                   </tr>
                 </thead>
                 <tbody>
-                  {testimonials.map(w=>(
-                    <tr key={w.key}>
+                  {testimonials.map((t,i)=>(
+                    <tr key={i}>
                       <td>
                         <input
-                          id={`select-${w.key}`}
-                          checked={(currentTestimonial?.key===w.key)}
-                          value={w.key} 
+                          id={`select-${i}`}
+                          checked={(i===currenctlySelectedTestimonialIndex)}
+                          value={i} 
                           type="radio"
-                          onChange={onRadioChange}
+                          onChange={()=>setCurrenctlySelectedTestimonialIndex(i)}
                         />
                         <label
                           className="p-3"
-                          htmlFor={`select-${w.key}`}>
-                          {(w.instructorName) ? w.instructorName : "EMPTY"}, {(w.date) ? w.date : "EMPTY"}
+                          htmlFor={`select-${i}`}>
+                          {t.from} -- “{(t.quote.length >= 20)? t.quote.substring(0,19) + '...' : t.quote }”
                         </label>
                       </td>
                       <td>
                         <input
                           type="checkbox"
-                          checked={w.display}
-                          onChange={() => {
-                            const update = testimonials.map(wrk=>{
-
-                              if (wrk.key===w.key){
-                                return {...wrk, display:!wrk.display}
-                              }
-
-                              return wrk
-                            })
-                            setTestimonials([...update])
-                          }} />
+                          checked={t.display}
+                          onChange={()=>onTestimonialDisplayChange(i)} />
                       </td>
 
                       <td>
-                        {deletionConfirm === w.key ? (
+                        {deletionConfirm === i ? (
                           <button
                             className="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-3 rounded-full"
                             onClick={()=>{
-                              setTestimonials([...testimonials.filter(work=>work.key!==w.key)])
-                              setDeletionConfirm("")
+                              const t = testimonials
+                              t.splice(i,1)
+                              setTestimonials([...t])
+                              setDeletionConfirm(undefined)
                             }}
                           >?</button>
                         ) : (
                             <button
                               className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-3 rounded-full"
                               onClick={()=>{
-                                setDeletionConfirm(w.key)
+                                setDeletionConfirm(i)
                               }}
                             >X</button>
                           )}
                       </td>
                     </tr>
                   ))}
+                  {(testimonials.length <= 0)  && (
+                    <tr>
+                      <td colSpan={3}>
+                        <p>Currently no testimonials</p>
+                      </td>
+                    </tr>
+                  )}
                   <tr>
-                    <td>
+                    <td colSpan={3}>
                       <button
                         className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
                         onClick={()=>{
                           setTestimonials([...testimonials, {
-                            instructorName: "",
-                            key: `EMPTY-${testimonials.length}`,
-                            imgPath: "",
-                            desc: "",
-                            type: "",
-                            date: "",
-                            time: "",
-                            price: "",
-                            link: "",
+                            from: "",
+                            quote: "",
                             display: false,
-                          } as Workshop ])
+                          } as Testimonial ])
                         }}
                       >New</button>
                     </td>
@@ -197,11 +225,11 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
             </div>
           </div>
           <div className="w-1/3 m-2">
-            {currentTestimonial && (
+            {((currenctlySelectedTestimonialIndex!==undefined) && (currenctlySelectedTestimonial!==undefined)) && (
               <div className="rounded-lg  p-5 bg-gray-200">
                 <div>
-                  <h1>Upload picture for workshop</h1>
-                  <form onSubmit={(event)=>void formSubmit(event)} >
+                  <h1>Upload picture for the testimonial</h1>
+                  <form onSubmit={(event)=>void headshotFormSubmit(event)} >
                     <input
                       name="file" ref={inputFileRef} type="file" required />
                     <br/>
@@ -210,101 +238,39 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
                       type="submit">Upload</button>
                   </form>
 
-                  {imageUploadError && (
+                  {headshotImageUploadError && (
                     <div>
-                      Error: { imageUploadError }
+                      Error: { headshotImageUploadError }
                     </div>
                   )}
                 </div>
 
                 <div>
                   <form>
-                    <label htmlFor="workshopFormInstructorName">Instructo&apos;s Name:</label>
+                    <label htmlFor="workshopFormInstructorName">Name:</label>
                     <input
                       id="workshopFormInstructorName"
                       className="border-gray-200 border-solid border-2 p-2 w-full"
                       type="text"
                       name="intructor_name"
                       required
-                      value={currentTestimonial?.instructorName}
-                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, instructorName:e.target.value})}}
+                      value={currenctlySelectedTestimonial.from}
+                      onChange={(e)=>{setCurrenctlySelectedTestimonial({...currenctlySelectedTestimonial, from:e.target.value})}}
                     />
                     <br/>
-                    <label htmlFor="workshopFormDescription">Description:</label>
+                    <label htmlFor="workshopFormDescription">Quote:</label>
                     <br/>
                     <textarea
                       id="workshopFormDescription"
                       className="border-gray-200 p-2 border-solid border-2 w-full whitespace-pre-line"
                       name="desc"
                       rows={10}
-                      value={currentTestimonial?.desc}
-                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, desc:e.target.value})}}
+                      value={currenctlySelectedTestimonial.quote}
+                      onChange={(e)=>{setCurrenctlySelectedTestimonial({...currenctlySelectedTestimonial, quote:e.target.value})}}
                       required
                     />
                     <br/>
                     <br/>
-                    <label htmlFor="workshopFormType">Type/Title:</label>
-                    <br/>
-                    <textarea
-                      id="workshopFormType"
-                      className="border-gray-200 p-2 border-solid border-2 w-full whitespace-pre-line"
-                      name="type"
-                      rows={5}
-                      value={currentTestimonial?.type}
-                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, type:e.target.value})}}
-                      required
-                    />
-                    <br/>
-
-                    <label htmlFor="workshopFormDate">Date</label>
-                    <input
-                      id="workshopFormDate"
-                      className="border-gray-200 border-solid border-2 p-2 w-full"
-                      type="text"
-                      name="date"
-                      required
-                      value={currentTestimonial?.date}
-                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, date:e.target.value})}}
-                    />
-                    <br/>
-
-                    <label htmlFor="workshopFormTime">Time</label>
-                    <input
-                      id="workshopFormTime"
-                      className="border-gray-200 border-solid border-2 p-2 w-full"
-                      type="text"
-                      name="time"
-                      required
-                      value={currentTestimonial?.time}
-                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, time:e.target.value})}}
-                    />
-                    <br/>
-
-                    <label htmlFor="workshopFormPrice">Price</label>
-                    <input
-                      id="workshopFormPrice"
-                      className="border-gray-200 border-solid border-2 p-2 w-full"
-                      type="text"
-                      name="price"
-                      required
-                      value={currentTestimonial?.price}
-                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, price:e.target.value})}}
-                    />
-                    <br/>
-
-                    <label htmlFor="workshopFormLink">Portfolio Link: (MUST include &quot;https://&quot;)</label>
-                    <input
-                      id="workshopFormLint"
-                      className="border-gray-200 border-solid border-2 p-2 w-full"
-                      type="text"
-                      name="Link"
-                      required
-                      value={currentTestimonial?.link}
-                      onChange={(e)=>{setCurrentTestimonial({...currentTestimonial, link:e.target.value})}}
-                    />
-                    <br/>
-                    <br/>
-
                   </form>
                 </div>
               </div>
@@ -312,8 +278,10 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
 
           </div>
           <div className="w-1/3 p-2">
-            {currentTestimonial && (
-              <WorkshopsCard workshops={[currentTestimonial]}/>
+            {testimonials.length>0 && (
+              <div className="rounded-lg border border-2 border-black">
+                <Testimonials testimonials={testimonials} carouselData={carouselData}/>
+              </div>
             )}
           </div>
 
@@ -323,7 +291,7 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
           { hasChanged &&( <p className="text-red-400">Unsaved Changes</p> )}
           <button
             className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            onClick={() => void sendTestimonials()}
+            onClick={() => void sendData()}
           >
             {loading ? (
               <div role="status">
@@ -352,9 +320,10 @@ export default function SelfUpdateTestimonials(props: SelfUpdateTestimonialsPage
 
         </div>
 
-        {workshopUpdateError && (
+
+        {updateError && (
           <div>
-            Error: { workshopUpdateError }
+            Error: { updateError }
           </div>
         )}
       </div>
@@ -388,9 +357,10 @@ export const getServerSideProps = withSessionSsr(
       throw testimonials.error
     }
     
-    r.props.testimonials = testimonials.data?.testimonials as Testimonial[]
+    r.props.testimonials = testimonials.data?.testimonials as Testimonial[] ?? null
     r.props.carouselData = testimonials.data?.carouselData as CarouselData
 
+    console.log(r.props)
 
     return r;
   }

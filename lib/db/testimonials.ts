@@ -1,11 +1,11 @@
 import clientPromise from "./connect";
 import { env } from "~/env.mjs";
-import { ObjectId } from "mongodb";
 import type { CarouselData, Testimonial } from "types/testimonial";
 
 const colName = env.MONGO_DB_GENERAL_COLLECTION
 
 type DbSchema = {
+  type: string
   testimonials: Testimonial[]
   carouselData: CarouselData
 }
@@ -15,15 +15,21 @@ export async function updateTestimonials(update: Testimonial[], carouselData: Ca
   const db = client.db();
 
   try {
-    console.log("Inserting into collection", colName);
+    console.log("updating in collection", colName);
 
     const u: DbSchema = {
+      type: "testimonials",
       testimonials: update,
       carouselData: carouselData,
     }
 
+    console.log("UPDATE",u)
+    
+
     const collection = db.collection(colName);
-    const res = await collection.updateOne({_id: new ObjectId("testimonials")}, u)
+    const res = await collection.updateOne({type:'testimonials'}, {$set:u}, {upsert:true})
+
+    console.log(res)
 
     return { data: res };
   } catch (e) {
@@ -38,24 +44,38 @@ export async function getAllTestimonials(display?: boolean) {
 
   try {
     const collection = db.collection(colName);
-    let filter: any = { _id: new ObjectId("testimonials")};
-
-    if (display !== undefined){
-      filter = {
-        ...filter,
-        display: display,
-      }
-    }
+    let filter: any = { type: "testimonials"};
 
     console.log(
       `Quering collection ${colName} for all records`
     );
 
     const res = await collection.findOne<DbSchema>(filter);
-    return { data: {
-      testimonials: res?.testimonials,
-      carouselData: res?.carouselData,
-    }, error: undefined };
+
+    console.log(res)
+
+    const t: Testimonial[] = res?.testimonials.map(t=>{
+      if((display !== undefined) && !t.display) return
+
+      return {
+        quote: t.quote,
+        from: t.from,
+        display: t.display,
+        headshot: t.headshot ?? null,
+      } as Testimonial
+    }) as Testimonial[]
+
+    const c: CarouselData = {
+      quotes: res?.carouselData.quotes ? res?.carouselData.quotes : [],
+      pictures: res?.carouselData.pictures ? res?.carouselData.pictures : [],
+    }
+
+    return {
+      data: {
+        testimonials: t,
+        carouselData: c,
+      }, error: undefined,
+    };
   } catch (e) {
 
     console.error(e);

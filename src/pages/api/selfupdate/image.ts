@@ -5,7 +5,7 @@ import { env } from '~/env.mjs';
 
 export default withSessionRoute(async function handler(req,res) {
     const type: string = req.query.type as string
-    if (type != "headshot"){
+    if (type != "headshot" && type != "ts_headshot"){
         console.log("invalid type")
         return res.status(400).json({error: "invalid type"})
     } 

@@ -37,30 +37,31 @@ function Testimonial({testimonial, imgPos}: TestimonialProps){
 
 export interface TestimonialsPorops {
   testimonials: Testimonial[]
-  carouselData: CarouselData
+  carouselData?: CarouselData
 }
 
 export default function Testimonials({testimonials, carouselData}:TestimonialsPorops){
   return (
     <div>
-      <div className="min-h-screen w-full bg-white text-[#8C2F00] ">
-        <div className="p-10">
-          <div className="h-full">
-            <h1 className="mb-10 text-center text-3xl">Testimonials</h1>
-            <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-lg:max-w-5xl">
-              {testimonials.map((t,i)=>(
-                <span key={i}>
-                  <Testimonial 
-                    testimonial={t}
-                    imgPos={ (i%2===0) ? "left" : "right" }
-                  />
-                </span>
-              ))}
-            </div>
+      <div className="p-10">
+        <div className="h-full">
+          <h1 className="mb-10 text-center text-3xl">Testimonials</h1>
+          <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-lg:max-w-5xl">
+            {testimonials.map((t,i)=>(
+              <span key={i}>
+                <Testimonial 
+                  testimonial={t}
+                  imgPos={ (i%2===0) ? "left" : "right" }
+                />
+              </span>
+            ))}
           </div>
+        </div>
 
-          <br />
+        <br />
 
+
+        {(carouselData) && (
           <div className="h-full">
             <div className="mx-auto mb-20 rounded-lg bg-[#FF955F] p-5 text-xl text-white over-md:max-w-5xl w-fit">
               <h1 className="pb-5 text-center text-3xl">
@@ -69,9 +70,9 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
               <div className="mx-auto flex over-xl:flex-row bellow-xl:flex-col">
                 <div className="mx-auto max-w-lg over-xl:pr-5">
                   {carouselData.quotes.map((quote)=>(
-                  <div className="py-5">
-                    “{quote}”
-                  </div>
+                    <div className="py-5">
+                      “{quote}”
+                    </div>
                   ))}
                   <div className="flex w-full  flex-col py-5">
                     <Link
@@ -95,25 +96,25 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
                       hasPrev: boolean,
                       label: string
                     ) => (
-                      <button
-                        type="button"
-                        aria-label={label}
-                        className="control-arrow control-prev rounded-l-lg"
-                        onClick={onClickHandler}
-                      />
-                    )}
+                        <button
+                          type="button"
+                          aria-label={label}
+                          className="control-arrow control-prev rounded-l-lg"
+                          onClick={onClickHandler}
+                        />
+                      )}
                     renderArrowNext={(
                       onClickHandler: () => void,
                       hasNext: boolean,
                       label: string
                     ) => (
-                      <button
-                        type="button"
-                        aria-label={label}
-                        className="control-arrow control-next rounded-r-lg"
-                        onClick={onClickHandler}
-                      />
-                    )}
+                        <button
+                          type="button"
+                          aria-label={label}
+                          className="control-arrow control-next rounded-r-lg"
+                          onClick={onClickHandler}
+                        />
+                      )}
                     autoPlay={true}
                     infiniteLoop={true}
                     showStatus={false}
@@ -137,7 +138,7 @@ export default function Testimonials({testimonials, carouselData}:TestimonialsPo
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   )
