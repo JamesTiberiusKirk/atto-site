@@ -25,7 +25,10 @@ export default function Admin(props: AdminProps) {
           <h1 className="text-3xl text-white">Admin: {props.user.email}</h1>
         </div>
         <div className="max-w-2/3 inline rounded-lg bg-white p-5">
-            <Link href="/admin/selfupdate" className="text-md m-2 flex w-fit flex-row rounded-full bg-[#8C2F00] px-3 py-1 font-bold text-gray-100 hover:bg-[#e64d00]">Self Update</Link>
+            <div className="flex flex-row">
+            <Link href="/admin/selfupdate/workshops" className="text-md m-2 flex w-fit flex-row rounded-full bg-[#8C2F00] px-3 py-1 font-bold text-gray-100 hover:bg-[#e64d00]">Self Update: Workshops</Link>
+            <Link href="/admin/selfupdate/testimonials" className="text-md m-2 flex w-fit flex-row rounded-full bg-[#8C2F00] px-3 py-1 font-bold text-gray-100 hover:bg-[#e64d00]">Self Update: Testimonials</Link>
+            </div>
           <div className="flex flex-row  pt-3 pl-3">
             <h1 className="text-2xl">Applications</h1>
             <div className="flex w-full flex-row">
